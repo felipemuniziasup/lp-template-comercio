@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+@@include("_partials/head.html")
+
+<body class="bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-800 antialiased">
+  <!-- Top bar / políticas rápidas -->
+  <div class="bg-gradient-to-r from-indigo-900 via-blue-700 to-cyan-600 text-white">
+    <div class="max-w-6xl mx-auto px-4 py-2 text-[13px] sm:text-sm flex flex-wrap items-center justify-center gap-3">
+      <span class="bg-white/15 px-2.5 py-1 rounded-md">🧾 Nota fiscal</span>
+      <span class="bg-white/15 px-2.5 py-1 rounded-md">🛡️ Garantia 90 dias</span>
+      <span class="bg-white/15 px-2.5 py-1 rounded-md">↩️ Devolução em 7 dias</span>
+      <a href="condicoes.html" class="underline underline-offset-4 decoration-white/40 hover:decoration-white">Políticas</a>
+    </div>
+  </div>
+
+  @@include("_partials/header.html")
+
+  <!-- ===================== HERO (carrossel + 2 CTAs) ===================== -->
+  <section id="hero" class="relative overflow-hidden select-none">
+    <ul id="heroSlides" class="relative h-[68vw] max-h-[540px]">
+      <!-- Slide 1 -->
+      <li class="absolute inset-0 opacity-100 transition-opacity duration-700">
+        <img src="assets/banners/banner1.png" alt="Destaques da semana" class="w-full h-full object-cover"
+             onerror="this.onerror=null;this.src='assets/banners/banner1.jpg'">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/60"></div>
+      </li>
+      <!-- Slide 2 -->
+      <li class="absolute inset-0 opacity-0 transition-opacity duration-700">
+        <img src="assets/banners/banner2.png" alt="Ofertas em celulares" class="w-full h-full object-cover"
+             onerror="this.onerror=null;this.src='assets/banners/banner2.jpg'">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/15 via-black/40 to-black/60"></div>
+      </li>
+      <!-- Slide 3 -->
+      <li class="absolute inset-0 opacity-0 transition-opacity duration-700">
+        <img src="assets/banners/banner3.png" alt="Perfumes importados" class="w-full h-full object-cover"
+             onerror="this.onerror=null;this.src='assets/banners/banner3.jpg'">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/15 via-black/40 to-black/60"></div>
+      </li>
+    </ul>
+
+    <!-- CTAs central -->
+    <div class="pointer-events-none absolute inset-0 grid place-items-center">
+      <div class="pointer-events-auto flex flex-wrap gap-3 justify-center">
+        <a href="https://wa.me/5521976950809?text=Quero%20as%20melhores%20ofertas%20de%20hoje%20%F0%9F%94%A5"
+           target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 px-5 py-3 rounded-full text-white font-extrabold
+                  border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
+                  bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
+                  hover:brightness-110 transition">
+          <span class="w-7 h-7 rounded-full grid place-items-center bg-white/20 border border-white/40">
+            <svg viewBox="0 0 32 32" width="16" height="16" fill="white"><path d="M19.11 17.41c-.29-.14-1.7-.84-1.96-.94-.26-.1-.45-.14-.64.14-.19.29-.74.94-.9 1.13-.17.19-.33.22-.61.08-.29-.14-1.21-.45-2.3-1.45-.85-.76-1.43-1.7-1.6-1.98-.17-.29-.02-.45.13-.59.14-.14.29-.33.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.64-1.54-.88-2.1-.23-.55-.47-.48-.64-.48-.17 0-.36-.02-.55-.02s-.5.07-.76.36c-.26.29-1 .98-1 2.39s1.02 2.77 1.16 2.96c.14.19 2 3.05 4.85 4.28.68.29 1.21.46 1.62.59.68.22 1.3.19 1.79.12.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33z"/></svg>
+          </span>
+          Ver ofertas
+        </a>
+
+        <a href="tudo.html"
+           class="inline-flex items-center gap-2 px-5 py-3 rounded-full font-bold text-white
+                  border border-white/30 bg-white/10 backdrop-blur hover:bg-white/16 transition">
+          Ver catálogo completo
+        </a>
+      </div>
+    </div>
+
+    <!-- Dots -->
+    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-10">
+      <button class="w-2.5 h-2.5 rounded-full bg-white/90 aria-[current=true]:w-3.5 aria-[current=true]:h-3.5 aria-[current=true]:bg-white"
+              aria-current="true" aria-label="Slide 1"></button>
+      <button class="w-2.5 h-2.5 rounded-full bg-white/65 aria-[current=true]:w-3.5 aria-[current=true]:h-3.5 aria-[current=true]:bg-white"
+              aria-label="Slide 2"></button>
+      <button class="w-2.5 h-2.5 rounded-full bg-white/65 aria-[current=true]:w-3.5 aria-[current=true]:h-3.5 aria-[current=true]:bg-white"
+              aria-label="Slide 3"></button>
+    </div>
+  </section>
+  <!-- ===================== /HERO ===================== -->
+
+  <!-- ===================== CATEGORIAS ===================== -->
+  <section class="max-w-6xl mx-auto px-4 py-12" id="categorias">
+    <div class="text-center mb-8">
+      <h2 class="font-extrabold tracking-tight text-3xl md:text-4xl text-neutral-900">Categorias</h2>
+      <p class="mt-2 text-neutral-500">Escolha uma categoria para começar</p>
+    </div>
+
+    <div id="catsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
+      <!-- Celulares -->
+      <a href="celulares.html" class="rounded-2xl p-4 md:p-5 bg-gradient-to-b from-blue-50 to-blue-100/70 ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-xl">
+        <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
+                    bg-gradient-to-br from-sky-400 via-cyan-400 to-emerald-400 text-white shadow-inner">
+          📱
+        </div>
+        <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Celulares</h3>
+        <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Novos e seminovos</p>
+      </a>
+
+      <!-- Perfumes -->
+      <a href="perfumes.html" class="rounded-2xl p-4 md:p-5 bg-gradient-to-b from-rose-50 to-rose-100/70 ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-xl">
+        <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
+                    bg-gradient-to-br from-pink-400 via-fuchsia-400 to-rose-400 text-white shadow-inner">
+          🌸
+        </div>
+        <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Perfumes</h3>
+        <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Importados originais</p>
+      </a>
+
+      <!-- Tudo -->
+      <a href="tudo.html" class="rounded-2xl p-4 md:p-5 bg-gradient-to-b from-emerald-50 to-emerald-100/70 ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-xl">
+        <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
+                    bg-gradient-to-br from-emerald-400 via-teal-400 to-cyan-400 text-white shadow-inner">
+          🛒
+        </div>
+        <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Tudo</h3>
+        <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Catálogo completo</p>
+      </a>
+
+      <!-- Extras revelados ao clicar -->
+      <a href="#" data-extra class="hidden rounded-2xl p-4 md:p-5 bg-gradient-to-b from-indigo-50 to-indigo-100/70 ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-xl">
+        <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
+                    bg-gradient-to-br from-indigo-400 via-violet-400 to-purple-400 text-white shadow-inner">
+          🎧
+        </div>
+        <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Áudio</h3>
+        <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Fones & caixas</p>
+      </a>
+
+      <a href="#" data-extra class="hidden rounded-2xl p-4 md:p-5 bg-gradient-to-b from-amber-50 to-amber-100/70 ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-xl">
+        <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
+                    bg-gradient-to-br from-amber-400 via-orange-400 to-rose-400 text-white shadow-inner">
+          ⌚
+        </div>
+        <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Relógios</h3>
+        <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Smart & premium</p>
+      </a>
+
+      <a href="#" data-extra class="hidden rounded-2xl p-4 md:p-5 bg-gradient-to-b from-teal-50 to-teal-100/70 ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-xl">
+        <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
+                    bg-gradient-to-br from-teal-400 via-emerald-400 to-green-400 text-white shadow-inner">
+          🔌
+        </div>
+        <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Acessórios</h3>
+        <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Carregadores, cases…</p>
+      </a>
+    </div>
+
+    <div class="mt-6 text-center">
+      <button id="toggleCats"
+              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full
+                     bg-gradient-to-r from-sky-500 to-emerald-500 text-white font-semibold
+                     shadow-[0_10px_30px_rgba(14,165,233,0.3)]
+                     hover:brightness-110 transition">
+        <span>Ver mais categorias</span> <span>＋</span>
+      </button>
+    </div>
+  </section>
+  <!-- ===================== /CATEGORIAS ===================== -->
+
+  <!-- ===================== OFERTA RELÂMPAGO + CARDS ===================== -->
+  <section class="bg-gradient-to-r from-indigo-900 via-blue-800 to-cyan-700 text-white">
+    <div class="max-w-6xl mx-auto px-4 py-8 md:py-10">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">🔥</span>
+          <h2 class="text-2xl md:text-3xl font-extrabold">Oferta relâmpago</h2>
+        </div>
+        <a href="tudo.html" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-bold text-white border border-white/30 bg-white/10 hover:bg-white/16 transition">
+          Ver todas as ofertas
+        </a>
+      </div>
+
+      <!-- carrossel horizontal -->
+      <div id="cardsScroller" class="mt-6 overflow-x-auto scrollbar-hide">
+        <div class="min-w-full grid grid-flow-col auto-cols-[76%] sm:auto-cols-[46%] md:auto-cols-[32%] gap-5 pb-1">
+          <!-- Card 1 -->
+          <article class="rounded-2xl bg-white text-slate-900 border border-slate-200 shadow-sm overflow-hidden">
+            <img src="assets/celulares/poco-x7-pro.jpg" class="w-full h-44 object-cover"
+                 alt="POCO X7 PRO"
+                 onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+            <div class="p-4">
+              <h3 class="font-bold">POCO X7 PRO</h3>
+              <p class="text-sm text-slate-600">8GB · 256GB · Snapdragon 7s Gen 2</p>
+              <div class="mt-2">
+                <div class="text-xs text-slate-400 line-through">R$ 2.199</div>
+                <div class="text-xl font-extrabold text-blue-700">R$ 1.899</div>
+              </div>
+              <a class="inline-flex w-full justify-center items-center gap-2 mt-3 px-4 py-2.5 rounded-full text-white font-extrabold
+                        border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
+                        bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
+                        hover:brightness-110 transition"
+                 href="https://wa.me/5521976950809?text=Tenho%20interesse%20no%20POCO%20X7%20PRO" target="_blank" rel="noopener">
+                <span class="w-6 h-6 rounded-full grid place-items-center bg-white/20 border border-white/40"></span>
+                Comprar no WhatsApp
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="rounded-2xl bg-white text-slate-900 border border-slate-200 shadow-sm overflow-hidden">
+            <img src="assets/celulares/iphone-13.jpg" class="w-full h-44 object-cover" alt="iPhone 13"
+                 onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+            <div class="p-4">
+              <h3 class="font-bold">iPhone 13</h3>
+              <p class="text-sm text-slate-600">128GB · Tela 6.1"</p>
+              <div class="mt-2">
+                <div class="text-xs text-slate-400 line-through">R$ 3.499</div>
+                <div class="text-xl font-extrabold text-blue-700">R$ 3.299</div>
+              </div>
+              <a class="inline-flex w-full justify-center items-center gap-2 mt-3 px-4 py-2.5 rounded-full text-white font-extrabold
+                        border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
+                        bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
+                        hover:brightness-110 transition"
+                 href="https://wa.me/5521976950809?text=Tenho%20interesse%20no%20iPhone%2013%20128GB" target="_blank" rel="noopener">
+                <span class="w-6 h-6 rounded-full grid place-items-center bg-white/20 border border-white/40"></span>
+                Comprar no WhatsApp
+              </a>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="rounded-2xl bg-white text-slate-900 border border-slate-200 shadow-sm overflow-hidden">
+            <img src="assets/perfumes/dior-sauvage.jpg" class="w-full h-44 object-cover" alt="Dior Sauvage"
+                 onerror="this.onerror=null;this.src='assets/perfumes/fallback-perfume.jpg'">
+            <div class="p-4">
+              <h3 class="font-bold">Dior Sauvage 100ml</h3>
+              <p class="text-sm text-slate-600">Eau de Toilette · Original lacrado</p>
+              <div class="mt-2">
+                <div class="text-xs text-slate-400 line-through">R$ 699</div>
+                <div class="text-xl font-extrabold text-blue-700">R$ 649</div>
+              </div>
+              <a class="inline-flex w-full justify-center items-center gap-2 mt-3 px-4 py-2.5 rounded-full text-white font-extrabold
+                        border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
+                        bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
+                        hover:brightness-110 transition"
+                 href="https://wa.me/5521976950809?text=Tenho%20interesse%20no%20Dior%20Sauvage%20100ml" target="_blank" rel="noopener">
+                <span class="w-6 h-6 rounded-full grid place-items-center bg-white/20 border border-white/40"></span>
+                Comprar no WhatsApp
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ===================== /OFERTA RELÂMPAGO ===================== -->
+
+  <!-- ===================== FAQ ===================== -->
+  <section class="max-w-6xl mx-auto px-4 py-12">
+    <h2 class="text-2xl md:text-3xl font-extrabold mb-6">Perguntas frequentes</h2>
+    <div class="grid md:grid-cols-2 gap-4">
+      <details class="bg-white rounded-xl border border-slate-200 p-4 group open:shadow-sm">
+        <summary class="flex items-center justify-between cursor-pointer">
+          <span class="font-semibold">Os aparelhos têm nota fiscal?</span>
+          <svg class="transition duration-200 group-open:rotate-180" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#64748b" stroke-width="2" stroke-linecap="round"/></svg>
+        </summary>
+        <p class="mt-2 text-slate-600">Sim, todos acompanham NF-e.</p>
+      </details>
+
+      <details class="bg-white rounded-xl border border-slate-200 p-4 group open:shadow-sm">
+        <summary class="flex items-center justify-between cursor-pointer">
+          <span class="font-semibold">Qual a garantia?</span>
+          <svg class="transition duration-200 group-open:rotate-180" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#64748b" stroke-width="2" stroke-linecap="round"/></svg>
+        </summary>
+        <p class="mt-2 text-slate-600">90 dias contra defeitos de fabricação (exceto mau uso).</p>
+      </details>
+
+      <details class="bg-white rounded-xl border border-slate-200 p-4 group open:shadow-sm">
+        <summary class="flex items-center justify-between cursor-pointer">
+          <span class="font-semibold">Posso devolver?</span>
+          <svg class="transition duration-200 group-open:rotate-180" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#64748b" stroke-width="2" stroke-linecap="round"/></svg>
+        </summary>
+        <p class="mt-2 text-slate-600">Devolução em até 7 dias corridos após o recebimento.</p>
+      </details>
+
+      <details class="bg-white rounded-xl border border-slate-200 p-4 group open:shadow-sm">
+        <summary class="flex items-center justify-between cursor-pointer">
+          <span class="font-semibold">Formas de pagamento?</span>
+          <svg class="transition duration-200 group-open:rotate-180" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#64748b" stroke-width="2" stroke-linecap="round"/></svg>
+        </summary>
+        <p class="mt-2 text-slate-600">PIX à vista, cartão até 12x (consulte taxas) e boleto.</p>
+      </details>
+    </div>
+  </section>
+  <!-- ===================== /FAQ ===================== -->
+
+  @@include("_partials/footer.html")
+
+  <!-- FAB WhatsApp -->
+  <a class="fixed right-4 bottom-4 z-50 w-14 h-14 rounded-full grid place-items-center text-white
+            border border-white/35 shadow-[0_12px_28px_rgba(16,185,129,.35)]
+            bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
+            hover:brightness-110"
+     href="https://wa.me/5521976950809?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20ver%20as%20ofertas."
+     target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 32 32" width="22" height="22" fill="white"><path d="M19.11 17.41c-.29-.14-1.7-.84-1.96-.94-.26-.1-.45-.14-.64.14-.19.29-.74.94-.9 1.13-.17.19-.33.22-.61.08-.29-.14-1.21-.45-2.3-1.45-.85-.76-1.43-1.7-1.6-1.98-.17-.29-.02-.45.13-.59.14-.14.29-.33.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.64-1.54-.88-2.1-.23-.55-.47-.48-.64-.48-.17 0-.36-.02-.55-.02s-.5.07-.76.36c-.26.29-1 .98-1 2.39s1.02 2.77 1.16 2.96c.14.19 2 3.05 4.85 4.28.68.29 1.21.46 1.62.59.68.22 1.3.19 1.79.12.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33z"/></svg>
+  </a>
+
+  <!-- Scripts da página -->
+  <script>
+    // Carrossel hero (auto + touch + dots)
+    (function heroCarousel(){
+      const root = document.getElementById('hero');
+      const slides = Array.from(document.querySelectorAll('#heroSlides > li'));
+      const dots = Array.from(root.querySelectorAll('button[aria-label^="Slide"]'));
+      let i = 0, timer = null, touch = {x:0};
+
+      function show(n){
+        i = (n + slides.length) % slides.length;
+        slides.forEach((el, idx) => el.style.opacity = idx === i ? '1' : '0');
+        dots.forEach((d, idx) => d.setAttribute('aria-current', idx === i ? 'true' : 'false'));
+      }
+      function play(){ clearInterval(timer); timer = setInterval(()=>show(i+1), 5000); }
+      dots.forEach((d, idx)=> d.addEventListener('click', ()=>{ show(idx); play(); }));
+      root.addEventListener('touchstart', e => { touch.x = e.touches[0].clientX; }, {passive:true});
+      root.addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - touch.x; if (Math.abs(dx) > 40){ show(i + (dx < 0 ? 1 : -1)); play(); } }, {passive:true});
+      show(0); play();
+    })();
+
+    // Categorias: ver mais/menos
+    (function catsToggle(){
+      const btn = document.getElementById('toggleCats');
+      if(!btn) return;
+      const extras = [...document.querySelectorAll('#catsGrid [data-extra]')];
+      let open = false;
+      const setState = () => {
+        extras.forEach(el => el.classList.toggle('hidden', !open));
+        btn.innerHTML = open ? '<span>Ver menos</span> <span>–</span>' : '<span>Ver mais categorias</span> <span>＋</span>';
+      };
+      setState(); btn.addEventListener('click', ()=>{ open = !open; setState(); });
+    })();
+
+    // Scroller de cards: arraste no desktop
+    (function cardsDrag(){
+      const scroller = document.getElementById('cardsScroller');
+      if(!scroller) return;
+      let isDown=false, startX=0, scrollLeft=0;
+      scroller.addEventListener('mousedown', e=>{ isDown=true; scroller.classList.add('cursor-grabbing'); startX=e.pageX - scroller.offsetLeft; scrollLeft=scroller.scrollLeft; });
+      scroller.addEventListener('mouseleave', ()=>{ isDown=false; scroller.classList.remove('cursor-grabbing'); });
+      scroller.addEventListener('mouseup', ()=>{ isDown=false; scroller.classList.remove('cursor-grabbing'); });
+      scroller.addEventListener('mousemove', e=>{ if(!isDown) return; e.preventDefault(); const x=e.pageX - scroller.offsetLeft; const walk=(x-startX)*1.2; scroller.scrollLeft=scrollLeft - walk; });
+    })();
+  </script>
+</body>
+</html>

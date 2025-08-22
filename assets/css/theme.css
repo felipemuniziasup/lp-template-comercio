@@ -1,0 +1,40 @@
+/* THEME (Nando) — tokens e componentes premium
+   Obs: edite as cores aqui quando quiser mudar a cara do site inteiro. */
+
+:root{
+  --brand-grad: linear-gradient(90deg,#1e1b4b,#1d4ed8,#0891b2);
+  --cta-grad: conic-gradient(from 0deg,#16a34a,#10b981,#06b6d4,#16a34a);
+}
+
+/* barra de políticas */
+.header-bar{ background: var(--brand-grad); }
+.chip{ background: rgba(255,255,255,.15); padding:.25rem .6rem; border-radius:.55rem; }
+.link-white{ text-decoration: underline; text-underline-offset: 4px; color: #fff; opacity:.9 }
+.link-white:hover{ opacity:1 }
+
+/* botões */
+.btn{ font-weight:800; }
+.btn-primary{ background:#0ea5e9; color:#fff; border:1px solid rgba(2,132,199,.25) }
+.btn-primary:hover{ filter: brightness(1.05) }
+.btn-whats{
+  background: var(--cta-grad);
+  color:#fff; border:1px solid rgba(255,255,255,.35);
+  box-shadow:0 12px 28px rgba(16,185,129,.35),inset 0 1px 0 rgba(255,255,255,.35);
+  padding:.65rem 1rem;
+}
+.ico-wa{
+  display:inline-block; width:26px; height:26px; border-radius:999px;
+  background: radial-gradient(circle at 30% 30%,rgba(255,255,255,.6),rgba(255,255,255,.15) 55%,transparent);
+  border:1px solid rgba(255,255,255,.35); box-shadow:inset 0 0 12px rgba(255,255,255,.25),0 3px 10px rgba(0,0,0,.18)
+}
+
+/* FAB WhatsApp */
+.fab-wa{
+  position:fixed; right:16px; bottom:16px; z-index:50; width:58px; height:58px; border-radius:9999px; color:#fff;
+  background: var(--cta-grad);
+  box-shadow:0 12px 28px rgba(16,185,129,.35),inset 0 1px 0 rgba(255,255,255,.35);
+  border:1px solid rgba(255,255,255,.35); display:grid; place-items:center
+}
+.fab-wa:hover{ filter:saturate(115%) brightness(1.03) }
+.fab-wa .ring{ position:absolute; inset:-6px; border-radius:9999px; border:2px solid rgba(255,255,255,.55); animation:pulse 1.8s infinite }
+@keyframes pulse{ 0%{ transform:scale(.9); opacity:.8 } 100%{ transform:scale(1.25); opacity:0 } }

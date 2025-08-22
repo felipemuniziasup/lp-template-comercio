@@ -1,0 +1,50 @@
+<!-- HEADER PREMIUM (Nando) -->
+<header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-white/65 bg-white/90 border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
+    <!-- Logo (sempre volta para a home de forma confiável) -->
+    <a href="index.html" class="flex items-center gap-3 shrink-0" aria-label="Página inicial">
+      <img src="assets/logo-monogram-192.png" alt="Nando Importados" class="h-9 w-9 rounded-xl ring-1 ring-black/5">
+      <img src="assets/logo-wordmark.png" alt="Nando Importados" class="h-6 hidden sm:block">
+    </a>
+
+    <!-- Busca global (desktop) -->
+    <form id="globalSearch" class="hidden md:flex items-center gap-2 flex-1 ms-4">
+      <div class="relative flex-1">
+        <input
+          id="searchInput"
+          type="search"
+          placeholder="Buscar produtos (ex.: iPhone 13, Sauvage)…"
+          class="w-full h-10 ps-10 pe-4 rounded-xl border border-slate-300/80 bg-white
+                 text-[15px] placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400/60 focus:border-sky-400">
+        <svg class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2" width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <circle cx="11" cy="11" r="7" stroke="#64748b" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="#64748b" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <button type="submit" class="btn btn-primary h-10 px-4 rounded-xl">Buscar</button>
+    </form>
+
+    <!-- CTA WhatsApp -->
+    <a href="https://wa.me/5521976950809?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20ver%20as%20ofertas."
+       target="_blank" rel="noopener"
+       class="hidden md:inline-flex btn btn-whats rounded-full">
+      <span class="ico-wa"></span><span>Atendimento imediato</span>
+    </a>
+
+    <!-- Botão Voltar (apenas quando há histórico) -->
+    <button id="btnBack"
+            class="ms-auto md:ms-3 inline-flex md:hidden items-center gap-2 h-10 px-4 rounded-full border border-slate-300/80 bg-white text-slate-700"
+            type="button" aria-label="Voltar" hidden>
+      ← Voltar
+    </button>
+  </div>
+
+  <!-- Barra de políticas (mantida) -->
+  <div class="header-bar text-white">
+    <div class="max-w-6xl mx-auto px-4 py-2 text-[13px] sm:text-sm flex flex-wrap items-center justify-center gap-3">
+      <span class="chip">🧾 Nota fiscal</span>
+      <span class="chip">🛡️ Garantia 90 dias</span>
+      <span class="chip">↩️ Devolução em 7 dias</span>
+      <a href="condicoes.html" class="link-white">Políticas</a>
+    </div>
+  </div>
+</header>

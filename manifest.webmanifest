@@ -1,0 +1,21 @@
+{
+  "name": "Nando Importados",
+  "short_name": "Nando",
+  "description": "Catálogo de celulares e perfumes importados.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "assets/logo-monogram-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/logo-monogram-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

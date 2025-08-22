@@ -1,0 +1,12 @@
+{
+  "brand_name": "Nando Importados",
+  "colors": {
+    "primary": "#0F172A",
+    "accentA": "#0EA5E9",
+    "accentB": "#22C55E"
+  },
+  "fonts": {
+    "heading": "Inter, Segoe UI, Roboto, Arial, sans-serif",
+    "body": "Inter, Segoe UI, Roboto, Arial, sans-serif"
+  }
+}
