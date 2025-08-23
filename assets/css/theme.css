@@ -1,5 +1,6 @@
 /* ===========================
-   Nando Importados — theme.css
+   Nando Importados — theme.css (v2)
+   WhatsApp FAB: ícone maior + halo forte e chamativo
    =========================== */
 
 /* Base */
@@ -8,35 +9,20 @@
 *::after { box-sizing: border-box; }
 
 html, body { height: 100%; }
-
 img, svg { display: block; max-width: 100%; }
-
-/* Tipografia mais nítida */
 html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
-/* Container utilitário — quando precisar centralizar com max-width */
-.container-6xl {
-  max-width: 72rem; /* ~ 1152px (tailwind max-w-6xl) */
-  margin: 0 auto;
-  padding-inline: 1rem;
-}
+.container-6xl { max-width: 72rem; margin: 0 auto; padding-inline: 1rem; }
 
 /* Esconde scrollbars em carrosséis horizontais */
-.scrollbar-hide {
-  -ms-overflow-style: none; /* IE/Edge */
-  scrollbar-width: none;    /* Firefox */
-}
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 
-/* Details/summary (FAQ) – remove marcador default */
-details > summary {
-  list-style: none;
-}
-details > summary::-webkit-details-marker {
-  display: none;
-}
+/* Details/summary (FAQ) */
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
 
-/* Pequena sombra suave para cartões brancos (quando não usar utilitários) */
+/* Cartão branco suave */
 .card-soft {
   border: 1px solid rgba(15, 23, 42, .06);
   box-shadow: 0 8px 24px rgba(2, 6, 23, .06);
@@ -45,104 +31,144 @@ details > summary::-webkit-details-marker {
 }
 
 /* ===========================
-   FAB WhatsApp (fixo à direita)
-   - Mantém o círculo do mesmo tamanho (56px)
-   - Ícone maior (28px)
-   - Halo/pulso suave
-   - Sem necessidade de alterar o HTML
+   FAB WhatsApp — canto inferior direito
+   - Círculo: mesmo tamanho (56px)
+   - Ícone: MAIOR (32px) para chamar atenção
+   - Halo: mais forte + animação de “ripple”
    =========================== */
 
 /* Seleciona o seu FAB atual pelo aria-label já existente */
 a[aria-label="Falar no WhatsApp"] {
   position: fixed !important;
-  right: 1rem;    /* ~ right-4 */
-  bottom: 1rem;   /* ~ bottom-4 */
-  width: 56px;    /* ~ w-14  */
-  height: 56px;   /* ~ h-14  */
+  right: 1rem;
+  bottom: 1rem;
+  width: 56px;   /* mantém tamanho da bolinha */
+  height: 56px;  /* mantém tamanho da bolinha */
   border-radius: 9999px;
-  z-index: 50;    /* sobrepõe quase tudo */
+  z-index: 50;
   display: grid;
   place-items: center;
-  /* mantém suas classes Tailwind para cores/gradiente/sombra/hover */
 }
 
-/* Ícone maior dentro da mesma bolinha */
+/* Ícone MAIOR */
 a[aria-label="Falar no WhatsApp"] svg {
-  width: 28px;    /* maior que o padrão */
-  height: 28px;
+  width: 32px;   /* antes 28px */
+  height: 32px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.25));
+  transition: transform .18s ease;
 }
 
-/* Halo pulsante (efeito glow) */
+/* Efeito “pop” ao passar o mouse/toque */
+a[aria-label="Falar no WhatsApp"]:hover svg,
+a[aria-label="Falar no WhatsApp"]:active svg {
+  transform: scale(1.06);
+}
+
+/* Halo principal mais forte (glow) */
 a[aria-label="Falar no WhatsApp"]::before {
   content: "";
   position: absolute;
-  inset: -10px;                /* cria um anel em volta da bolinha */
+  inset: -14px;                 /* anel maior ao redor */
   border-radius: inherit;
   pointer-events: none;
   background: radial-gradient(
     circle,
-    rgba(16, 185, 129, .35) 0%,
-    rgba(16, 185, 129, .25) 35%,
-    rgba(16, 185, 129, .12) 60%,
-    transparent 70%
+    rgba(16, 185, 129, .60) 0%,  /* reforço no centro */
+    rgba(16, 185, 129, .35) 36%,
+    rgba(16, 185, 129, .18) 58%,
+    transparent 72%
   );
-  opacity: .85;
-  transform: scale(0.92);
-  animation: ni-fab-ring 2.2s ease-out infinite;
-  filter: blur(0.3px);         /* leve difusão para suavizar */
+  opacity: .95;
+  transform: scale(0.98);
+  animation: ni-fab-glow 1.8s ease-in-out infinite;
+  filter: blur(0.5px);
 }
 
-@keyframes ni-fab-ring {
-  0%   { transform: scale(0.90); opacity: .65; }
-  45%  { transform: scale(1.04); opacity: .95; }
-  100% { transform: scale(0.90); opacity: .65; }
+/* “Ripple” externo que expande e some (círculo de luz animado) */
+a[aria-label="Falar no WhatsApp"]::after {
+  content: "";
+  position: absolute;
+  width: 56px;                 /* inicia colado à bolinha */
+  height: 56px;
+  border-radius: 9999px;
+  pointer-events: none;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, .55);
+  animation: ni-fab-ripple 1.8s ease-out infinite;
 }
 
-/* Respeita usuários com redução de movimento */
+/* Keyframes */
+@keyframes ni-fab-glow {
+  0%   { transform: scale(0.96); opacity: .80; }
+  50%  { transform: scale(1.02); opacity: 1;   }
+  100% { transform: scale(0.96); opacity: .80; }
+}
+
+@keyframes ni-fab-ripple {
+  0%   { transform: scale(1);   box-shadow: 0 0 0 0 rgba(16,185,129,.55); opacity: .9; }
+  60%  { transform: scale(1.38); box-shadow: 0 0 0 12px rgba(16,185,129,.18); opacity: .35; }
+  100% { transform: scale(1.55); box-shadow: 0 0 0 18px rgba(16,185,129,0); opacity: 0; }
+}
+
+/* Foco (acessibilidade) */
+a[aria-label="Falar no WhatsApp"]:focus-visible {
+  outline: 3px solid rgba(16,185,129,.85);
+  outline-offset: 4px;
+}
+
+/* Respeita redução de movimento */
 @media (prefers-reduced-motion: reduce) {
-  a[aria-label="Falar no WhatsApp"]::before {
+  a[aria-label="Falar no WhatsApp"]::before,
+  a[aria-label="Falar no WhatsApp"]::after,
+  a[aria-label="Falar no WhatsApp"] svg {
     animation: none;
+    transition: none;
+  }
+  a[aria-label="Falar no WhatsApp"]::before {
     opacity: .55;
+  }
+  a[aria-label="Falar no WhatsApp"]::after {
+    display: none;
   }
 }
 
-/* ===========================
-   Header / busca (toques leves)
-   =========================== */
-
-/* Deixa inputs de busca com “glass” quando não for Tailwind puro */
-.search-glass {
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.6));
-  border: 1px solid rgba(15, 23, 42, .06);
-  box-shadow:
-    0 1px 0 rgba(255,255,255,.8) inset,
-    0 10px 30px rgba(2, 6, 23, .06);
-  border-radius: 1.5rem;
+/* Ajuste para telas muito pequenas */
+@media (max-width: 420px) {
+  a[aria-label="Falar no WhatsApp"] { right: 12px; bottom: 12px; width: 52px; height: 52px; }
+  a[aria-label="Falar no WhatsApp"] svg { width: 30px; height: 30px; }
 }
 
-/* Campo de busca: placeholder um pouco mais nítido */
+/* ===========================
+   Header / Busca (glass)
+   =========================== */
+.search-glass {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,.68));
+  border: 1px solid rgba(15, 23, 42, .08);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.85) inset,
+    0 14px 40px rgba(2, 6, 23, .08);
+  border-radius: 1.5rem;
+}
 .search-glass::placeholder { color: rgba(15, 23, 42, .50); }
 
 /* ===========================
-   Dots do hero (seguro caso queira realçar)
+   Dots do hero (se usar .hero-dot)
    =========================== */
 .hero-dot {
   width: 10px; height: 10px; border-radius: 9999px;
   background: rgba(255,255,255,.7);
-  transition: transform .2s ease, background .2s ease;
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
 }
 .hero-dot[aria-current="true"] {
-  transform: scale(1.25);
+  transform: scale(1.28);
   background: #fff;
+  box-shadow: 0 0 0 4px rgba(255,255,255,.35);
 }
 
 /* ===========================
-   Utilitários visuais
+   Imagem de produto: fallback
    =========================== */
-
-/* Borda sutil para imagens de produto quando não carregarem */
 .img-fallback {
   object-fit: contain !important;
   padding: 16px !important;
@@ -151,27 +177,10 @@ a[aria-label="Falar no WhatsApp"]::before {
   border-radius: 0.75rem;
 }
 
-/* Botões com foco mais visível (acessibilidade) */
+/* Botões com foco visível (acessibilidade) */
 .btn:focus-visible,
 a:focus-visible {
-  outline: 2px solid rgba(59, 130, 246, .9); /* azul */
+  outline: 2px solid rgba(59, 130, 246, .9);
   outline-offset: 3px;
   border-radius: 0.75rem;
-}
-
-/* ===========================
-   Responsivo fino
-   =========================== */
-@media (max-width: 420px) {
-  /* Ajuste do FAB para telas muito pequenas */
-  a[aria-label="Falar no WhatsApp"] {
-    right: 12px;
-    bottom: 12px;
-    width: 52px;
-    height: 52px;
-  }
-  a[aria-label="Falar no WhatsApp"] svg {
-    width: 26px;
-    height: 26px;
-  }
 }
