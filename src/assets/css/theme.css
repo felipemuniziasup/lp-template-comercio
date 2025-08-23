@@ -1,121 +1,265 @@
-/* ===============================
-   THEME.CSS – estilo global do site (premium)
-   =============================== */
+/* ===================================================================
+   THEME.CSS – Estilo global adicional (convive bem com Tailwind)
+   Projeto: Nando Importados
+   Observação: mantemos a filosofia “utilitário primeiro”.
+   Este arquivo só cobre o que Tailwind não resolve bem sozinho
+   (microdetalhes visuais, animações, helpers e pequenos toques).
+   =================================================================== */
 
-/* Base / Reset */
-* { box-sizing: border-box; }
-html, body {
-  margin: 0; padding: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
-  color: #0f172a;
-  background: #f8fafc;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* -------------------------
+   Base / resets suaves
+   ------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
   scroll-behavior: smooth;
 }
-img { max-width: 100%; display: block; }
-a { color: inherit; text-decoration: none; }
 
-/* Containers utilitárias */
-.container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
-
-/* ===============================
-   HEADER / NAV (vidro sutil)
-   =============================== */
-header {
-  position: sticky; top: 0; z-index: 50;
-  background: rgba(255,255,255,.75);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(15,23,42,.06);
+body {
+  margin: 0;
+  color: #1e293b;             /* slate-800 */
+  background: linear-gradient(#f8fafc, #ffffff);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-header nav a { font-weight: 600; }
-header nav a:hover { color: #2563eb; }
 
-/* ===============================
-   HERO / CAROUSEL
-   =============================== */
-#hero { position: relative; }
-#heroSlides li { transition: opacity .7s ease-in-out; }
-#heroSlides img { object-fit: cover; width: 100%; height: 100%; }
-/* dots do hero */
-#hero button[aria-current="true"] { transform: scale(1.2); }
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
 
-/* ===============================
-   CARDS/CATEGORIAS (refino leve)
-   =============================== */
-.card {
-  background: #fff;
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color .15s ease, opacity .15s ease, filter .15s ease;
+}
+
+/* Seleção de texto */
+::selection { background: rgba(99,102,241,.2); }
+
+/* -------------------------
+   Variáveis de cor (opcional)
+   ------------------------- */
+:root{
+  --brand-1: #0ea5e9;   /* sky-500  */
+  --brand-2: #10b981;   /* emerald-500 */
+  --indigo-900: #1e1b4b;
+  --blue-800:  #1e40af;
+  --cyan-700:  #0e7490;
+  --shadow-soft: 0 10px 30px rgba(2,6,23,.12);
+  --ring-subtle: 0 0 0 1px rgba(255,255,255,.15);
+}
+
+/* -------------------------
+   Helpers utilitários
+   ------------------------- */
+
+/* Efeito “glass” leve para containers brancos translúcidos */
+.glass {
+  background: rgba(255,255,255,.72);
+  backdrop-filter: saturate(160%) blur(12px);
+  -webkit-backdrop-filter: saturate(160%) blur(12px);
+  box-shadow: var(--shadow-soft);
   border: 1px solid rgba(2,6,23,.06);
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(2,6,23,.06);
-  overflow: hidden;
-  transition: transform .15s ease, box-shadow .15s ease;
-}
-.card:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(2,6,23,.08); }
-
-/* ===============================
-   FOOTER (gradiente elegante)
-   =============================== */
-.site-footer {
-  background: linear-gradient(90deg, #0f172a, #1e293b 35%, #334155);
-  color: #e2e8f0;
-  padding: 3rem 0 1.5rem;
-}
-.site-footer .brand {
-  display: grid; gap: .6rem; margin-bottom: 1.25rem;
-}
-.site-footer .brand img { width: 220px; height: auto; filter: drop-shadow(0 6px 18px rgba(0,0,0,.24)); }
-.site-footer .brand p { margin: 0; opacity: .9; }
-
-.site-footer .cols {
-  display: grid; grid-template-columns: repeat(3, minmax(0,1fr));
-  gap: 1.5rem; margin: 1rem 0 1.25rem;
-}
-.site-footer h4 { margin: 0 0 .5rem; font-size: 1rem; color: #fff; }
-.site-footer ul { list-style: none; margin: 0; padding: 0; }
-.site-footer li { margin: .4rem 0; }
-.site-footer a { color: #93c5fd; font-weight: 500; }
-.site-footer a:hover { color: #fff; }
-
-.site-footer .divider {
-  height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
-  margin: .75rem 0 1rem;
-}
-.site-footer .copy {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 1rem; font-size: .95rem; opacity: .9;
-}
-@media (max-width: 860px) {
-  .site-footer .cols { grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 640px) {
-  .site-footer .cols { grid-template-columns: 1fr; }
-  .site-footer .copy { flex-direction: column; text-align: center; }
 }
 
-/* ===== FAB WhatsApp (fixo, com glow) ===== */
-.fab-whatsapp{
-  position: fixed !important;
-  right: 1.2rem !important;
-  bottom: 1.2rem !important;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: #25D366; /* verde WhatsApp */
+/* Gradiente padrão do projeto (mesma linha visual do hero) */
+.bg-brand-gradient {
+  background-image: linear-gradient(90deg, var(--indigo-900), var(--blue-800), var(--cyan-700));
+}
+
+/* Botão com gradiente conic (usado em CTAs) */
+.btn-conic {
+  background: conic-gradient(at 50% 50%, #16a34a, #10b981, #06b6d4, #16a34a);
   color: #fff;
-  font-size: 34px; /* ícone grande */
-  border: 2px solid #fff;
-  box-shadow: 0 6px 24px rgba(0,0,0,.25);
-  z-index: 9999;
-  animation: fabGlow 2s ease-in-out infinite;
-  transition: transform .2s ease-in-out, filter .2s ease-in-out;
+  border: 1px solid rgba(255,255,255,.3);
+  box-shadow: 0 12px 28px rgba(16,185,129,.35);
 }
-.fab-whatsapp:hover{ transform: scale(1.08); filter: brightness(1.06); }
 
-@keyframes fabGlow{
-  0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, .60), 0 8px 22px rgba(0,0,0,.25); }
-  40%  { box-shadow: 0 0 18px 12px rgba(37, 211, 102, .18), 0 8px 22px rgba(0,0,0,.25); }
-  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0), 0 8px 22px rgba(0,0,0,.25); }
+/* Sombra suave padrão para cards */
+.shadow-soft { box-shadow: var(--shadow-soft); }
+
+/* Esconder scrollbars de containers horizontais (cardsScroller) */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* -------------------------
+   Header / Navegação
+   ------------------------- */
+header.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(2,6,23,.06);
+}
+
+/* Busca (aprimora o campo dentro do header) */
+.header-search input[type="search"]{
+  outline: none;
+  background: rgba(255,255,255,.9);
+  border: 1px solid rgba(2,6,23,.08);
+  box-shadow: inset 0 0 0 1px rgba(2,6,23,.02), var(--shadow-soft);
+  transition: box-shadow .2s ease, transform .15s ease;
+}
+.header-search input[type="search"]::placeholder{
+  color: rgb(100 116 139 / .85); /* slate-500 */
+}
+.header-search input[type="search"]:focus{
+  box-shadow: 0 0 0 4px rgba(14,165,233,.15), var(--shadow-soft);
+}
+
+/* Botão “Buscar” arredondado */
+.header-search .btn-buscar {
+  border: 1px solid rgba(255,255,255,.35);
+  box-shadow: 0 12px 24px rgba(2,6,23,.15);
+}
+
+/* -------------------------
+   Top bar (pílulas “nota fiscal / garantia”)
+   ------------------------- */
+.top-pills .pill{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.35rem .8rem;border-radius:.75rem;
+  color:#fff;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow: inset var(--ring-subtle);
+}
+
+/* -------------------------
+   Hero / Carrossel
+   ------------------------- */
+#hero { position: relative; user-select:none; }
+#heroSlides { position: relative; }
+#heroSlides > li { transition: opacity .7s ease-in-out; }
+#heroSlides img { object-fit: cover; }
+
+/* Dots mais responsivos (quando não usamos Tailwind para isso) */
+#hero .hero-dot { 
+  width:10px;height:10px;border-radius:9999px;background:rgba(255,255,255,.7);
+}
+#hero .hero-dot[aria-current="true"]{ width:14px;height:14px;background:#fff; }
+
+/* -------------------------
+   Categorias (cards quadrados)
+   ------------------------- */
+.category-tile{
+  border-radius: 1rem;
+  border: 1px solid rgba(2,6,23,.06);
+  box-shadow: 0 10px 20px rgba(2,6,23,.06);
+  transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+}
+.category-tile:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(2,6,23,.10);
+  filter: saturate(110%);
+}
+
+/* -------------------------
+   Ofertas (carrossel horizontal)
+   ------------------------- */
+#cardsScroller{
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+}
+.offer-card{
+  scroll-snap-align: start;
+  border: 1px solid rgba(2,6,23,.06);
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #fff;
+  transition: transform .15s ease, box-shadow .2s ease;
+}
+.offer-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(2,6,23,.12);
+}
+
+/* Preço: linha com valor riscado mais sutil */
+.price-strike{
+  color: rgb(100 116 139 / .75);
+  text-decoration: line-through;
+}
+
+/* -------------------------
+   FAQ (details/summary)
+   ------------------------- */
+.faq details{
+  border: 1px solid rgba(2,6,23,.08);
+  border-radius: .75rem;
+  background: #fff;
+  transition: box-shadow .2s ease, border-color .2s ease, transform .15s ease;
+}
+.faq details[open]{
+  box-shadow: 0 10px 24px rgba(2,6,23,.08);
+  border-color: rgba(2,6,23,.12);
+}
+.faq summary{
+  list-style: none;
+}
+.faq summary::-webkit-details-marker { display: none; }
+
+/* -------------------------
+   Footer (ajustes sutis)
+   ------------------------- */
+footer .payment-logos img{
+  height: 26px; width:auto; opacity:.9; filter: saturate(80%);
+}
+footer .payment-logos img:hover{ opacity:1; filter:none; }
+
+/* -------------------------
+   Animações utilitárias
+   ------------------------- */
+
+/* brilha sutil (para botões/links, se desejar aplicar) */
+@keyframes glow {
+  0% { box-shadow: 0 0 0 0 rgba(16,185,129,.35); }
+  70% { box-shadow: 0 0 30px 12px rgba(16,185,129,0); }
+  100%{ box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+}
+
+/* aparição suave */
+@keyframes floatIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* -------------------------
+   Responsivo
+   ------------------------- */
+@media (min-width: 768px){
+  .header-search input[type="search"]{ min-width: 420px; }
+  .category-tile:hover{ transform: translateY(-3px); }
+}
+
+/* -------------------------
+   Modo redução de movimento
+   ------------------------- */
+@media (prefers-reduced-motion: reduce){
+  html { scroll-behavior: auto; }
+  #heroSlides > li { transition: none; }
+  .offer-card, .category-tile { transition: none; }
+}
+
+/* -------------------------
+   Impressão (bem simples)
+   ------------------------- */
+@media print{
+  header, .top-pills, #hero, .faq svg, .btn-conic { display: none !important; }
+  a::after { content:" (" attr(href) ")"; font-size: 12px; color:#64748b; }
 }
