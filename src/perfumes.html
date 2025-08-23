@@ -1,89 +1,376 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <!-- @@include head.html -->
+@@include("_partials/head.html")
 
-  <body class="bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-800 antialiased">
-    <!-- @@include header.html -->
+<body class="bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-800 antialiased">
 
-    <!-- Hero da página -->
-    <section class="relative bg-gradient-to-r from-blue-700 via-indigo-700 to-sky-600 text-white">
-      <div class="max-w-6xl mx-auto px-4 py-16 text-center">
-        <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Celulares Importados</h1>
-        <p class="text-white/80 max-w-2xl mx-auto">
-          Modelos originais, novos e seminovos, com nota fiscal e garantia de 90 dias.
-        </p>
+  @@include("_partials/header.html")
+
+  <!-- ===================== HERO PERFUMES ===================== -->
+  <section class="relative overflow-hidden bg-brand-gradient text-white">
+    <div class="max-w-6xl mx-auto px-4 py-10 md:py-14">
+      <nav class="text-sm text-white/80 mb-3">
+        <a href="index.html" class="hover:text-white">Início</a> <span class="opacity-70">/</span>
+        <span class="text-white font-medium">Perfumes</span>
+      </nav>
+      <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">Perfumes</h1>
+      <p class="mt-3 max-w-2xl text-white/90">
+        Importados originais, lacrados e com garantia. Encontre seu próximo perfume por marca, gênero ou concentração.
+      </p>
+
+      <!-- CTA rápido -->
+      <div class="mt-5">
+        <a data-wa
+           class="inline-flex items-center gap-2 px-5 py-3 rounded-full text-white font-extrabold
+                  border border-white/25 shadow-[0_12px_28px_rgba(16,185,129,.35)]
+                  bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
+                  hover:brightness-110 transition">
+          <span class="w-7 h-7 rounded-full grid place-items-center bg-white/20 border border-white/30">
+            <svg viewBox="0 0 32 32" width="16" height="16" fill="white"><path d="M19.11 17.41c-.29-.14-1.7-.84-1.96-.94-.26-.1-.45-.14-.64.14-.19.29-.74.94-.9 1.13-.17.19-.33.22-.61.08-.29-.14-1.21-.45-2.3-1.45-.85-.76-1.43-1.7-1.6-1.98-.17-.29-.02-.45.13-.59.14-.14.29-.33.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.64-1.54-.88-2.1-.23-.55-.47-.48-.64-.48-.17 0-.36-.02-.55-.02s-.5.07-.76.36c-.26.29-1 .98-1 2.39s1.02 2.77 1.16 2.96c.14.19 2 3.05 4.85 4.28.68.29 1.21.46 1.62.59.68.22 1.3.19 1.79.12.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33z"/></svg>
+          </span>
+          Ver ofertas no WhatsApp
+        </a>
       </div>
-    </section>
+    </div>
+  </section>
+  <!-- ===================== /HERO ===================== -->
 
-    <!-- Lista de celulares -->
-    <main class="max-w-6xl mx-auto px-4 py-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Produto 1 -->
-      <article class="bg-white rounded-2xl shadow hover:shadow-lg overflow-hidden border border-slate-200 transition">
-        <img src="assets/celulares/poco-x7-pro.jpg" alt="POCO X7 PRO" class="w-full h-52 object-cover"
-             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+  <!-- ===================== BARRA DE FILTROS (STICKY) ===================== -->
+  <section class="bg-white/75 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-slate-200 sticky top-14 z-40">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center gap-3">
+      <!-- Busca -->
+      <div class="relative flex-1 min-w-[220px]">
+        <input id="search"
+               class="w-full rounded-xl border border-slate-300/70 bg-white px-4 py-2.5 pr-9 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+               type="search" placeholder="Buscar por nome, marca, notas… (ex: Sauvage, EDT, baunilha)">
+        <svg class="absolute right-3 top-2.5 opacity-60" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m21 21-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="#334155" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+
+      <!-- Gênero -->
+      <div class="flex flex-wrap gap-2">
+        <button class="chip active" data-gender="all">Todos</button>
+        <button class="chip" data-gender="masculino">Masculinos</button>
+        <button class="chip" data-gender="feminino">Femininos</button>
+        <button class="chip" data-gender="unissex">Unissex</button>
+      </div>
+
+      <!-- Marca -->
+      <div>
+        <select id="brand" class="rounded-xl border border-slate-300/70 bg-white px-3 py-2 text-sm">
+          <option value="all">Todas as marcas</option>
+          <option value="dior">Dior</option>
+          <option value="versace">Versace</option>
+          <option value="chanel">Chanel</option>
+          <option value="paco">Paco Rabanne</option>
+          <option value="ysl">YSL</option>
+          <option value="lancome">Lancôme</option>
+          <option value="carolina">Carolina Herrera</option>
+        </select>
+      </div>
+
+      <!-- Ordenação -->
+      <div class="ml-auto">
+        <select id="sort" class="rounded-xl border border-slate-300/70 bg-white px-3 py-2 text-sm">
+          <option value="featured">Destaques</option>
+          <option value="price-asc">Menor preço</option>
+          <option value="price-desc">Maior preço</option>
+          <option value="newest">Mais novos</option>
+        </select>
+      </div>
+    </div>
+  </section>
+  <!-- ===================== /FILTROS ===================== -->
+
+  <!-- ===================== GRID DE PRODUTOS ===================== -->
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="mb-4 text-sm text-slate-600">
+      <span id="countVisible">0</span> perfume(s) encontrado(s)
+      · <a href="tudo.html" class="text-blue-700 underline underline-offset-2">Ver catálogo completo</a>
+    </div>
+
+    <div id="gridProdutos" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- ======= CARDS ======= -->
+
+      <!-- Dior Sauvage EDT -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+               data-brand="dior" data-gender="masculino" data-price="649" data-new="2024-04-01"
+               data-search="dior sauvage eau de toilette edt 100ml masculino fresco amadeirado">
+        <img src="assets/perfumes/dior-sauvage.jpg" alt="Dior Sauvage EDT 100ml"
+             class="w-full h-52 object-cover"
+             onerror="this.onerror=null;this.src='assets/perfumes/fallback-perfume.jpg'">
         <div class="p-5">
-          <h2 class="font-bold text-lg">POCO X7 PRO</h2>
-          <p class="text-sm text-slate-600">8GB · 256GB · Snapdragon 7s Gen 2</p>
+          <h2 class="font-bold text-lg">Dior Sauvage EDT 100ml</h2>
+          <p class="text-sm text-slate-600">Masculino · Fresco amadeirado</p>
           <div class="mt-3">
-            <div class="text-xs text-slate-400 line-through">R$ 2.199</div>
-            <div class="text-xl font-extrabold text-blue-700">R$ 1.899</div>
+            <div class="price-strike text-xs">R$ 699</div>
+            <div class="text-xl font-extrabold text-blue-700">R$ 649</div>
           </div>
-          <a href="https://wa.me/5521976950809?text=Tenho%20interesse%20no%20POCO%20X7%20PRO"
-             target="_blank" rel="noopener"
-             class="mt-4 inline-flex w-full justify-center items-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold
-                    border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
-                    bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
-                    hover:brightness-110 transition">
-            Comprar no WhatsApp
-          </a>
+          <a class="btn-wa mt-4 w-full" data-wa-product="Dior Sauvage EDT 100ml">Falar no WhatsApp</a>
         </div>
       </article>
 
-      <!-- Produto 2 -->
-      <article class="bg-white rounded-2xl shadow hover:shadow-lg overflow-hidden border border-slate-200 transition">
-        <img src="assets/celulares/iphone-13.jpg" alt="iPhone 13" class="w-full h-52 object-cover"
-             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+      <!-- Versace Dylan Blue -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+               data-brand="versace" data-gender="masculino" data-price="549" data-new="2024-03-12"
+               data-search="versace dylan blue 100ml masculino fougere moderno">
+        <img src="assets/perfumes/versace-dylan-blue.jpg" alt="Versace Dylan Blue 100ml"
+             class="w-full h-52 object-cover"
+             onerror="this.onerror=null;this.src='assets/perfumes/fallback-perfume.jpg'">
         <div class="p-5">
-          <h2 class="font-bold text-lg">iPhone 13</h2>
-          <p class="text-sm text-slate-600">128GB · Tela 6.1"</p>
+          <h2 class="font-bold text-lg">Versace Dylan Blue 100ml</h2>
+          <p class="text-sm text-slate-600">Masculino · Aromático</p>
           <div class="mt-3">
-            <div class="text-xs text-slate-400 line-through">R$ 3.499</div>
-            <div class="text-xl font-extrabold text-blue-700">R$ 3.299</div>
+            <div class="price-strike text-xs">R$ 599</div>
+            <div class="text-xl font-extrabold text-blue-700">R$ 549</div>
           </div>
-          <a href="https://wa.me/5521976950809?text=Tenho%20interesse%20no%20iPhone%2013%20128GB"
-             target="_blank" rel="noopener"
-             class="mt-4 inline-flex w-full justify-center items-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold
-                    border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
-                    bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
-                    hover:brightness-110 transition">
-            Comprar no WhatsApp
-          </a>
+          <a class="btn-wa mt-4 w-full" data-wa-product="Versace Dylan Blue 100ml">Falar no WhatsApp</a>
         </div>
       </article>
 
-      <!-- Produto 3 -->
-      <article class="bg-white rounded-2xl shadow hover:shadow-lg overflow-hidden border border-slate-200 transition">
-        <img src="assets/celulares/galaxy-a34.jpg" alt="Galaxy A34" class="w-full h-52 object-cover"
-             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+      <!-- Bleu de Chanel -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+               data-brand="chanel" data-gender="masculino" data-price="1099" data-new="2024-01-30"
+               data-search="bleu de chanel eau de parfum edp 100ml masculino amadeirado citrico">
+        <img src="assets/perfumes/bleu-de-chanel.jpg" alt="Bleu de Chanel EDP 100ml"
+             class="w-full h-52 object-cover"
+             onerror="this.onerror=null;this.src='assets/perfumes/fallback-perfume.jpg'">
         <div class="p-5">
-          <h2 class="font-bold text-lg">Galaxy A34</h2>
-          <p class="text-sm text-slate-600">128GB · Novo lacrado</p>
+          <h2 class="font-bold text-lg">Bleu de Chanel EDP 100ml</h2>
+          <p class="text-sm text-slate-600">Masculino · Amadeirado</p>
           <div class="mt-3">
-            <div class="text-xs text-slate-400 line-through">R$ 1.699</div>
-            <div class="text-xl font-extrabold text-blue-700">R$ 1.499</div>
+            <div class="price-strike text-xs">R$ 1.199</div>
+            <div class="text-xl font-extrabold text-blue-700">R$ 1.099</div>
           </div>
-          <a href="https://wa.me/5521976950809?text=Tenho%20interesse%20no%20Galaxy%20A34"
-             target="_blank" rel="noopener"
-             class="mt-4 inline-flex w-full justify-center items-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold
-                    border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
-                    bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
-                    hover:brightness-110 transition">
-            Comprar no WhatsApp
-          </a>
+          <a class="btn-wa mt-4 w-full" data-wa-product="Bleu de Chanel EDP 100ml">Falar no WhatsApp</a>
         </div>
       </article>
-    </main>
 
-    <!-- @@include footer.html -->
-  </body>
+      <!-- 1 Million -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+               data-brand="paco" data-gender="masculino" data-price="499" data-new="2024-02-20"
+               data-search="paco rabanne 1 million 100ml masculino doce especiado">
+        <img src="assets/perfumes/one-million.jpg" alt="1 Million 100ml"
+             class="w-full h-52 object-cover"
+             onerror="this.onerror=null;this.src='assets/perfumes/fallback-perfume.jpg'">
+        <div class="p-5">
+          <h2 class="font-bold text-lg">1 Million 100ml</h2>
+          <p class="text-sm text-slate-600">Masculino · Especiado</p>
+          <div class="mt-3">
+            <div class="price-strike text-xs">R$ 559</div>
+            <div class="text-xl font-extrabold text-blue-700">R$ 499</div>
+          </div>
+          <a class="btn-wa mt-4 w-full" data-wa-product="1 Million 100ml">Falar no WhatsApp</a>
+        </div>
+      </article>
+
+      <!-- YSL Libre -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+               data-brand="ysl" data-gender="feminino" data-price="799" data-new="2024-03-22"
+               data-search="ysl libre eau de parfum edp 90ml feminino floral baunilha lavanda">
+        <img src="assets/perfumes/ysl-libre.jpg" alt="YSL Libre EDP 90ml"
+             class="w-full h-52 object-cover"
+             onerror="this.onerror=null;this.src='assets/perfumes/fallback-perfume.jpg'">
+        <div class="p-5">
+          <h2 class="font-bold text-lg">YSL Libre EDP 90ml</h2>
+          <p class="text-sm text-slate-600">Feminino · Floral</p>
+          <div class="mt-3">
+            <div class="price-strike text-xs">R$ 869</div>
+            <div class="text-xl font-extrabold text-blue-700">R$ 799</div>
+          </div>
+          <a class="btn-wa mt-4 w-full" data-wa-product="YSL Libre EDP 90ml">Falar no WhatsApp</a>
+        </div>
+      </article>
+
+      <!-- Lancôme La Vie Est Belle -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+               data-brand="lancome" data-gender="feminino" data-price="729" data-new="2024-04-18"
+               data-search="lancome la vie est belle 100ml feminino gourmand floral baunilha">
+        <img src="assets/perfumes/la-vie-est-belle.jpg" alt="La Vie Est Belle 100ml"
+             class="w-full h-52 object-cover"
+             onerror="this.onerror=null;this.src='assets/perfumes/fallback-perfume.jpg'">
+        <div class="p-5">
+          <h2 class="font-bold text-lg">La Vie Est Belle 100ml</h2>
+          <p class="text-sm text-slate-600">Feminino · Floral gourmand</p>
+          <div class="mt-3">
+            <div class="price-strike text-xs">R$ 789</div>
+            <div class="text-xl font-extrabold text-blue-700">R$ 729</div>
+          </div>
+          <a class="btn-wa mt-4 w-full" data-wa-product="La Vie Est Belle 100ml">Falar no WhatsApp</a>
+        </div>
+      </article>
+
+      <!-- 212 VIP Rosé -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+               data-brand="carolina" data-gender="feminino" data-price="519" data-new="2024-01-10"
+               data-search="carolina herrera 212 vip rose 80ml feminino floral frutado">
+        <img src="assets/perfumes/212-vip-rose.jpg" alt="212 VIP Rosé 80ml"
+             class="w-full h-52 object-cover"
+             onerror="this.onerror=null;this.src='assets/perfumes/fallback-perfume.jpg'">
+        <div class="p-5">
+          <h2 class="font-bold text-lg">212 VIP Rosé 80ml</h2>
+          <p class="text-sm text-slate-600">Feminino · Floral frutado</p>
+          <div class="mt-3">
+            <div class="price-strike text-xs">R$ 559</div>
+            <div class="text-xl font-extrabold text-blue-700">R$ 519</div>
+          </div>
+          <a class="btn-wa mt-4 w-full" data-wa-product="212 VIP Rosé 80ml">Falar no WhatsApp</a>
+        </div>
+      </article>
+
+      <!-- ======= /CARDS ======= -->
+    </div>
+
+    <!-- Vazio -->
+    <div id="emptyState" class="hidden mt-10 text-center text-slate-600">
+      <div class="inline-block px-4 py-2 rounded-full bg-slate-100 text-slate-700 font-medium">
+        Nenhum perfume encontrado para <span class="font-semibold" data-q></span>.
+      </div>
+      <div class="mt-3">
+        <a href="perfumes.html" class="text-blue-700 underline">Limpar filtros</a>
+      </div>
+    </div>
+  </main>
+  <!-- ===================== /GRID ===================== -->
+
+  @@include("_partials/footer.html")
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <script>
+    // WhatsApp CTA geral (hero)
+    (function waHero(){
+      const a = document.querySelector('a[data-wa]');
+      if(!a) return;
+      const msg = `Olá, Nando! Vim pelo site (página: Perfumes). Pode me mostrar as melhores ofertas de hoje?`;
+      a.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
+      a.target = "_blank"; a.rel = "noopener";
+    })();
+
+    // Helpers
+    function moneyToNumber(txt){
+      if(!txt) return 0;
+      return Number(String(txt).replace(/[^\d]/g,''));
+    }
+
+    // Filtros + busca + ordenação
+    (function filtros(){
+      const params = new URLSearchParams(location.search);
+      const qParam = (params.get('q') || '').trim().toLowerCase();
+      const genderParam = (params.get('gender') || 'all').toLowerCase();
+      const brandParam = (params.get('brand') || 'all').toLowerCase();
+      const sortParam = (params.get('sort') || 'featured');
+
+      const grid = document.getElementById('gridProdutos');
+      const cards = Array.from(grid.querySelectorAll('article[data-brand]'));
+      const countEl = document.getElementById('countVisible');
+      const empty = document.getElementById('emptyState');
+      const qHolders = document.querySelectorAll('[data-q]');
+
+      // Controles
+      const search = document.getElementById('search');
+      const sort = document.getElementById('sort');
+      const brandSel = document.getElementById('brand');
+      const chipsGender = Array.from(document.querySelectorAll('.chip[data-gender]'));
+
+      // Estado
+      let activeGender = 'all';
+      let activeBrand = 'all';
+      let activeQuery = '';
+
+      // Inicial
+      if (qParam) {
+        activeQuery = qParam;
+        search.value = qParam;
+        qHolders.forEach(el => el.textContent = qParam);
+      }
+      activeGender = genderParam;
+      chipsGender.forEach(c => c.classList.toggle('active', c.getAttribute('data-gender') === activeGender));
+      brandSel.value = brandParam;
+      sort.value = sortParam;
+
+      // Clique em gênero
+      chipsGender.forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeGender = btn.getAttribute('data-gender') || 'all';
+          chipsGender.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          aplicar();
+        });
+      });
+
+      // Marca
+      brandSel.addEventListener('change', () => {
+        activeBrand = brandSel.value || 'all';
+        aplicar();
+      });
+
+      // Busca
+      let t;
+      search.addEventListener('input', () => {
+        clearTimeout(t);
+        t = setTimeout(()=> {
+          activeQuery = (search.value || '').trim().toLowerCase();
+          aplicar();
+        }, 180);
+      });
+
+      // Ordenação
+      sort.addEventListener('change', aplicar);
+
+      function aplicar(){
+        // Ordena DOM
+        const sorted = cards.slice().sort((a,b)=>{
+          const sa = a.querySelector('.text-xl')?.textContent || '';
+          const sb = b.querySelector('.text-xl')?.textContent || '';
+          const pa = Number(a.getAttribute('data-price') || moneyToNumber(sa));
+          const pb = Number(b.getAttribute('data-price') || moneyToNumber(sb));
+          const da = new Date(a.getAttribute('data-new') || '2000-01-01').getTime();
+          const db = new Date(b.getAttribute('data-new') || '2000-01-01').getTime();
+
+          switch (sort.value){
+            case 'price-asc': return pa - pb;
+            case 'price-desc': return pb - pa;
+            case 'newest': return db - da;
+            default: return 0;
+          }
+        });
+        sorted.forEach(card => grid.appendChild(card));
+
+        // Aplica filtros
+        let visible = 0;
+        cards.forEach(card => {
+          const gender = (card.getAttribute('data-gender') || '').toLowerCase();
+          const brand = (card.getAttribute('data-brand') || '').toLowerCase();
+          const hay = (card.getAttribute('data-search') || '').toLowerCase();
+
+          const passGender = activeGender === 'all' ? true : (gender === activeGender);
+          const passBrand = activeBrand === 'all' ? true : (brand === activeBrand);
+          const passQuery = activeQuery ? hay.includes(activeQuery) : true;
+
+          const show = passGender && passBrand && passQuery;
+          card.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+
+        countEl.textContent = visible;
+        empty.classList.toggle('hidden', visible !== 0);
+        qHolders.forEach(el => el.textContent = activeQuery || '');
+      }
+
+      aplicar();
+    })();
+
+    // Links WhatsApp por produto, mensagem contextual
+    (function waProdutos(){
+      const links = document.querySelectorAll('a.btn-wa[data-wa-product]');
+      links.forEach(a => {
+        const name = a.getAttribute('data-wa-product') || 'Perfume';
+        const msg = `Olá, Nando! Vim pelo site (página: Perfumes) e me interessei por: ${name}. Pode me atender?`;
+        a.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
+        a.target = "_blank";
+        a.rel = "noopener";
+        a.className = "inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)] bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)] hover:brightness-110 transition";
+      });
+    })();
+  </script>
+</body>
 </html>
