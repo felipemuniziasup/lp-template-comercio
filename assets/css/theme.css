@@ -1,40 +1,170 @@
-/* THEME (Nando) — tokens e componentes premium
-   Obs: edite as cores aqui quando quiser mudar a cara do site inteiro. */
+/* ==========================================================================
+   Nando Importados – Theme.css
+   Este arquivo complementa o Tailwind com pequenos acabamentos visuais,
+   micro-animações e correções de layout.
+   ========================================================================== */
 
+/* ---------- Base / resetzinhos delicados ---------- */
 :root{
-  --brand-grad: linear-gradient(90deg,#1e1b4b,#1d4ed8,#0891b2);
-  --cta-grad: conic-gradient(from 0deg,#16a34a,#10b981,#06b6d4,#16a34a);
+  --ni-glass-bg: rgba(255,255,255,.08);
+  --ni-glass-brd: rgba(255,255,255,.22);
+  --ni-focus: 0 0 0 3px rgba(59,130,246,.35);
+  --ni-hero-max: 460px; /* altura máx. do hero */
 }
 
-/* barra de políticas */
-.header-bar{ background: var(--brand-grad); }
-.chip{ background: rgba(255,255,255,.15); padding:.25rem .6rem; border-radius:.55rem; }
-.link-white{ text-decoration: underline; text-underline-offset: 4px; color: #fff; opacity:.9 }
-.link-white:hover{ opacity:1 }
+* { -webkit-tap-highlight-color: transparent; }
+html, body { scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
-/* botões */
-.btn{ font-weight:800; }
-.btn-primary{ background:#0ea5e9; color:#fff; border:1px solid rgba(2,132,199,.25) }
-.btn-primary:hover{ filter: brightness(1.05) }
-.btn-whats{
-  background: var(--cta-grad);
-  color:#fff; border:1px solid rgba(255,255,255,.35);
-  box-shadow:0 12px 28px rgba(16,185,129,.35),inset 0 1px 0 rgba(255,255,255,.35);
-  padding:.65rem 1rem;
-}
-.ico-wa{
-  display:inline-block; width:26px; height:26px; border-radius:999px;
-  background: radial-gradient(circle at 30% 30%,rgba(255,255,255,.6),rgba(255,255,255,.15) 55%,transparent);
-  border:1px solid rgba(255,255,255,.35); box-shadow:inset 0 0 12px rgba(255,255,255,.25),0 3px 10px rgba(0,0,0,.18)
+/* ---------- Header / barra de busca “glass” ---------- */
+/* Aplica um look de vidro em qualquer container com a classe .ni-glass */
+.ni-glass{
+  background: var(--ni-glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--ni-glass-brd);
+  box-shadow: 0 8px 28px rgba(2,6,23,.12);
+  border-radius: 16px;
 }
 
-/* FAB WhatsApp */
-.fab-wa{
-  position:fixed; right:16px; bottom:16px; z-index:50; width:58px; height:58px; border-radius:9999px; color:#fff;
-  background: var(--cta-grad);
-  box-shadow:0 12px 28px rgba(16,185,129,.35),inset 0 1px 0 rgba(255,255,255,.35);
-  border:1px solid rgba(255,255,255,.35); display:grid; place-items:center
+/* Inputs (ex.: busca do header) com foco mais visível */
+.ni-field{
+  outline: none;
+  transition: box-shadow .2s ease, background .2s ease, border-color .2s ease;
 }
-.fab-wa:hover{ filter:saturate(115%) brightness(1.03) }
-.fab-wa .ring{ position:absolute; inset:-6px; border-radius:9999px; border:2px solid rgba(255,255,255,.55); animation:pulse 1.8s infinite }
-@keyframes pulse{ 0%{ transform:scale(.9); opacity:.8 } 100%{ transform:scale(1.25); opacity:0 } }
+.ni-field:focus{
+  box-shadow: var(--ni-focus);
+}
+
+/* Botões compactos */
+.ni-btn{
+  transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
+}
+.ni-btn:hover{ transform: translateY(-1px); filter: brightness(1.05); }
+.ni-btn:active{ transform: translateY(0); filter: brightness(0.98); }
+
+/* ---------- HERO / carrossel ---------- */
+/* restringe um pouco a altura para deixar a página mais “rápida” visualmente */
+#hero #heroSlides { max-height: var(--ni-hero-max) !important; }
+
+/* Dots com realce suave */
+#hero [aria-label^="Slide"]{
+  transition: transform .2s ease, background-color .2s ease, box-shadow .2s ease;
+  box-shadow: 0 0 0 0 rgba(255,255,255,0);
+}
+#hero [aria-label^="Slide"][aria-current="true"]{
+  transform: scale(1.12);
+  box-shadow: 0 0 0 6px rgba(255,255,255,.18);
+}
+
+/* Fade sutil no topo do hero para leitura melhor do header */
+#hero::before{
+  content:"";
+  position:absolute; inset:0 0 auto 0; height:110px; pointer-events:none;
+  background: linear-gradient(to bottom, rgba(0,0,0,.22), rgba(0,0,0,0));
+  z-index:1;
+}
+
+/* ---------- CATEGORIAS ---------- */
+/* Fundo com textura leve (não compete com os cards) */
+#categorias{
+  position: relative;
+  background:
+    radial-gradient(1200px 600px at 10% -20%, rgba(59,130,246,.08), transparent 60%),
+    radial-gradient(1200px 600px at 90% -20%, rgba(16,185,129,.08), transparent 60%);
+}
+#categorias::after{
+  /* grid/pontos super discretos */
+  content:"";
+  position:absolute; inset:0; pointer-events:none;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(2,6,23,.06) 1px, transparent 0);
+  background-size: 22px 22px;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.12));
+}
+
+/* Cards de categoria – micro interação */
+#catsGrid a{
+  transform: translateZ(0);
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+}
+#catsGrid a:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 18px 36px rgba(2,6,23,.10);
+  filter: saturate(1.06);
+}
+
+/* ---------- Scroller de cards (oferta relâmpago) ---------- */
+#cardsScroller{
+  /* fade nas bordas para indicar que há conteúdo horizontal */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+}
+
+/* cursor visual ao arrastar no desktop (classe adicionada no JS) */
+.cursor-grabbing{ cursor: grabbing !important; cursor: -webkit-grabbing !important; }
+
+/* Cards dos produtos (carrossel) – hover */
+#cardsScroller article{
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+#cardsScroller article:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 18px 42px rgba(2,6,23,.10);
+  border-color: rgba(2,6,23,.08);
+}
+
+/* ---------- CTA WhatsApp (flutuante e botões) ---------- */
+a[href*="wa.me"],
+.ni-cta-wa{
+  position: relative;
+}
+a[href*="wa.me"]::after,
+.ni-cta-wa::after{
+  content:"";
+  position:absolute; inset:auto -4px -4px -4px; height: 16px; border-radius: 9999px;
+  background: radial-gradient(12px 8px at 50% 0, rgba(16,185,129,.35), transparent 70%);
+  filter: blur(6px);
+  opacity:.0; transition: opacity .2s ease;
+}
+a[href*="wa.me"]:hover::after,
+.ni-cta-wa:hover::after{ opacity:.8; }
+
+/* ---------- FAQ ---------- */
+details{
+  transition: box-shadow .18s ease, border-color .18s ease, background-color .18s ease;
+}
+details[open]{
+  background-color: #fff;
+  border-color: rgba(2,6,23,.10);
+  box-shadow: 0 8px 28px rgba(2,6,23,.06);
+}
+details summary::-webkit-details-marker{ display:none; }
+
+/* ---------- Utilitários finos ---------- */
+.shadow-soft{ box-shadow: 0 10px 30px rgba(2,6,23,.08); }
+.text-gradient-emerald{
+  background: linear-gradient(90deg, #0ea5e9, #10b981, #06b6d4);
+  -webkit-background-clip: text; background-clip:text; color: transparent;
+}
+
+/* ---------- Acessibilidade / performance ---------- */
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+}
+
+/* ---------- Breakpoints pequenos ajustes ---------- */
+@media (min-width: 1024px){
+  :root{ --ni-hero-max: 500px; } /* um pouquinho maior no desktop */
+}
+
+@media (max-width: 380px){
+  /* compacta levemente os paddings dos cards menores */
+  #catsGrid a{ padding: .9rem !important; }
+}
+
+/* ---------- (Opcional) Estados de placeholder de imagens ---------- */
+/* Se quiser um fundo neutro quando a imagem não carrega por 1 frame */
+img{ background-color: rgba(241,245,249,.35); }
+img[loading="lazy"]{ transition: filter .3s ease; }
+img[loading="lazy"].loaded{ filter: none; }

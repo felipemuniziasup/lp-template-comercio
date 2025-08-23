@@ -1,22 +1,50 @@
-<!-- HEADER simples só para validar render -->
-<header class="bg-white/90 backdrop-blur border-b border-slate-200">
-  <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
-    <a href="index.html" class="font-extrabold text-slate-900">Nando Importados</a>
+<header class="sticky top-0 z-40">
+  <!-- faixa fina de informações -->
+  <div class="bg-gradient-to-r from-indigo-900 via-blue-700 to-cyan-600 text-white">
+    <div class="max-w-6xl mx-auto px-4 py-2 text-[13px] sm:text-sm flex flex-wrap items-center justify-center gap-3">
+      <span class="bg-white/15 px-2.5 py-1 rounded-md">🧾 Nota fiscal</span>
+      <span class="bg-white/15 px-2.5 py-1 rounded-md">🛡️ Garantia 90 dias</span>
+      <span class="bg-white/15 px-2.5 py-1 rounded-md">↩️ Devolução em 7 dias</span>
+      <a href="condicoes.html" class="underline underline-offset-4 decoration-white/40 hover:decoration-white">Políticas</a>
+    </div>
+  </div>
 
-    <form action="tudo.html" method="get" class="hidden sm:flex items-center gap-2">
-      <input
-        name="q"
-        class="px-3 py-1.5 rounded-lg border border-slate-300 text-sm"
-        placeholder="Buscar no catálogo"
-      />
-      <button class="px-3 py-1.5 rounded-lg bg-slate-900 text-white text-sm">Buscar</button>
-    </form>
+  <!-- barra principal “glass” -->
+  <div class="backdrop-blur-xl bg-white/60 border-b border-white/40 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
+      <!-- logo -->
+      <a href="index.html" class="flex items-center gap-2 shrink-0">
+        <img src="assets/logo-monogram-192.png" alt="Nando" class="h-8 w-8 rounded-md" />
+        <span class="font-extrabold tracking-tight text-slate-900">Nando Importados</span>
+      </a>
 
-    <nav class="hidden md:flex items-center gap-4 text-sm">
-      <a class="hover:underline" href="celulares.html">Celulares</a>
-      <a class="hover:underline" href="perfumes.html">Perfumes</a>
-      <a class="hover:underline" href="tudo.html">Tudo</a>
-      <a class="hover:underline" href="contato.html">Contato</a>
-    </nav>
+      <!-- busca -->
+      <form action="tudo.html" method="get" class="ml-auto w-full max-w-[520px]">
+        <div class="group flex items-center gap-2 rounded-full px-4 py-2.5
+                    bg-white/70 border border-slate-200/70 hover:bg-white/80
+                    shadow-[inset_0_1px_0_rgba(255,255,255,.6),0_8px_30px_rgba(2,6,23,.06)]
+                    focus-within:ring-2 focus-within:ring-cyan-400/60 transition">
+          <svg width="18" height="18" viewBox="0 0 24 24" class="opacity-60">
+            <path d="M21 21l-4.3-4.3m1.3-5.2a7 7 0 11-14 0 7 7 0 0114 0z"
+                  fill="none" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <input name="q" type="search" placeholder="Busque por produto, marca, modelo…"
+                 class="w-full bg-transparent outline-none text-slate-800 placeholder-slate-400" />
+          <button class="rounded-full px-3 py-1.5 text-sm font-semibold text-white
+                         bg-gradient-to-r from-sky-500 to-emerald-500 hover:brightness-110">
+            Buscar
+          </button>
+        </div>
+      </form>
+
+      <!-- CTA WhatsApp -->
+      <a href="https://wa.me/5521976950809?text=Ol%C3%A1!%20Vim%20pelo%20site."
+         target="_blank" rel="noopener"
+         class="hidden sm:inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-white
+                bg-gradient-to-r from-emerald-500 to-cyan-500 border border-white/30
+                shadow-[0_10px_30px_rgba(16,185,129,.35)] hover:brightness-110">
+        WhatsApp
+      </a>
+    </div>
   </div>
 </header>

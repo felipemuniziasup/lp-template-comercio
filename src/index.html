@@ -3,44 +3,35 @@
 @@include("_partials/head.html")
 
 <body class="bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-800 antialiased">
-  <!-- Top bar / políticas rápidas -->
-  <div class="bg-gradient-to-r from-indigo-900 via-blue-700 to-cyan-600 text-white">
-    <div class="max-w-6xl mx-auto px-4 py-2 text-[13px] sm:text-sm flex flex-wrap items-center justify-center gap-3">
-      <span class="bg-white/15 px-2.5 py-1 rounded-md">🧾 Nota fiscal</span>
-      <span class="bg-white/15 px-2.5 py-1 rounded-md">🛡️ Garantia 90 dias</span>
-      <span class="bg-white/15 px-2.5 py-1 rounded-md">↩️ Devolução em 7 dias</span>
-      <a href="condicoes.html" class="underline underline-offset-4 decoration-white/40 hover:decoration-white">Políticas</a>
-    </div>
-  </div>
 
   @@include("_partials/header.html")
 
   <!-- ===================== HERO (carrossel + 2 CTAs) ===================== -->
   <section id="hero" class="relative overflow-hidden select-none">
-    <ul id="heroSlides" class="relative h-[68vw] max-h-[540px]">
+    <ul id="heroSlides" class="relative h-[52vw] max-h-[420px]">
       <!-- Slide 1 -->
       <li class="absolute inset-0 opacity-100 transition-opacity duration-700">
         <img src="assets/banners/banner1.png" alt="Destaques da semana" class="w-full h-full object-cover"
              onerror="this.onerror=null;this.src='assets/banners/banner1.jpg'">
-        <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/60"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
       </li>
       <!-- Slide 2 -->
       <li class="absolute inset-0 opacity-0 transition-opacity duration-700">
         <img src="assets/banners/banner2.png" alt="Ofertas em celulares" class="w-full h-full object-cover"
              onerror="this.onerror=null;this.src='assets/banners/banner2.jpg'">
-        <div class="absolute inset-0 bg-gradient-to-b from-black/15 via-black/40 to-black/60"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
       </li>
       <!-- Slide 3 -->
       <li class="absolute inset-0 opacity-0 transition-opacity duration-700">
         <img src="assets/banners/banner3.png" alt="Perfumes importados" class="w-full h-full object-cover"
              onerror="this.onerror=null;this.src='assets/banners/banner3.jpg'">
-        <div class="absolute inset-0 bg-gradient-to-b from-black/15 via-black/40 to-black/60"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
       </li>
     </ul>
 
     <!-- CTAs central -->
     <div class="pointer-events-none absolute inset-0 grid place-items-center">
-      <div class="pointer-events-auto flex flex-wrap gap-3 justify-center">
+      <div class="pointer-events-auto flex flex-wrap gap-3 justify-center animate-[fadeUp_.6s_ease-out_.15s_both]">
         <a href="https://wa.me/5521976950809?text=Quero%20as%20melhores%20ofertas%20de%20hoje%20%F0%9F%94%A5"
            target="_blank" rel="noopener"
            class="inline-flex items-center gap-2 px-5 py-3 rounded-full text-white font-extrabold
@@ -74,80 +65,97 @@
   <!-- ===================== /HERO ===================== -->
 
   <!-- ===================== CATEGORIAS ===================== -->
-  <section class="max-w-6xl mx-auto px-4 py-12" id="categorias">
-    <div class="text-center mb-8">
-      <h2 class="font-extrabold tracking-tight text-3xl md:text-4xl text-neutral-900">Categorias</h2>
-      <p class="mt-2 text-neutral-500">Escolha uma categoria para começar</p>
-    </div>
+  <section class="relative">
+    <!-- fundo dinâmico -->
+    <div class="absolute inset-0 -z-10 bg-[radial-gradient(80%_60%_at_50%_0%,rgba(59,130,246,.12),rgba(6,182,212,.08),transparent_70%)]"></div>
 
-    <div id="catsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
-      <!-- Celulares -->
-      <a href="celulares.html" class="rounded-2xl p-4 md:p-5 bg-gradient-to-b from-blue-50 to-blue-100/70 ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-xl">
-        <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
-                    bg-gradient-to-br from-sky-400 via-cyan-400 to-emerald-400 text-white shadow-inner">
-          📱
-        </div>
-        <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Celulares</h3>
-        <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Novos e seminovos</p>
-      </a>
+    <div class="max-w-6xl mx-auto px-4 py-12" id="categorias">
+      <div class="text-center mb-8">
+        <h2 class="font-extrabold tracking-tight text-3xl md:text-4xl text-neutral-900">Categorias</h2>
+        <p class="mt-2 text-neutral-500">Escolha uma categoria para começar</p>
+      </div>
 
-      <!-- Perfumes -->
-      <a href="perfumes.html" class="rounded-2xl p-4 md:p-5 bg-gradient-to-b from-rose-50 to-rose-100/70 ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-xl">
-        <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
-                    bg-gradient-to-br from-pink-400 via-fuchsia-400 to-rose-400 text-white shadow-inner">
-          🌸
-        </div>
-        <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Perfumes</h3>
-        <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Importados originais</p>
-      </a>
+      <div id="catsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
+        <!-- Celulares -->
+        <a href="celulares.html"
+           class="rounded-2xl p-4 md:p-5 bg-white/30 backdrop-blur-xl ring-1 ring-white/60
+                  shadow-[0_10px_30px_rgba(2,6,23,0.08)] hover:-translate-y-0.5 hover:shadow-xl transition">
+          <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
+                      bg-gradient-to-br from-sky-400 via-cyan-400 to-emerald-400 text-white shadow-inner">
+            📱
+          </div>
+          <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Celulares</h3>
+          <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Novos e seminovos</p>
+        </a>
 
-      <!-- Tudo -->
-      <a href="tudo.html" class="rounded-2xl p-4 md:p-5 bg-gradient-to-b from-emerald-50 to-emerald-100/70 ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-xl">
-        <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
-                    bg-gradient-to-br from-emerald-400 via-teal-400 to-cyan-400 text-white shadow-inner">
-          🛒
-        </div>
-        <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Tudo</h3>
-        <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Catálogo completo</p>
-      </a>
+        <!-- Perfumes -->
+        <a href="perfumes.html"
+           class="rounded-2xl p-4 md:p-5 bg-white/30 backdrop-blur-xl ring-1 ring-white/60
+                  shadow-[0_10px_30px_rgba(2,6,23,0.08)] hover:-translate-y-0.5 hover:shadow-xl transition">
+          <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
+                      bg-gradient-to-br from-pink-400 via-fuchsia-400 to-rose-400 text-white shadow-inner">
+            🌸
+          </div>
+          <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Perfumes</h3>
+          <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Importados originais</p>
+        </a>
 
-      <!-- Extras revelados ao clicar -->
-      <a href="#" data-extra class="hidden rounded-2xl p-4 md:p-5 bg-gradient-to-b from-indigo-50 to-indigo-100/70 ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-xl">
-        <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
-                    bg-gradient-to-br from-indigo-400 via-violet-400 to-purple-400 text-white shadow-inner">
-          🎧
-        </div>
-        <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Áudio</h3>
-        <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Fones & caixas</p>
-      </a>
+        <!-- Tudo -->
+        <a href="tudo.html"
+           class="rounded-2xl p-4 md:p-5 bg-white/30 backdrop-blur-xl ring-1 ring-white/60
+                  shadow-[0_10px_30px_rgba(2,6,23,0.08)] hover:-translate-y-0.5 hover:shadow-xl transition">
+          <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
+                      bg-gradient-to-br from-emerald-400 via-teal-400 to-cyan-400 text-white shadow-inner">
+            🛒
+          </div>
+          <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Tudo</h3>
+          <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Catálogo completo</p>
+        </a>
 
-      <a href="#" data-extra class="hidden rounded-2xl p-4 md:p-5 bg-gradient-to-b from-amber-50 to-amber-100/70 ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-xl">
-        <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
-                    bg-gradient-to-br from-amber-400 via-orange-400 to-rose-400 text-white shadow-inner">
-          ⌚
-        </div>
-        <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Relógios</h3>
-        <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Smart & premium</p>
-      </a>
+        <!-- Extras ocultos -->
+        <a href="#" data-extra
+           class="hidden rounded-2xl p-4 md:p-5 bg-white/30 backdrop-blur-xl ring-1 ring-white/60
+                  shadow-[0_10px_30px_rgba(2,6,23,0.08)] hover:-translate-y-0.5 hover:shadow-xl transition">
+          <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
+                      bg-gradient-to-br from-indigo-400 via-violet-400 to-purple-400 text-white shadow-inner">
+            🎧
+          </div>
+          <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Áudio</h3>
+          <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Fones & caixas</p>
+        </a>
 
-      <a href="#" data-extra class="hidden rounded-2xl p-4 md:p-5 bg-gradient-to-b from-teal-50 to-teal-100/70 ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-xl">
-        <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
-                    bg-gradient-to-br from-teal-400 via-emerald-400 to-green-400 text-white shadow-inner">
-          🔌
-        </div>
-        <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Acessórios</h3>
-        <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Carregadores, cases…</p>
-      </a>
-    </div>
+        <a href="#" data-extra
+           class="hidden rounded-2xl p-4 md:p-5 bg-white/30 backdrop-blur-xl ring-1 ring-white/60
+                  shadow-[0_10px_30px_rgba(2,6,23,0.08)] hover:-translate-y-0.5 hover:shadow-xl transition">
+          <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
+                      bg-gradient-to-br from-amber-400 via-orange-400 to-rose-400 text-white shadow-inner">
+            ⌚
+          </div>
+          <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Relógios</h3>
+          <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Smart & premium</p>
+        </a>
 
-    <div class="mt-6 text-center">
-      <button id="toggleCats"
-              class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full
-                     bg-gradient-to-r from-sky-500 to-emerald-500 text-white font-semibold
-                     shadow-[0_10px_30px_rgba(14,165,233,0.3)]
-                     hover:brightness-110 transition">
-        <span>Ver mais categorias</span> <span>＋</span>
-      </button>
+        <a href="#" data-extra
+           class="hidden rounded-2xl p-4 md:p-5 bg-white/30 backdrop-blur-xl ring-1 ring-white/60
+                  shadow-[0_10px_30px_rgba(2,6,23,0.08)] hover:-translate-y-0.5 hover:shadow-xl transition">
+          <div class="h-16 w-16 md:h-20 md:w-20 mx-auto mb-3 md:mb-4 rounded-2xl grid place-items-center text-3xl md:text-4xl
+                      bg-gradient-to-br from-teal-400 via-emerald-400 to-green-400 text-white shadow-inner">
+            🔌
+          </div>
+          <h3 class="text-center font-semibold text-slate-900 text-sm md:text-base">Acessórios</h3>
+          <p class="mt-1 text-center text-[12px] md:text-sm text-slate-600">Carregadores, cases…</p>
+        </a>
+      </div>
+
+      <div class="mt-6 text-center">
+        <button id="toggleCats"
+                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full
+                       bg-gradient-to-r from-sky-500 to-emerald-500 text-white font-semibold
+                       shadow-[0_10px_30px_rgba(14,165,233,0.3)]
+                       hover:brightness-110 transition">
+          <span>Ver mais categorias</span> <span>＋</span>
+        </button>
+      </div>
     </div>
   </section>
   <!-- ===================== /CATEGORIAS ===================== -->
@@ -305,10 +313,13 @@
         slides.forEach((el, idx) => el.style.opacity = idx === i ? '1' : '0');
         dots.forEach((d, idx) => d.setAttribute('aria-current', idx === i ? 'true' : 'false'));
       }
-      function play(){ clearInterval(timer); timer = setInterval(()=>show(i+1), 5000); }
+      function play(){ clearInterval(timer); timer = setInterval(()=>show(i+1), 4500); }
       dots.forEach((d, idx)=> d.addEventListener('click', ()=>{ show(idx); play(); }));
       root.addEventListener('touchstart', e => { touch.x = e.touches[0].clientX; }, {passive:true});
-      root.addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - touch.x; if (Math.abs(dx) > 40){ show(i + (dx < 0 ? 1 : -1)); play(); } }, {passive:true});
+      root.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - touch.x;
+        if (Math.abs(dx) > 40){ show(i + (dx < 0 ? 1 : -1)); play(); }
+      }, {passive:true});
       show(0); play();
     })();
 
@@ -330,10 +341,17 @@
       const scroller = document.getElementById('cardsScroller');
       if(!scroller) return;
       let isDown=false, startX=0, scrollLeft=0;
-      scroller.addEventListener('mousedown', e=>{ isDown=true; scroller.classList.add('cursor-grabbing'); startX=e.pageX - scroller.offsetLeft; scrollLeft=scroller.scrollLeft; });
+      scroller.addEventListener('mousedown', e=>{
+        isDown=true; scroller.classList.add('cursor-grabbing');
+        startX=e.pageX - scroller.offsetLeft; scrollLeft=scroller.scrollLeft;
+      });
       scroller.addEventListener('mouseleave', ()=>{ isDown=false; scroller.classList.remove('cursor-grabbing'); });
       scroller.addEventListener('mouseup', ()=>{ isDown=false; scroller.classList.remove('cursor-grabbing'); });
-      scroller.addEventListener('mousemove', e=>{ if(!isDown) return; e.preventDefault(); const x=e.pageX - scroller.offsetLeft; const walk=(x-startX)*1.2; scroller.scrollLeft=scrollLeft - walk; });
+      scroller.addEventListener('mousemove', e=>{
+        if(!isDown) return; e.preventDefault();
+        const x=e.pageX - scroller.offsetLeft; const walk=(x-startX)*1.2;
+        scroller.scrollLeft=scrollLeft - walk;
+      });
     })();
   </script>
 </body>
