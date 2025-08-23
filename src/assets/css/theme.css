@@ -131,3 +131,55 @@ details[open] { box-shadow: 0 6px 20px rgba(2,6,23,.06); }
 
 /* Sombra suave utilitária */
 .shadow-soft { box-shadow: 0 8px 30px rgba(2,6,23,.08); }
+/* ===== WhatsApp FAB (fixo + brilho pulsante forte) ===== */
+.whatsapp-fab{
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  border-radius: 9999px;
+  background: #25D366;             /* verde WhatsApp */
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.6);
+  box-shadow:
+    0 12px 28px rgba(0,0,0,0.25),  /* sombra base */
+    0 0 0 0 rgba(37,211,102,0.75); /* será animado no :after */
+  z-index: 9999;
+  transition: transform .15s ease, filter .15s ease;
+}
+.whatsapp-fab:hover{
+  transform: translateY(-1px) scale(1.03);
+  filter: brightness(1.05);
+}
+
+/* Dois anéis pulsando: um forte + um secundário, intercalados */
+.whatsapp-fab::after,
+.whatsapp-fab::before{
+  content: "";
+  position: absolute;
+  inset: -6px;                    /* expande além do botão */
+  border-radius: 9999px;
+  pointer-events: none;
+}
+.whatsapp-fab::after{
+  box-shadow: 0 0 0 0 rgba(37,211,102,0.65);
+  animation: fabPulse 1.8s ease-out infinite;
+}
+.whatsapp-fab::before{
+  box-shadow: 0 0 0 0 rgba(37,211,102,0.35);
+  animation: fabPulse 1.8s ease-out .9s infinite; /* desfase */
+}
+
+@keyframes fabPulse{
+  0%   { box-shadow: 0 0 0 0 rgba(37,211,102, var(--a, 0.65)); }
+  70%  { box-shadow: 0 0 0 22px rgba(37,211,102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37,211,102, 0); }
+}
+
+/* Responsivo: um pouco menor em telas muito pequenas */
+@media (max-width: 380px){
+  .whatsapp-fab{ width: 52px; height: 52px; right: 14px; bottom: 14px; }
+}
