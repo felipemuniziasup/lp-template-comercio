@@ -1,118 +1,130 @@
 /* ===============================
-   THEME.CSS – estilo global do site
+   THEME.CSS – estilo global do site (premium)
    =============================== */
 
-/* Reset e base */
+/* Base / Reset */
+* { box-sizing: border-box; }
 html, body {
-  margin: 0;
-  padding: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  margin: 0; padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+  color: #0f172a;
+  background: #f8fafc;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
-  background-color: #f9fafb;
-  color: #1e293b;
 }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
 
-a {
-  text-decoration: none;
-  color: inherit;
-}
+/* Containers utilitárias */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
 
 /* ===============================
-   HEADER / NAV
+   HEADER / NAV (vidro sutil)
    =============================== */
 header {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.7);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  position: sticky;
-  top: 0;
-  z-index: 50;
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255,255,255,.75);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(15,23,42,.06);
 }
-
-/* Links de navegação */
-header nav a {
-  font-weight: 600;
-  transition: color .2s;
-}
-header nav a:hover {
-  color: #2563eb;
-}
+header nav a { font-weight: 600; }
+header nav a:hover { color: #2563eb; }
 
 /* ===============================
-   HERO CAROUSEL
+   HERO / CAROUSEL
    =============================== */
-#hero {
-  position: relative;
-}
-#heroSlides li {
-  transition: opacity .7s ease-in-out;
-}
-#heroSlides img {
-  object-fit: cover;
-}
-
-/* Dots */
-#hero button[aria-current="true"] {
-  transform: scale(1.2);
-}
+#hero { position: relative; }
+#heroSlides li { transition: opacity .7s ease-in-out; }
+#heroSlides img { object-fit: cover; width: 100%; height: 100%; }
+/* dots do hero */
+#hero button[aria-current="true"] { transform: scale(1.2); }
 
 /* ===============================
-   BOTÃO WHATSAPP FIXO (FAB)
+   CARDS/CATEGORIAS (refino leve)
    =============================== */
-.fab-whatsapp {
-  position: fixed;
-  right: 1.2rem;
-  bottom: 1.2rem;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: #25d366; /* verde oficial WhatsApp */
-  color: white;
-  font-size: 34px; /* ícone grande */
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  z-index: 999;
-  border: 2px solid white;
-  animation: pulseGlow 2s infinite;
-  transition: transform .2s ease-in-out;
+.card {
+  background: #fff;
+  border: 1px solid rgba(2,6,23,.06);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(2,6,23,.06);
+  overflow: hidden;
+  transition: transform .15s ease, box-shadow .15s ease;
 }
-.fab-whatsapp:hover {
-  transform: scale(1.08);
-}
-
-@keyframes pulseGlow {
-  0% {
-    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 20px 15px rgba(37, 211, 102, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
-  }
-}
+.card:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(2,6,23,.08); }
 
 /* ===============================
-   FOOTER
+   FOOTER (gradiente elegante)
    =============================== */
-footer {
-  background: linear-gradient(to right, #0f172a, #1e293b, #334155);
+.site-footer {
+  background: linear-gradient(90deg, #0f172a, #1e293b 35%, #334155);
   color: #e2e8f0;
-  padding: 2rem 1rem;
-  text-align: center;
+  padding: 3rem 0 1.5rem;
 }
-footer a {
-  color: #93c5fd;
-  font-weight: 500;
-  transition: color .2s;
+.site-footer .brand {
+  display: grid; gap: .6rem; margin-bottom: 1.25rem;
 }
-footer a:hover {
-  color: #fff;
+.site-footer .brand img { width: 220px; height: auto; filter: drop-shadow(0 6px 18px rgba(0,0,0,.24)); }
+.site-footer .brand p { margin: 0; opacity: .9; }
+
+.site-footer .cols {
+  display: grid; grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 1.5rem; margin: 1rem 0 1.25rem;
 }
-footer .copyright {
-  font-size: 0.875rem;
-  opacity: 0.7;
-  margin-top: 1rem;
+.site-footer h4 { margin: 0 0 .5rem; font-size: 1rem; color: #fff; }
+.site-footer ul { list-style: none; margin: 0; padding: 0; }
+.site-footer li { margin: .4rem 0; }
+.site-footer a { color: #93c5fd; font-weight: 500; }
+.site-footer a:hover { color: #fff; }
+
+.site-footer .divider {
+  height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
+  margin: .75rem 0 1rem;
 }
+.site-footer .copy {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; font-size: .95rem; opacity: .9;
+}
+@media (max-width: 860px) {
+  .site-footer .cols { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .site-footer .cols { grid-template-columns: 1fr; }
+  .site-footer .copy { flex-direction: column; text-align: center; }
+}
+
+/* ===============================
+   FAB WHATSAPP (flutuante global)
+   =============================== */
+.fab-whatsapp{
+  position: fixed !important;
+  right: 1.2rem !important;
+  left: auto !important;
+  bottom: 1.2rem !important;
+  width: 64px !important;
+  height: 64px !important;
+  border-radius: 50% !important;
+  display: grid !important;
+  place-items: center !important;
+  background: #25d366 !important;   /* verde oficial */
+  color: #fff !important;
+  font-size: 34px !important;        /* tamanho do ícone (aplica ao SVG via currentColor) */
+  border: 2px solid #fff !important;
+  box-shadow: 0 8px 26px rgba(0,0,0,.28) !important;
+  z-index: 9999 !important;
+  animation: pulseGlow 2s infinite !important;
+  transition: transform .2s !important;
+}
+.fab-whatsapp:hover{ transform: scale(1.08) !important; }
+.fab-whatsapp svg { width: 28px; height: 28px; }
+
+/* Glow pulsando */
+@keyframes pulseGlow{
+  0%   { box-shadow: 0 0 0 0 rgba(37,211,102,.75); }
+  60%  { box-shadow: 0 0 28px 18px rgba(37,211,102,0); }
+  100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+}
+
+/* Utilidades pequenas */
+.text-muted { color: #64748b; }
+.hidden { display: none !important; }

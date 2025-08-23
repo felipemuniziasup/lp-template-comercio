@@ -1,24 +1,23 @@
-<footer class="mt-16">
-  <div class="max-w-6xl mx-auto px-4 py-10">
-    <div class="grid md:grid-cols-3 gap-8 items-start">
-      <div>
-        <h3 class="text-lg font-semibold">Nando Importados</h3>
-        <p class="mt-2 text-slate-300/90">
-          Modelos originais, novos e seminovos, com nota fiscal e garantia de 90 dias.
-        </p>
-      </div>
+<!-- ===================== FOOTER (global) ===================== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="brand">
+      <img src="assets/logo-wordmark.png" alt="Nando Importados" loading="lazy">
+      <p>Modelos originais, novos e seminovos, com nota fiscal e garantia de 90 dias.</p>
+    </div>
 
-      <div>
-        <h3 class="text-lg font-semibold">Atendimento</h3>
-        <ul class="mt-2 space-y-1 text-slate-300/90">
+    <div class="cols">
+      <div class="col">
+        <h4>Atendimento</h4>
+        <ul>
           <li>Seg–Sáb • 9h às 20h</li>
           <li>Rio de Janeiro – RJ</li>
         </ul>
       </div>
 
-      <div>
-        <h3 class="text-lg font-semibold">Links</h3>
-        <ul class="mt-2 space-y-1">
+      <div class="col">
+        <h4>Links</h4>
+        <ul>
           <li><a href="index.html">Início</a></li>
           <li><a href="tudo.html">Catálogo completo</a></li>
           <li><a href="celulares.html">Celulares</a></li>
@@ -26,39 +25,53 @@
           <li><a href="condicoes.html">Políticas</a></li>
         </ul>
       </div>
+
+      <div class="col">
+        <h4>Fale com a gente</h4>
+        <ul>
+          <li><a href="https://wa.me/5521976950809" target="_blank" rel="noopener">WhatsApp (21) 97695-0809</a></li>
+          <li><a href="contato.html">Formulário de contato</a></li>
+        </ul>
+      </div>
     </div>
 
-    <div class="mt-10 border-t border-white/10 pt-6 flex items-center justify-between flex-wrap gap-4">
-      <p class="copyright">© 2025 Nando Importados — NF e garantia.</p>
+    <div class="divider"></div>
+
+    <div class="copy">
+      <span>© 2025 Nando Importados — NF e garantia.</span>
       <a href="condicoes.html">Políticas</a>
     </div>
   </div>
 </footer>
 
-<!-- FAB WhatsApp (fora do <footer>!) -->
-<a id="fabWhats"
-   class="fab-whatsapp"
-   href="https://wa.me/5521976950809?text=Ol%C3%A1%2C%20Nando!%20Estou%20no%20site%20e%20preciso%20de%20atendimento.%20Poderia%20me%20ajudar%3F"
-   target="_blank"
-   rel="noopener"
-   aria-label="Falar no WhatsApp">
-  <!-- Ícone WhatsApp em SVG (não precisa de Font Awesome) -->
+<!-- ===================== FAB WHATSAPP (global) ===================== -->
+<a id="fabWhats" class="fab-whatsapp"
+   href="https://wa.me/5521976950809"
+   target="_blank" rel="noopener"
+   aria-label="Falar no WhatsApp" title="Atendimento no WhatsApp">
+  <!-- Ícone WhatsApp (maior) -->
   <svg viewBox="0 0 32 32" width="28" height="28" fill="currentColor" aria-hidden="true">
     <path d="M19.11 17.41c-.29-.14-1.7-.84-1.96-.94-.26-.1-.45-.14-.64.14-.19.29-.74.94-.9 1.13-.17.19-.33.22-.61.08-.29-.14-1.21-.45-2.3-1.45-.85-.76-1.43-1.7-1.6-1.98-.17-.29-.02-.45.13-.59.14-.14.29-.33.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.64-1.54-.88-2.1-.23-.55-.47-.48-.64-.48-.17 0-.36-.02-.55-.02s-.5.07-.76.36c-.26.29-1 .98-1 2.39s1.02 2.77 1.16 2.96c.14.19 2 3.05 4.85 4.28.68.29 1.21.46 1.62.59.68.22 1.3.19 1.79.12.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33z"/>
   </svg>
 </a>
 
 <script>
-  // Mensagem dinâmica com a página atual
+  // Mensagem dinâmica para o WhatsApp (inclui página atual)
   (function () {
-    var fab = document.getElementById('fabWhats');
-    if (!fab) return;
-    var page = document.title || location.pathname.replace(/^\//,'') || 'página';
-    var msg =
-      'Ol%C3%A1%2C%20Nando!%20Estou%20no%20site%20(' +
-      encodeURIComponent(page) +
-      ')%20e%20preciso%20de%20atendimento.%20Pode%20me%20ajudar%3F';
-    var base = 'https://wa.me/5521976950809?text=';
-    fab.setAttribute('href', base + msg);
+    var a = document.getElementById('fabWhats');
+    if (!a) return;
+
+    function pagina() {
+      // index.html => Início
+      var p = (location.pathname.split('/').pop() || 'index.html')
+                .replace(/\.html$/,'');
+      if (!p || p === 'index') return 'Início';
+      return p.charAt(0).toUpperCase() + p.slice(1);
+    }
+
+    var msg = 'Ol%C3%A1%2C%20Nando!%20Estou%20no%20site%20(Nando%20Importados)%2C%20p%C3%A1gina%3A%20' +
+              encodeURIComponent(pagina()) +
+              '.%20Preciso%20de%20atendimento.%20Pode%20me%20ajudar%3F';
+    a.href = 'https://wa.me/5521976950809?text=' + msg;
   })();
 </script>
