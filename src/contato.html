@@ -1,89 +1,76 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <!-- @@include head.html -->
+@@include("_partials/head.html")
+<body class="bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-800 antialiased">
+  @@include("_partials/header.html")
 
-  <body class="bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-800 antialiased">
-    <!-- @@include header.html -->
+  <section class="bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-700 text-white">
+    <div class="max-w-6xl mx-auto px-4 py-14">
+      <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">Fale com a gente</h1>
+      <p class="mt-3 text-white/85 max-w-2xl">Atendimento rápido no WhatsApp. Preencha os dados e vamos agilizar sua compra.</p>
+    </div>
+  </section>
 
-    <!-- Hero -->
-    <section class="relative bg-gradient-to-r from-cyan-700 via-blue-800 to-indigo-900 text-white">
-      <div class="max-w-5xl mx-auto px-4 py-16 text-center">
-        <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Contato</h1>
-        <p class="text-white/80 max-w-2xl mx-auto">
-          Fale com a <strong>Nando Importados</strong> e tire todas as suas dúvidas. Atendimento rápido e humanizado!
-        </p>
+  <main class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-2 gap-8">
+    <form id="formContato" class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+      <label class="block text-sm font-semibold text-slate-700">Seu nome</label>
+      <input required name="nome" class="w-full mt-1 mb-4 rounded-xl border border-slate-200 px-3 py-2" />
+
+      <label class="block text-sm font-semibold text-slate-700">WhatsApp</label>
+      <input required name="whats" class="w-full mt-1 mb-4 rounded-xl border border-slate-200 px-3 py-2" placeholder="(xx) xxxxx-xxxx" />
+
+      <label class="block text-sm font-semibold text-slate-700">Interesse</label>
+      <select name="interesse" class="w-full mt-1 mb-4 rounded-xl border border-slate-200 px-3 py-2">
+        <option value="Celulares">Celulares</option>
+        <option value="Perfumes">Perfumes</option>
+        <option value="Outros">Outros</option>
+      </select>
+
+      <label class="block text-sm font-semibold text-slate-700">Mensagem</label>
+      <textarea name="mensagem" rows="4" class="w-full mt-1 mb-6 rounded-xl border border-slate-200 px-3 py-2"
+        placeholder="Conte rapidamente o que você procura…"></textarea>
+
+      <button class="w-full rounded-xl bg-emerald-500 text-white font-extrabold py-3 hover:brightness-110">Chamar no WhatsApp</button>
+
+      <p class="mt-4 text-xs text-slate-500">Ao enviar, você será direcionado ao WhatsApp com uma mensagem pronta para <strong>Nando</strong>.</p>
+    </form>
+
+    <aside class="space-y-4">
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+        <h3 class="font-bold text-lg">Atendimento</h3>
+        <p class="text-slate-600 mt-1">Seg–Sáb, 9h às 20h</p>
+        <p class="text-slate-600">Rio de Janeiro, RJ</p>
       </div>
-    </section>
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+        <h3 class="font-bold text-lg">Garantias</h3>
+        <ul class="mt-2 space-y-1 text-slate-600">
+          <li>🧾 NF-e em todos os produtos</li>
+          <li>🛡️ 90 dias contra defeito</li>
+          <li>↩️ Devolução em 7 dias</li>
+        </ul>
+      </div>
+    </aside>
+  </main>
 
-    <!-- Conteúdo -->
-    <main class="max-w-5xl mx-auto px-4 py-12 space-y-12">
+  @@include("_partials/footer.html")
 
-      <!-- Formulário -->
-      <section>
-        <h2 class="text-2xl font-bold text-indigo-900 mb-6">📩 Envie sua mensagem</h2>
-        <form class="bg-white rounded-2xl shadow-lg p-6 border border-slate-200 space-y-4"
-              action="https://formspree.io/f/mjkvnyzg" method="POST">
-          <div>
-            <label class="block text-sm font-medium text-slate-700">Nome</label>
-            <input type="text" name="nome" required
-                   class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-blue-500">
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-slate-700">E-mail</label>
-            <input type="email" name="email" required
-                   class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-blue-500">
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-slate-700">Mensagem</label>
-            <textarea name="mensagem" rows="4" required
-                      class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:ring-2 focus:ring-blue-500"></textarea>
-          </div>
-          <button type="submit"
-                  class="w-full px-5 py-3 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-600
-                         text-white font-semibold shadow-lg hover:brightness-110 transition">
-            Enviar mensagem
-          </button>
-        </form>
-      </section>
+  <script>
+    (function(){
+      const form = document.getElementById('formContato');
+      form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const fd = new FormData(form);
+        const nome = fd.get('nome')||'';
+        const whats = fd.get('whats')||'';
+        const interesse = fd.get('interesse')||'';
+        const mensagem = (fd.get('mensagem')||'').trim();
 
-      <!-- Contato rápido -->
-      <section>
-        <h2 class="text-2xl font-bold text-indigo-900 mb-6">📞 Contato Rápido</h2>
-        <div class="grid md:grid-cols-2 gap-6">
-
-          <div class="bg-white rounded-2xl shadow p-6 border border-slate-200 space-y-2">
-            <h3 class="font-semibold text-lg">WhatsApp</h3>
-            <p class="text-slate-600 text-sm">Fale diretamente com nosso atendimento.</p>
-            <a href="https://wa.me/5521976950809"
-               target="_blank" rel="noopener"
-               class="inline-block mt-3 px-5 py-2 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white font-medium shadow hover:brightness-110 transition">
-              Abrir WhatsApp
-            </a>
-          </div>
-
-          <div class="bg-white rounded-2xl shadow p-6 border border-slate-200 space-y-2">
-            <h3 class="font-semibold text-lg">Instagram</h3>
-            <p class="text-slate-600 text-sm">Confira novidades e promoções no nosso perfil.</p>
-            <a href="https://instagram.com/loja.nandoimports"
-               target="_blank" rel="noopener"
-               class="inline-block mt-3 px-5 py-2 rounded-full bg-gradient-to-r from-pink-500 to-rose-600 text-white font-medium shadow hover:brightness-110 transition">
-              Visitar Instagram
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- Localização -->
-      <section>
-        <h2 class="text-2xl font-bold text-indigo-900 mb-6">📍 Localização</h2>
-        <div class="rounded-2xl overflow-hidden shadow border border-slate-200">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.981791748707!2d-46.65598198501968!3d-23.57332086727415!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8aa7b9df3%3A0x2d9e8a0a7c0dbe!2sPaulista!5e0!3m2!1spt-BR!2sbr!4v1618320000000!5m2!1spt-BR!2sbr"
-            width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-        </div>
-      </section>
-    </main>
-
-    <!-- @@include footer.html -->
-  </body>
+        const pagina = 'contato.html';
+        const texto = `Olá Nando! Vim pelo site (página: ${pagina}).\n\nNome: ${nome}\nWhatsApp: ${whats}\nInteresse: ${interesse}\n\nMensagem: ${mensagem||'—'}`;
+        const url = `https://wa.me/5521976950809?text=${encodeURIComponent(texto)}`;
+        location.href = url;
+      });
+    })();
+  </script>
+</body>
 </html>
