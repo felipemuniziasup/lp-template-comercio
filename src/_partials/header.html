@@ -1,55 +1,22 @@
-<!-- HEADER PARCIAL (logo + navegação + busca + voltar) -->
-<header class="sticky top-0 z-40 bg-white/80 backdrop-blur border-b border-slate-200">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
-    <!-- Botão Voltar (esconde na home) -->
-    <button id="btnBack"
-            class="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50"
-            title="Voltar"
-            onclick="(history.length>1)?history.back():location.assign('/')">
-      ←
-    </button>
+<!-- HEADER simples só para validar render -->
+<header class="bg-white/90 backdrop-blur border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
+    <a href="index.html" class="font-extrabold text-slate-900">Nando Importados</a>
 
-    <!-- Logo -->
-    <a href="/" class="flex items-center gap-3" aria-label="Página inicial">
-      <img src="/assets/logo-monogram-192.png" alt="Nando Importados" class="h-9 w-9 rounded-xl">
-      <img src="/assets/logo-wordmark.png" alt="Nando Importados" class="h-6 hidden sm:block">
-    </a>
-
-    <!-- Navegação -->
-    <nav class="ml-auto hidden md:flex items-center gap-6 text-sm">
-      <a href="/celulares.html" class="hover:text-blue-700">Celulares</a>
-      <a href="/perfumes.html" class="hover:text-blue-700">Perfumes</a>
-      <a href="/tudo.html" class="hover:text-blue-700">Tudo</a>
-    </nav>
-
-    <!-- Busca global (manda para /tudo.html?q=...) -->
-    <form action="/tudo.html" method="GET" class="ml-3 flex-1 max-w-md">
-      <div class="relative">
-        <input name="q" type="search" placeholder="Buscar produto..."
-               class="w-full rounded-full border border-slate-200 px-4 py-2 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        <button class="absolute right-1 top-1/2 -translate-y-1/2 px-3 py-1.5 text-sm rounded-full bg-blue-600 text-white hover:bg-blue-700">Buscar</button>
-      </div>
+    <form action="tudo.html" method="get" class="hidden sm:flex items-center gap-2">
+      <input
+        name="q"
+        class="px-3 py-1.5 rounded-lg border border-slate-300 text-sm"
+        placeholder="Buscar no catálogo"
+      />
+      <button class="px-3 py-1.5 rounded-lg bg-slate-900 text-white text-sm">Buscar</button>
     </form>
 
-    <!-- CTA WhatsApp -->
-    <a href="https://wa.me/5521976950809?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20ver%20as%20ofertas."
-       target="_blank" rel="noopener"
-       class="ml-3 inline-flex items-center gap-2 px-3 py-2 rounded-full text-white font-extrabold
-              border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
-              bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
-              hover:brightness-110">
-      <span class="w-5 h-5 rounded-full grid place-items-center bg-white/20 border border-white/40"></span>
-      WhatsApp
-    </a>
+    <nav class="hidden md:flex items-center gap-4 text-sm">
+      <a class="hover:underline" href="celulares.html">Celulares</a>
+      <a class="hover:underline" href="perfumes.html">Perfumes</a>
+      <a class="hover:underline" href="tudo.html">Tudo</a>
+      <a class="hover:underline" href="contato.html">Contato</a>
+    </nav>
   </div>
 </header>
-
-<script>
-  // Esconde o botão de voltar quando estiver na home
-  (function(){
-    const p = location.pathname.replace(/\/+$/,'').toLowerCase();
-    const isHome = (p === '' || p === '/' || p.endsWith('/index.html'));
-    const el = document.getElementById('btnBack');
-    if (el && !isHome) el.classList.remove('hidden');
-  })();
-</script>

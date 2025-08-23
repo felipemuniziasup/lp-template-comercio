@@ -1,29 +1,65 @@
-<!-- HEAD PARCIAL (premium + CDN Tailwind + CSS próprio) -->
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Nando Importados — Celulares & Perfumes</title>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<!-- SEO básico -->
-<link rel="canonical" href="/" />
-<meta name="robots" content="index,follow" />
-<meta name="description" content="Celulares e perfumes importados — originais, com nota fiscal, garantia e entrega rápida. Fale no WhatsApp e confira as ofertas.">
-<meta property="og:title" content="Nando Importados — Celulares & Perfumes">
-<meta property="og:description" content="Importados originais com nota e garantia. Veja ofertas e fale no WhatsApp.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="/assets/logo-monogram-512.png">
-<meta name="theme-color" content="#0f172a">
+  <title>Nando Importados</title>
+  <meta name="description" content="Celulares e perfumes com NF e garantia." />
 
-<!-- PWA -->
-<link rel="manifest" href="/manifest.webmanifest">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/assets/logo-monogram-192.png">
-<link rel="apple-touch-icon" href="/assets/logo-monogram-512.png">
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- Fonte + Tailwind CDN -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
+  <!-- Fallback: se o Tailwind não carregar, liga o Twind shim -->
+  <script>
+    (function () {
+      var tried = false;
+      function ensure() {
+        if (window.tailwind || tried) return;
+        tried = true;
+        var s = document.createElement('script');
+        s.type = 'module';
+        s.src = 'https://cdn.skypack.dev/twind/shim';
+        document.head.appendChild(s);
+        console.log('[fallback] Twind shim carregado');
+      }
+      setTimeout(ensure, 500);
+      window.addEventListener('load', ensure);
+    })();
+  </script>
 
-<!-- CSS do tema (caminho absoluto para funcionar no site e no Live Server) -->
-<link rel="stylesheet" href="/assets/css/theme.css" />
+  <!-- Ícones / manifesto -->
+  <link rel="icon" href="assets/favicon.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="manifest.webmanifest" />
+
+  <!-- Seu CSS opcional -->
+  <link rel="stylesheet" href="assets/css/theme.css" />
+
+  <!-- ================== Integração com Planilha ================== -->
+  <script>
+    // 🔗 link publicado da sua planilha (já no formato CSV)
+    const PLANILHA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTWCKrvP5DymUqQisodxJtLRHzsTuCGp4zKFfjnPLecA7K0koMHaZW6Av9sD_EPUaJGfsMIzxXp6mQ/pub?output=csv";
+
+    // Função global para carregar produtos
+    async function carregarProdutos() {
+      try {
+        const resp = await fetch(PLANILHA_URL);
+        const texto = await resp.text();
+
+        // Converte CSV → array de objetos
+        const linhas = texto.trim().split("\n").map(l => l.split(","));
+        const cabecalho = linhas[0].map(h => h.trim().toLowerCase());
+        const dados = linhas.slice(1).map(linha => {
+          let obj = {};
+          cabecalho.forEach((chave, i) => obj[chave] = (linha[i] || "").trim());
+          return obj;
+        });
+
+        console.log("[Produtos carregados]", dados);
+        return dados;
+      } catch (err) {
+        console.error("Erro ao carregar planilha:", err);
+        return [];
+      }
+    }
+  </script>
+</head>
