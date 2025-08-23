@@ -2,13 +2,35 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Nando Importados</title>
-  <meta name="description" content="Celulares e perfumes com NF e garantia." />
+  <title>Nando Importados — Celulares e Perfumes com NF e Garantia</title>
+  <meta name="description" content="Catálogo atualizado de celulares e perfumes originais com NF e 90 dias de garantia. Atendimento rápido no WhatsApp." />
+  <link rel="canonical" href="https://lp-template-comercio.pages.dev/" />
 
-  <!-- Tailwind via CDN -->
+  <!-- SEO base -->
+  <meta name="theme-color" content="#0ea5e9" />
+  <meta name="robots" content="index,follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Nando Importados — Ofertas selecionadas" />
+  <meta property="og:description" content="Celulares e perfumes com NF e garantia. Fale no WhatsApp e receba ofertas de hoje." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lp-template-comercio.pages.dev/" />
+  <meta property="og:image" content="https://lp-template-comercio.pages.dev/assets/og-cover.jpg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Nando Importados" />
+  <meta name="twitter:description" content="Catálogo atualizado com atendimento via WhatsApp." />
+  <meta name="twitter:image" content="https://lp-template-comercio.pages.dev/assets/og-cover.jpg" />
+
+  <!-- Pré-conexões/Performance -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <!-- Se você usar o Apps Script, coloque também um dns-prefetch para o domínio do seu Web App -->
+  <!-- <link rel="dns-prefetch" href="https://script.google.com"> -->
+
+  <!-- Tailwind via CDN (com fallback Twind) -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Fallback: se o Tailwind não carregar, liga o Twind shim -->
   <script>
     (function () {
       var tried = false;
@@ -26,40 +48,27 @@
     })();
   </script>
 
-  <!-- Ícones / manifesto -->
+  <!-- Manifesto / Ícones -->
   <link rel="icon" href="assets/favicon.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/pwa-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
 
-  <!-- Seu CSS opcional -->
+  <!-- CSS do tema (build copia pra dist/assets/css/theme.css) -->
   <link rel="stylesheet" href="assets/css/theme.css" />
 
-  <!-- ================== Integração com Planilha ================== -->
-  <script>
-    // 🔗 link publicado da sua planilha (já no formato CSV)
-    const PLANILHA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTWCKrvP5DymUqQisodxJtLRHzsTuCGp4zKFfjnPLecA7K0koMHaZW6Av9sD_EPUaJGfsMIzxXp6mQ/pub?output=csv";
-
-    // Função global para carregar produtos
-    async function carregarProdutos() {
-      try {
-        const resp = await fetch(PLANILHA_URL);
-        const texto = await resp.text();
-
-        // Converte CSV → array de objetos
-        const linhas = texto.trim().split("\n").map(l => l.split(","));
-        const cabecalho = linhas[0].map(h => h.trim().toLowerCase());
-        const dados = linhas.slice(1).map(linha => {
-          let obj = {};
-          cabecalho.forEach((chave, i) => obj[chave] = (linha[i] || "").trim());
-          return obj;
-        });
-
-        console.log("[Produtos carregados]", dados);
-        return dados;
-      } catch (err) {
-        console.error("Erro ao carregar planilha:", err);
-        return [];
-      }
-    }
+  <!-- JSON-LD básico (ajuda no SEO de marca) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"Nando Importados",
+    "url":"https://lp-template-comercio.pages.dev/",
+    "logo":"https://lp-template-comercio.pages.dev/assets/logo-monogram-512.png",
+    "sameAs":[]
+  }
   </script>
+
+  <!-- Analytics leve (Plausible – opcional; se não usar, remova) -->
+  <!-- <script defer data-domain="lp-template-comercio.pages.dev" src="https://plausible.io/js/script.js"></script> -->
 </head>
