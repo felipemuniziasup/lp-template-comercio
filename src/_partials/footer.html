@@ -1,29 +1,97 @@
-<footer class="bg-white border-t border-slate-200 mt-12">
-  <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
-    <!-- Logo + descrição -->
-    <div class="flex items-center gap-2">
-      <img src="assets/logo-monogram-192.png" alt="Nando Importados" class="w-8 h-8">
-      <span class="font-semibold text-slate-900">Nando Importados</span>
+<!-- ===================== FOOTER ===================== -->
+<footer class="mt-16">
+  <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 text-slate-100">
+    <div class="max-w-6xl mx-auto px-4 py-10 grid gap-8 md:grid-cols-3">
+      <!-- Bloco 1: Marca -->
+      <div>
+        <div class="flex items-center gap-3">
+          <img src="assets/logo-monogram-512.png" alt="Nando Importados" class="w-10 h-10 rounded-md">
+          <span class="font-extrabold text-lg tracking-tight">Nando Importados</span>
+        </div>
+        <p class="mt-3 text-sm text-slate-300">
+          Celulares e perfumes com nota fiscal e garantia. Atendimento rápido e pagamento facilitado.
+        </p>
+      </div>
+
+      <!-- Bloco 2: Links -->
+      <div class="grid grid-cols-2 gap-6">
+        <div>
+          <h4 class="font-semibold mb-2">Páginas</h4>
+          <ul class="space-y-1 text-slate-300">
+            <li><a href="index.html" class="hover:text-white">Início</a></li>
+            <li><a href="tudo.html" class="hover:text-white">Catálogo completo</a></li>
+            <li><a href="celulares.html" class="hover:text-white">Celulares</a></li>
+            <li><a href="perfumes.html" class="hover:text-white">Perfumes</a></li>
+            <li><a href="sobre.html" class="hover:text-white">Sobre</a></li>
+            <li><a href="condicoes.html" class="hover:text-white">Políticas</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-2">Contato</h4>
+          <ul class="space-y-1 text-slate-300">
+            <li>WhatsApp: <a href="https://wa.me/5521976950809" target="_blank" rel="noopener" class="hover:text-white">(+55) 21 97695-0809</a></li>
+            <li><a href="contato.html" class="hover:text-white">Formulário de contato</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bloco 3: Pagamento/segurança -->
+      <div>
+        <h4 class="font-semibold mb-2">Pagamentos</h4>
+        <p class="text-sm text-slate-300">PIX, cartão em até 12x (consulte taxas) e boleto.</p>
+        <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-400">
+          <span class="px-2 py-1 rounded border border-white/10 bg-white/5">PIX</span>
+          <span class="px-2 py-1 rounded border border-white/10 bg-white/5">Visa</span>
+          <span class="px-2 py-1 rounded border border-white/10 bg-white/5">Mastercard</span>
+          <span class="px-2 py-1 rounded border border-white/10 bg-white/5">Elo</span>
+        </div>
+      </div>
     </div>
-    <p class="text-sm text-slate-500 text-center md:text-left">
-      © 2025 Nando Importados — NF e garantia.
-    </p>
-    <nav class="flex gap-4 text-sm text-slate-600">
-      <a href="condicoes.html" class="hover:text-slate-900">Políticas</a>
-      <a href="contato.html" class="hover:text-slate-900">Contato</a>
-    </nav>
+
+    <div class="border-t border-white/10">
+      <div class="max-w-6xl mx-auto px-4 py-4 text-center">
+        <p class="text-sm text-slate-400">
+          © <span id="yearNow"></span> Nando Importados. Todos os direitos reservados.
+        </p>
+      </div>
+    </div>
   </div>
 </footer>
+<!-- ===================== /FOOTER ===================== -->
 
-<!-- FAB WhatsApp -->
-<a id="whatsappFab"
-   href="https://wa.me/5521976950809?text=Ol%C3%A1!%20Estou%20no%20site%20Nando%20Importados%20e%20preciso%20de%20atendimento."
-   target="_blank" rel="noopener"
-   class="whatsapp-fab"
+<!-- ===================== FAB WHATSAPP (fixo, glow, maior) ===================== -->
+<a id="fabWhats"
+   class="fab-whatsapp"
+   href="https://wa.me/5521976950809"
+   target="_blank"
+   rel="noopener"
    aria-label="Falar no WhatsApp">
-  <!-- Ícone oficial WhatsApp (maior) -->
-  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="white">
-    <path
-      d="M12 .5C5.65.5.5 5.65.5 12c0 2.11.55 4.07 1.52 5.77L.5 23.5l5.92-1.55A11.44 11.44 0 0 0 12 23.5c6.35 0 11.5-5.15 11.5-11.5S18.35.5 12 .5zm0 21c-1.9 0-3.68-.52-5.22-1.43l-.37-.22-3.5.92.94-3.41-.24-.35a9.45 9.45 0 0 1-1.61-5.01c0-5.26 4.26-9.52 9.5-9.52s9.5 4.26 9.5 9.52-4.26 9.5-9.5 9.5zm5.32-7.1c-.29-.15-1.7-.84-1.96-.94-.26-.1-.45-.15-.64.14s-.74.94-.9 1.13c-.17.19-.33.22-.61.08-.29-.14-1.21-.45-2.3-1.45-.85-.76-1.43-1.7-1.6-1.98-.17-.29-.02-.45.13-.59.14-.14.29-.33.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.64-1.54-.88-2.1-.23-.55-.47-.48-.64-.48-.17 0-.36-.02-.55-.02s-.5.07-.76.36c-.26.29-1 .98-1 2.39s1.02 2.77 1.16 2.96c.14.19 2 3.05 4.85 4.28.68.29 1.21.46 1.62.59.68.22 1.3.19 1.79.12.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33z" />
-  </svg>
+  <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
 </a>
+
+<!-- Font Awesome (ícones) -->
+<script src="https://kit.fontawesome.com/4f254df8b0.js" crossorigin="anonymous"></script>
+
+<!-- Script utilidades Footer/FAB -->
+<script>
+  (function () {
+    // ano automático
+    var y = document.getElementById('yearNow');
+    if (y) y.textContent = new Date().getFullYear();
+
+    // Mensagem dinâmica para o WhatsApp com título e caminho da página
+    var phone = '5521976950809';
+    var pageTitle =
+      (document.querySelector('main h1, section h1, h1') && (document.querySelector('main h1, section h1, h1').textContent || '')) ||
+      document.title || 'Página';
+    pageTitle = pageTitle.trim();
+
+    var path = location.pathname.replace(/^\/+/, '') || 'index.html';
+    var msg = `Olá! Estou no site Nando Importados, na página "${pageTitle}" (${path}). Preciso de atendimento.`;
+    var wa = document.getElementById('fabWhats');
+    if (wa) {
+      wa.href = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
+    }
+  })();
+</script>
+<!-- ===================== /FAB WHATSAPP ===================== -->
