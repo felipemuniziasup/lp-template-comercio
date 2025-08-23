@@ -1,4 +1,3 @@
-<!-- src/_partials/footer.html -->
 <footer class="mt-12 border-t border-slate-200/70 bg-white/60 backdrop-blur">
   <div class="max-w-6xl mx-auto px-4 py-6 flex items-center justify-between text-sm text-slate-600">
     <p>© 2025 Nando Importados — NF e garantia.</p>
@@ -6,47 +5,39 @@
   </div>
 </footer>
 
-<!-- FAB WhatsApp (único para todo o site) -->
-<a id="whatsappFab"
-   class="whatsapp-fab"
-   href="https://wa.me/5521976950809"
-   target="_blank" rel="noopener"
-   aria-label="Falar no WhatsApp">
-  <!-- Ícone WhatsApp (branco, GRANDE) -->
+<!-- FAB WhatsApp -->
+<a id="whatsappFab" class="whatsapp-fab" href="https://wa.me/5521976950809" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <!-- Ícone WhatsApp (branco, grande) -->
   <svg viewBox="0 0 32 32" width="30" height="30" fill="white" aria-hidden="true">
-    <!-- logotipo oficial simplificado -->
+    <path d="M16 3.5c-7 0-12.5 5.4-12.5 12.1 0 2.2.6 4.2 1.7 6L4 28.5l7-1.9c1.7.9 3.6 1.4 5.6 1.4 7 0 12.5-5.4 12.5-12.1S23 3.5 16 3.5zm0 21c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-4.1 1.1 1.1-3.9-.3-.4c-1-1.6-1.5-3.4-1.5-5.3 0-5.6 4.7-10.1 10.3-10.1s10.3 4.6 10.3 10.1S21.6 24.5 16 24.5z"/>
     <path d="M19.11 17.41c-.29-.14-1.7-.84-1.96-.94-.26-.1-.45-.14-.64.14-.19.29-.74.94-.9 1.13-.17.19-.33.22-.61.08-.29-.14-1.21-.45-2.3-1.45-.85-.76-1.43-1.7-1.6-1.98-.17-.29-.02-.45.13-.59.14-.14.29-.33.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.64-1.54-.88-2.1-.23-.55-.47-.48-.64-.48-.17 0-.36-.02-.55-.02s-.5.07-.76.36c-.26.29-1 .98-1 2.39s1.02 2.77 1.16 2.96c.14.19 2 3.05 4.85 4.28.68.29 1.21.46 1.62.59.68.22 1.3.19 1.79.12.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33z"/>
-    <path d="M16 3.5c-7 0-12.5 5.4-12.5 12.1 0 2.2.6 4.2 1.7 6L4 28.5l7-1.9c1.7.9 3.6 1.4 5.6 1.4 7 0 12.5-5.4 12.5-12.1S23 3.5 16 3.5zm0 21c-1.8 0-3.6-.5-5.1-1.4l-.4-.2-4.1 1.1 1.1-3.9-.3-.4c-1-1.6-1.5-3.4-1.5-5.3 0-5.6 4.7-10.1 10.3-10.1s10.3 4.6 10.3 10.1S21.6 24.5 16 24.5z" fill="white"/>
   </svg>
 </a>
 
 <script>
   (function () {
-    const phone = '5521976950809';
-
-    function friendlyPageName() {
-      const p = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-      const map = {
-        'index.html':      'Página inicial',
-        'tudo.html':       'Catálogo completo',
-        'celulares.html':  'Categoria: Celulares',
-        'perfumes.html':   'Categoria: Perfumes',
-        'sobre.html':      'Página: Sobre',
-        'contato.html':    'Página: Contato',
-        'condicoes.html':  'Página: Políticas',
-        '404.html':        'Página: 404'
-      };
-      return map[p] || p.replace('.html','');
+    try {
+      var phone = '5521976950809';
+      function pageName() {
+        var p = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+        var map = {
+          'index.html': 'Página inicial',
+          'tudo.html': 'Catálogo completo',
+          'celulares.html': 'Categoria: Celulares',
+          'perfumes.html': 'Categoria: Perfumes',
+          'sobre.html': 'Página: Sobre',
+          'contato.html': 'Página: Contato',
+          'condicoes.html': 'Página: Políticas',
+          '404.html': 'Página: 404'
+        };
+        return map[p] || p.replace('.html','');
+      }
+      var msg = 'Olá, Nando! Vim pelo site. Estou em: ' + pageName() +
+                '. Preciso de atendimento sobre um produto — pode me ajudar?';
+      var a = document.getElementById('whatsappFab');
+      if (a) a.href = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
+    } catch (e) {
+      console.error('FAB init error', e);
     }
-
-    // Mensagem profissional (sem URL no corpo)
-    const msg = [
-      'Olá, Nando! Vim pelo site.',
-      'Estou em:', friendlyPageName() + '.',
-      'Preciso de atendimento sobre um produto — pode me ajudar?'
-    ].join(' ');
-
-    const a = document.getElementById('whatsappFab');
-    if (a) a.href = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
   })();
 </script>
