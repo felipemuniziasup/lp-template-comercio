@@ -5,85 +5,283 @@
   <body class="bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-800 antialiased">
     <!-- @include header.html -->
 
-    <!-- Hero da página -->
-    <section class="relative bg-gradient-to-r from-blue-700 via-indigo-700 to-sky-600 text-white">
-      <div class="max-w-6xl mx-auto px-4 py-16 text-center">
-        <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Celulares Importados</h1>
-        <p class="text-white/80 max-w-2xl mx-auto">
-          Modelos originais, novos e seminovos, com nota fiscal e garantia de 90 dias.
+    <!-- HERO -->
+    <section class="relative bg-gradient-to-r from-indigo-900 via-blue-800 to-cyan-700 text-white">
+      <div class="max-w-6xl mx-auto px-4 py-12 md:py-16">
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">Catálogo completo</h1>
+        <p class="mt-3 text-white/85 max-w-2xl">
+          Explore todos os produtos. Use a busca no topo ou os filtros abaixo para encontrar rápido.
         </p>
+
+        <!-- Filtros rápidos -->
+        <div class="mt-6 flex flex-wrap gap-2">
+          <button data-filter="all"
+                  class="px-3 py-1.5 rounded-full text-sm font-semibold bg-white/15 border border-white/25 hover:bg-white/25">
+            Todos
+          </button>
+          <button data-filter="celulares"
+                  class="px-3 py-1.5 rounded-full text-sm font-semibold bg-white/10 border border-white/20 hover:bg-white/25">
+            Celulares
+          </button>
+          <button data-filter="perfumes"
+                  class="px-3 py-1.5 rounded-full text-sm font-semibold bg-white/10 border border-white/20 hover:bg-white/25">
+            Perfumes
+          </button>
+          <!-- você pode adicionar mais categorias futuramente -->
+        </div>
+
+        <!-- Termo aplicado / limpar -->
+        <div id="activeQuery" class="mt-3 hidden text-sm">
+          <span class="opacity-80">Filtro:</span>
+          <span class="font-semibold" data-q></span>
+          <a href="tudo.html" class="ml-2 underline decoration-white/40 hover:decoration-white">Limpar</a>
+        </div>
       </div>
     </section>
 
-    <!-- Lista de celulares -->
-    <main class="max-w-6xl mx-auto px-4 py-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Produto 1 -->
-      <article class="bg-white rounded-2xl shadow hover:shadow-lg overflow-hidden border border-slate-200 transition">
-        <img src="assets/celulares/poco-x7-pro.jpg" alt="POCO X7 PRO" class="w-full h-52 object-cover"
-             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
-        <div class="p-5">
-          <h2 class="font-bold text-lg">POCO X7 PRO</h2>
-          <p class="text-sm text-slate-600">8GB · 256GB · Snapdragon 7s Gen 2</p>
-          <div class="mt-3">
-            <div class="text-xs text-slate-400 line-through">R$ 2.199</div>
-            <div class="text-xl font-extrabold text-blue-700">R$ 1.899</div>
-          </div>
-          <a href="https://wa.me/5521976950809?text=Tenho%20interesse%20no%20POCO%20X7%20PRO"
-             target="_blank" rel="noopener"
-             class="mt-4 inline-flex w-full justify-center items-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold
-                    border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
-                    bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
-                    hover:brightness-110 transition">
-            Comprar no WhatsApp
-          </a>
-        </div>
-      </article>
+    <!-- LISTA DE PRODUTOS -->
+    <main class="max-w-6xl mx-auto px-4 py-10">
+      <!-- Contagem -->
+      <div class="mb-4 text-sm text-slate-600">
+        <span id="countVisible">0</span> produto(s) exibido(s)
+      </div>
 
-      <!-- Produto 2 -->
-      <article class="bg-white rounded-2xl shadow hover:shadow-lg overflow-hidden border border-slate-200 transition">
-        <img src="assets/celulares/iphone-13.jpg" alt="iPhone 13" class="w-full h-52 object-cover"
-             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
-        <div class="p-5">
-          <h2 class="font-bold text-lg">iPhone 13</h2>
-          <p class="text-sm text-slate-600">128GB · Tela 6.1"</p>
-          <div class="mt-3">
-            <div class="text-xs text-slate-400 line-through">R$ 3.499</div>
-            <div class="text-xl font-extrabold text-blue-700">R$ 3.299</div>
-          </div>
-          <a href="https://wa.me/5521976950809?text=Tenho%20interesse%20no%20iPhone%2013%20128GB"
-             target="_blank" rel="noopener"
-             class="mt-4 inline-flex w-full justify-center items-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold
-                    border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
-                    bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
-                    hover:brightness-110 transition">
-            Comprar no WhatsApp
-          </a>
-        </div>
-      </article>
+      <div id="gridProdutos" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- ============ CARDS ============ -->
+        <!-- Cada card tem:
+             data-category="celulares|perfumes|..."  (filtro por categoria)
+             data-search="texto para busca"          (busca por nome, especificações, tags) -->
 
-      <!-- Produto 3 -->
-      <article class="bg-white rounded-2xl shadow hover:shadow-lg overflow-hidden border border-slate-200 transition">
-        <img src="assets/celulares/galaxy-a34.jpg" alt="Galaxy A34" class="w-full h-52 object-cover"
-             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
-        <div class="p-5">
-          <h2 class="font-bold text-lg">Galaxy A34</h2>
-          <p class="text-sm text-slate-600">128GB · Novo lacrado</p>
-          <div class="mt-3">
-            <div class="text-xs text-slate-400 line-through">R$ 1.699</div>
-            <div class="text-xl font-extrabold text-blue-700">R$ 1.499</div>
+        <!-- POCO X7 PRO -->
+        <article
+          class="bg-white rounded-2xl shadow hover:shadow-lg overflow-hidden border border-slate-200 transition"
+          data-category="celulares"
+          data-search="poco x7 pro 8gb 256gb snapdragon 7s gen 2 celular android smartphone">
+          <img src="assets/celulares/poco-x7-pro.jpg"
+               alt="POCO X7 PRO"
+               class="w-full h-52 object-cover"
+               onerror="this.onerror=null;this.src='assets/logo-monogram-512.png';this.style.objectFit='contain';this.style.padding='16px'">
+          <div class="p-5">
+            <h2 class="font-bold text-lg">POCO X7 PRO</h2>
+            <p class="text-sm text-slate-600">8GB · 256GB · Snapdragon 7s Gen 2</p>
+            <div class="mt-3">
+              <div class="text-xs text-slate-400 line-through">R$ 2.199</div>
+              <div class="text-xl font-extrabold text-blue-700">R$ 1.899</div>
+            </div>
+            <a href="https://wa.me/5521976950809?text=Tenho%20interesse%20no%20POCO%20X7%20PRO"
+               target="_blank" rel="noopener"
+               class="mt-4 inline-flex w-full justify-center items-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold
+                      border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
+                      bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
+                      hover:brightness-110 transition">
+              Comprar no WhatsApp
+            </a>
           </div>
-          <a href="https://wa.me/5521976950809?text=Tenho%20interesse%20no%20Galaxy%20A34"
-             target="_blank" rel="noopener"
-             class="mt-4 inline-flex w-full justify-center items-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold
-                    border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
-                    bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
-                    hover:brightness-110 transition">
-            Comprar no WhatsApp
-          </a>
+        </article>
+
+        <!-- iPhone 13 -->
+        <article
+          class="bg-white rounded-2xl shadow hover:shadow-lg overflow-hidden border border-slate-200 transition"
+          data-category="celulares"
+          data-search="iphone 13 128gb ios apple celular smartphone 6.1 polegadas">
+          <img src="assets/celulares/iphone-13.jpg"
+               alt="iPhone 13"
+               class="w-full h-52 object-cover"
+               onerror="this.onerror=null;this.src='assets/logo-monogram-512.png';this.style.objectFit='contain';this.style.padding='16px'">
+          <div class="p-5">
+            <h2 class="font-bold text-lg">iPhone 13</h2>
+            <p class="text-sm text-slate-600">128GB · Tela 6.1"</p>
+            <div class="mt-3">
+              <div class="text-xs text-slate-400 line-through">R$ 3.499</div>
+              <div class="text-xl font-extrabold text-blue-700">R$ 3.299</div>
+            </div>
+            <a href="https://wa.me/5521976950809?text=Tenho%20interesse%20no%20iPhone%2013%20128GB"
+               target="_blank" rel="noopener"
+               class="mt-4 inline-flex w-full justify-center items-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold
+                      border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
+                      bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
+                      hover:brightness-110 transition">
+              Comprar no WhatsApp
+            </a>
+          </div>
+        </article>
+
+        <!-- Galaxy A34 -->
+        <article
+          class="bg-white rounded-2xl shadow hover:shadow-lg overflow-hidden border border-slate-200 transition"
+          data-category="celulares"
+          data-search="samsung galaxy a34 128gb android celular smartphone">
+          <img src="assets/celulares/galaxy-a34.jpg"
+               alt="Galaxy A34"
+               class="w-full h-52 object-cover"
+               onerror="this.onerror=null;this.src='assets/logo-monogram-512.png';this.style.objectFit='contain';this.style.padding='16px'">
+          <div class="p-5">
+            <h2 class="font-bold text-lg">Galaxy A34</h2>
+            <p class="text-sm text-slate-600">128GB · Novo lacrado</p>
+            <div class="mt-3">
+              <div class="text-xs text-slate-400 line-through">R$ 1.699</div>
+              <div class="text-xl font-extrabold text-blue-700">R$ 1.499</div>
+            </div>
+            <a href="https://wa.me/5521976950809?text=Tenho%20interesse%20no%20Galaxy%20A34"
+               target="_blank" rel="noopener"
+               class="mt-4 inline-flex w-full justify-center items-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold
+                      border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
+                      bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
+                      hover:brightness-110 transition">
+              Comprar no WhatsApp
+            </a>
+          </div>
+        </article>
+
+        <!-- Dior Sauvage -->
+        <article
+          class="bg-white rounded-2xl shadow hover:shadow-lg overflow-hidden border border-slate-200 transition"
+          data-category="perfumes"
+          data-search="perfume dior sauvage 100ml eau de toilette masculino importado original">
+          <img src="assets/perfumes/dior-sauvage.jpg"
+               alt="Dior Sauvage 100ml"
+               class="w-full h-52 object-cover"
+               onerror="this.onerror=null;this.src='assets/logo-monogram-512.png';this.style.objectFit='contain';this.style.padding='16px'">
+          <div class="p-5">
+            <h2 class="font-bold text-lg">Dior Sauvage 100ml</h2>
+            <p class="text-sm text-slate-600">Eau de Toilette · Original lacrado</p>
+            <div class="mt-3">
+              <div class="text-xs text-slate-400 line-through">R$ 699</div>
+              <div class="text-xl font-extrabold text-blue-700">R$ 649</div>
+            </div>
+            <a href="https://wa.me/5521976950809?text=Tenho%20interesse%20no%20Dior%20Sauvage%20100ml"
+               target="_blank" rel="noopener"
+               class="mt-4 inline-flex w-full justify-center items-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold
+                      border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
+                      bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
+                      hover:brightness-110 transition">
+              Comprar no WhatsApp
+            </a>
+          </div>
+        </article>
+
+        <!-- Exemplo extra 1 -->
+        <article
+          class="bg-white rounded-2xl shadow hover:shadow-lg overflow-hidden border border-slate-200 transition"
+          data-category="perfumes"
+          data-search="versace dylan blue masculino perfume 100ml importado original">
+          <img src="assets/perfumes/versace-dylan-blue.jpg"
+               alt="Versace Dylan Blue"
+               class="w-full h-52 object-cover"
+               onerror="this.onerror=null;this.src='assets/logo-monogram-512.png';this.style.objectFit='contain';this.style.padding='16px'">
+          <div class="p-5">
+            <h2 class="font-bold text-lg">Versace Dylan Blue</h2>
+            <p class="text-sm text-slate-600">100ml · Masculino</p>
+            <div class="mt-3">
+              <div class="text-xs text-slate-400 line-through">R$ 599</div>
+              <div class="text-xl font-extrabold text-blue-700">R$ 549</div>
+            </div>
+            <a href="https://wa.me/5521976950809?text=Tenho%20interesse%20no%20Versace%20Dylan%20Blue"
+               target="_blank" rel="noopener"
+               class="mt-4 inline-flex w-full justify-center items-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold
+                      border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
+                      bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
+                      hover:brightness-110 transition">
+              Comprar no WhatsApp
+            </a>
+          </div>
+        </article>
+
+        <!-- Exemplo extra 2 -->
+        <article
+          class="bg-white rounded-2xl shadow hover:shadow-lg overflow-hidden border border-slate-200 transition"
+          data-category="celulares"
+          data-search="motorola moto g84 256gb 12gb ram android celular smartphone">
+          <img src="assets/celulares/moto-g84.jpg"
+               alt="Moto G84"
+               class="w-full h-52 object-cover"
+               onerror="this.onerror=null;this.src='assets/logo-monogram-512.png';this.style.objectFit='contain';this.style.padding='16px'">
+          <div class="p-5">
+            <h2 class="font-bold text-lg">Moto G84</h2>
+            <p class="text-sm text-slate-600">12GB · 256GB · 5G</p>
+            <div class="mt-3">
+              <div class="text-xs text-slate-400 line-through">R$ 1.899</div>
+              <div class="text-xl font-extrabold text-blue-700">R$ 1.699</div>
+            </div>
+            <a href="https://wa.me/5521976950809?text=Tenho%20interesse%20no%20Moto%20G84"
+               target="_blank" rel="noopener"
+               class="mt-4 inline-flex w-full justify-center items-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold
+                      border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
+                      bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
+                      hover:brightness-110 transition">
+              Comprar no WhatsApp
+            </a>
+          </div>
+        </article>
+        <!-- ============ /CARDS ============ -->
+      </div>
+
+      <!-- Estado vazio -->
+      <div id="emptyState" class="hidden mt-10 text-center text-slate-600">
+        <div class="inline-block px-4 py-2 rounded-full bg-slate-100 text-slate-700 font-medium">
+          Nenhum produto encontrado para <span class="font-semibold" data-q></span>.
         </div>
-      </article>
+        <div class="mt-3">
+          <a href="tudo.html" class="text-blue-700 underline">Limpar filtros</a>
+        </div>
+      </div>
     </main>
 
     <!-- @include footer.html -->
+
+    <!-- SCRIPT DE FILTRO (busca ?q= + botões de categoria) -->
+    <script>
+      (function catalogoFiltro() {
+        const params = new URLSearchParams(location.search);
+        const q = (params.get('q') || '').trim().toLowerCase();
+        const grid = document.getElementById('gridProdutos');
+        const cards = Array.from(grid.querySelectorAll('article[data-category]'));
+        const countEl = document.getElementById('countVisible');
+        const empty = document.getElementById('emptyState');
+        const activeQWrap = document.getElementById('activeQuery');
+        const qHolders = document.querySelectorAll('[data-q]');
+        const filterButtons = Array.from(document.querySelectorAll('button[data-filter]'));
+
+        let activeCategory = 'all';
+
+        // Aplica termo de busca (se existir)
+        if (q) {
+          activeQWrap.classList.remove('hidden');
+          qHolders.forEach(el => el.textContent = q);
+        }
+
+        // Clique nos botões de categoria
+        filterButtons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            activeCategory = btn.getAttribute('data-filter') || 'all';
+            // destaque visual simples
+            filterButtons.forEach(b => b.style.background = 'rgba(255,255,255,.10)');
+            btn.style.background = 'rgba(255,255,255,.22)';
+            aplicarFiltro();
+          });
+        });
+
+        function aplicarFiltro() {
+          let visible = 0;
+          cards.forEach(card => {
+            const cat = card.getAttribute('data-category');
+            const haystack = (card.getAttribute('data-search') || '').toLowerCase();
+
+            const passCat = (activeCategory === 'all') ? true : (cat === activeCategory);
+            const passQuery = q ? haystack.includes(q) : true;
+
+            const show = passCat && passQuery;
+            card.style.display = show ? '' : 'none';
+            if (show) visible++;
+          });
+
+          countEl.textContent = visible;
+          empty.classList.toggle('hidden', visible !== 0);
+          qHolders.forEach(el => el.textContent = q || '');
+        }
+
+        aplicarFiltro();
+      })();
+    </script>
   </body>
 </html>

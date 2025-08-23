@@ -1,20 +1,20 @@
-<!-- FOOTER PREMIUM (Nando) -->
-<footer class="bg-slate-950 text-white">
+<!-- FOOTER PARCIAL -->
+<footer class="bg-slate-950 text-white mt-10">
   <div class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-8">
     <div>
       <div class="flex items-center gap-3">
-        <img src="assets/logo-monogram-192.png" class="h-8 w-8 rounded-xl ring-1 ring-white/20" alt="">
-        <span class="brand text-xl font-extrabold">Nando Importados</span>
+        <img src="/assets/logo-monogram-192.png" class="h-8 w-8 rounded-xl" alt="">
+        <span class="text-xl font-extrabold">Nando Importados</span>
       </div>
       <p class="mt-3 text-sm text-white/70">Originais com nota e garantia. Entrega combinada.</p>
     </div>
     <div>
       <h4 class="font-semibold mb-3">Navegação</h4>
       <ul class="space-y-2 text-white/80 text-sm">
-        <li><a href="celulares.html" class="hover:underline">Celulares</a></li>
-        <li><a href="perfumes.html" class="hover:underline">Perfumes</a></li>
-        <li><a href="tudo.html" class="hover:underline">Tudo</a></li>
-        <li><a href="condicoes.html" class="hover:underline">Políticas</a></li>
+        <li><a href="/celulares.html" class="hover:underline">Celulares</a></li>
+        <li><a href="/perfumes.html" class="hover:underline">Perfumes</a></li>
+        <li><a href="/tudo.html" class="hover:underline">Tudo</a></li>
+        <li><a href="/condicoes.html" class="hover:underline">Políticas</a></li>
       </ul>
     </div>
     <div>
@@ -30,40 +30,6 @@
   </div>
 </footer>
 
-<!-- FAB WhatsApp -->
-<a class="fab-wa"
-   href="https://wa.me/5521976950809?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20ver%20as%20ofertas."
-   target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
-  <div class="ring" aria-hidden="true"></div>
-  <svg viewBox="0 0 32 32" width="22" height="22" fill="white">
-    <path d="M19.11 17.41c-.29-.14-1.7-.84-1.96-.94-.26-.1-.45-.14-.64.14-.19.29-.74.94-.9 1.13-.17.19-.33.22-.61.08-.29-.14-1.21-.45-2.3-1.45-.85-.76-1.43-1.7-1.6-1.98-.17-.29-.02-.45.13-.59.14-.14.29-.33.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.64-1.54-.88-2.1-.23-.55-.47-.48-.64-.48-.17 0-.36-.02-.55-.02s-.5.07-.76.36c-.26.29-1 .98-1 2.39s1.02 2.77 1.16 2.96c.14.19 2 3.05 4.85 4.28.68.29 1.21.46 1.62.59.68.22 1.3.19 1.79.12.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33zM16.02 28C9.39 28 4 22.62 4 16.02 4 9.39 9.39 4 16.02 4 22.62 4 28 9.39 28 16.02 28 22.62 22.62 28 16.02 28zm0-21.9c-5.48 0-9.93 4.45-9.93 9.92 0 1.79.48 3.53 1.39 5.05l-1.48 5.41 5.55-1.46c1.5.82 3.2 1.25 4.93 1.25 5.48 0 9.92-4.45 9.92-9.93S21.49 6.1 16.02 6.1z"/>
-  </svg>
-</a>
-
-<!-- Scripts globais (carregam em todas as páginas) -->
 <script>
-  // ano no rodapé
-  const y = document.getElementById('year'); if (y) y.textContent = new Date().getFullYear();
-
-  // Mostrar/ocultar botão Voltar no mobile
-  (function backButton(){
-    const btn = document.getElementById('btnBack');
-    if(!btn) return;
-    const canGoBack = window.history.length > 1;
-    btn.hidden = !canGoBack;
-    if (canGoBack) btn.addEventListener('click', () => window.history.back());
-  })();
-
-  // Busca global (leva para tudo.html?q=termo)
-  (function globalSearch(){
-    const form = document.getElementById('globalSearch');
-    const input = document.getElementById('searchInput');
-    if(!form || !input) return;
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const q = input.value.trim();
-      const url = q ? `tudo.html?q=${encodeURIComponent(q)}` : 'tudo.html';
-      window.location.href = url;
-    });
-  })();
+  document.getElementById('year').textContent = new Date().getFullYear();
 </script>
