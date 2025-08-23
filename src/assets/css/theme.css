@@ -93,38 +93,29 @@ header nav a:hover { color: #2563eb; }
   .site-footer .copy { flex-direction: column; text-align: center; }
 }
 
-/* ===============================
-   FAB WHATSAPP (flutuante global)
-   =============================== */
+/* ===== FAB WhatsApp (fixo, com glow) ===== */
 .fab-whatsapp{
   position: fixed !important;
   right: 1.2rem !important;
-  left: auto !important;
   bottom: 1.2rem !important;
-  width: 64px !important;
-  height: 64px !important;
-  border-radius: 50% !important;
-  display: grid !important;
-  place-items: center !important;
-  background: #25d366 !important;   /* verde oficial */
-  color: #fff !important;
-  font-size: 34px !important;        /* tamanho do ícone (aplica ao SVG via currentColor) */
-  border: 2px solid #fff !important;
-  box-shadow: 0 8px 26px rgba(0,0,0,.28) !important;
-  z-index: 9999 !important;
-  animation: pulseGlow 2s infinite !important;
-  transition: transform .2s !important;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #25D366; /* verde WhatsApp */
+  color: #fff;
+  font-size: 34px; /* ícone grande */
+  border: 2px solid #fff;
+  box-shadow: 0 6px 24px rgba(0,0,0,.25);
+  z-index: 9999;
+  animation: fabGlow 2s ease-in-out infinite;
+  transition: transform .2s ease-in-out, filter .2s ease-in-out;
 }
-.fab-whatsapp:hover{ transform: scale(1.08) !important; }
-.fab-whatsapp svg { width: 28px; height: 28px; }
+.fab-whatsapp:hover{ transform: scale(1.08); filter: brightness(1.06); }
 
-/* Glow pulsando */
-@keyframes pulseGlow{
-  0%   { box-shadow: 0 0 0 0 rgba(37,211,102,.75); }
-  60%  { box-shadow: 0 0 28px 18px rgba(37,211,102,0); }
-  100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+@keyframes fabGlow{
+  0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, .60), 0 8px 22px rgba(0,0,0,.25); }
+  40%  { box-shadow: 0 0 18px 12px rgba(37, 211, 102, .18), 0 8px 22px rgba(0,0,0,.25); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0), 0 8px 22px rgba(0,0,0,.25); }
 }
-
-/* Utilidades pequenas */
-.text-muted { color: #64748b; }
-.hidden { display: none !important; }
