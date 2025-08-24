@@ -1,139 +1,216 @@
-// ======= CONFIG =======
-const WEB_APP_ID = '1AbCdEfGhIjKlMnOpQrStUvWxYz1234567890'; // seu ID do Apps Script (Web App)
-const API_URL = `https://script.google.com/macros/s/${WEB_APP_ID}/exec`; // retorna JSON
-const CATEGORIES = ['celulares','perfumes']; // mapeadas no sheet
+// ====================================================================
+// produtos.js — NandoCatalog (dual-source: Planilha + Local)
+// Lê a planilha (todas as colunas) e/ou um array local e renderiza o grid
+// ====================================================================
 
-// ======= UTIL =======
-const pageName = location.pathname.split('/').pop() || 'index.html';
-const toBRL = (n)=> n ? n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'}) : '';
+(function () {
+  // =========================
+  // CONFIG
+  // =========================
+  // 1) Coloque aqui a URL do seu Google Apps Script (Web App) que retorna JSON
+  //    Formato esperado: array de objetos com colunas:
+  //    ID, Status, Categoria, Marca, Nome, Descricao, Preco, PrecoDe,
+  //    Destaque, ImagemURL, LinkWA, CreatedAt, UpdateAt
+  const SHEET_WEBAPP_URL = ""; // ex: "https://script.google.com/macros/s/AKfycbx.../exec"
+  // Se estiver vazio, o catálogo será apenas local (se definido).
 
-function buildWaText(prod) {
-  const base = `Olá Nando! Vim pelo site (${pageName}).`;
-  const prodTxt = prod ? `\n\nMe interessei por:\n• ${prod.nome}\n• ${prod.especificacoes||''}\n• Preço: ${prod.preco_final ? toBRL(prod.preco_final) : (prod.preco||'—')}` : '';
-  const ask = `\n\nPode me atender?`;
-  return encodeURIComponent(base + prodTxt + ask);
-}
+  // 2) Mapeamento de categorias aceitas (ajusta nomes se quiser)
+  const CATEGORY_ALIASES = {
+    celulares: ["celular", "celulares", "smartphone", "smartphones", "phone", "phones"],
+    perfumes: ["perfume", "perfumes", "fragrancia", "fragrâncias", "fragrance", "parfum", "eau"],
+    tudo: ["tudo", "catalogo", "catálogo", "todos", "all"],
+  };
 
-function createCard(p) {
-  const vendido = p.status === 'Vendido';
-  const destaque = p.tag === 'Destaque';
-  const precoDe = p.preco_de ? `<div class="text-xs text-slate-400 line-through">${toBRL(p.preco_de)}</div>` : '';
-  const preco = p.preco_final ? `<div class="text-xl font-extrabold text-blue-700">${toBRL(p.preco_final)}</div>` : '';
-  const badge = vendido ? `<span class="absolute top-2 left-2 bg-rose-600 text-white text-[11px] px-2 py-1 rounded-full">Vendido</span>`
-                        : (destaque ? `<span class="absolute top-2 left-2 bg-amber-500 text-white text-[11px] px-2 py-1 rounded-full">Destaque</span>` : '');
+  // =========================
+  // HELPERS
+  // =========================
+  const norm = (v) => (v == null ? "" : String(v).trim());
+  const lower = (v) => norm(v).toLowerCase();
+  const isTruthy = (v) => ["1", "true", "sim", "yes", "y"].includes(lower(v));
+  const moneyToNumber = (txt) => {
+    if (txt == null) return 0;
+    const s = String(txt).replace(/[^\d,.\-]/g, "");
+    // tenta "1.234,56" (BR) -> 1234.56
+    if (s.includes(",") && s.lastIndexOf(",") > s.lastIndexOf(".")) {
+      return Number(s.replace(/\./g, "").replace(",", "."));
+    }
+    return Number(s.replace(/,/g, ""));
+  };
+  const formatPriceBRL = (n) =>
+    isFinite(n) && n > 0
+      ? n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
+      : "";
 
-  const btn = vendido
-    ? `<button disabled class="inline-flex w-full justify-center items-center gap-2 mt-3 px-4 py-2.5 rounded-full bg-slate-300 text-slate-600 font-extrabold cursor-not-allowed">Indisponível</button>`
-    : `<a class="inline-flex w-full justify-center items-center gap-2 mt-3 px-4 py-2.5 rounded-full text-white font-extrabold
-                  border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
-                  bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
-                  hover:brightness-110 transition"
-          href="https://wa.me/5521976950809?text=${buildWaText(p)}" target="_blank" rel="noopener">
-          Comprar no WhatsApp
-       </a>`;
+  const inCategory = (itemCat, target) => {
+    const ic = lower(itemCat);
+    const tg = lower(target);
+    if (!ic || !tg) return false;
+    const aliases = CATEGORY_ALIASES[tg] || [tg];
+    return [ic, ic.replace(/s$/, "")].some((c) => aliases.includes(c));
+  };
 
-  return `
-  <article class="relative bg-white rounded-2xl shadow hover:shadow-lg overflow-hidden border border-slate-200 transition"
-           data-category="${(p.categoria||'').toLowerCase()}"
-           data-search="${(p.busca||'').toLowerCase()}">
-    ${badge}
-    <img src="${p.foto}" alt="${p.nome}" class="w-full h-52 object-cover"
-         onerror="this.onerror=null;this.src='assets/logo-monogram-512.png';this.style.objectFit='contain';this.style.padding='16px'">
-    <div class="p-5">
-      <h2 class="font-bold text-lg">${p.nome}</h2>
-      <p class="text-sm text-slate-600">${p.especificacoes||''}</p>
-      <div class="mt-3">
-        ${precoDe}
-        ${preco}
-      </div>
-      ${btn}
+  // Normaliza um registro bruto da planilha para o formato interno
+  function normalizeRow(row) {
+    return {
+      id: norm(row.ID),
+      status: lower(row.Status) || "ativo",
+      categoria: norm(row.Categoria),
+      marca: norm(row.Marca),
+      nome: norm(row.Nome),
+      descricao: norm(row.Descricao),
+      preco: moneyToNumber(row.Preco),
+      precoDe: moneyToNumber(row.PrecoDe),
+      destaque: isTruthy(row.Destaque),
+      img: norm(row.ImagemURL),
+      wa: norm(row.LinkWA),
+      createdAt: norm(row.CreatedAt),
+      updatedAt: norm(row.UpdateAt),
+      // para busca:
+      haystack: [
+        row.ID,
+        row.Categoria,
+        row.Marca,
+        row.Nome,
+        row.Descricao,
+        row.Preco,
+        row.PrecoDe,
+      ]
+        .map(norm)
+        .join(" ")
+        .toLowerCase(),
+    };
+  }
+
+  // Render de um card
+  function renderCard(p) {
+    const preco = formatPriceBRL(p.preco);
+    const precoDe = p.precoDe && p.precoDe > p.preco ? formatPriceBRL(p.precoDe) : "";
+    const searchAttr = [
+      p.nome,
+      p.descricao,
+      p.marca,
+      p.categoria,
+      preco,
+      precoDe,
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    const waHref =
+      p.wa ||
+      `https://wa.me/5521976950809?text=${encodeURIComponent(
+        `Olá, Nando! Vim pelo site e me interessei por: ${p.nome}. Pode me atender?`
+      )}`;
+
+    return `
+<article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+         data-brand="${lower(p.marca)}"
+         data-price="${p.preco || 0}"
+         data-new="${p.createdAt || ""}"
+         data-search="${searchAttr}">
+  <img src="${p.img || "assets/celulares/fallback-celular.jpg"}"
+       alt="${escapeHtml(p.nome)}"
+       class="w-full h-52 object-cover"
+       onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+  <div class="p-5">
+    <h2 class="font-bold text-lg">${escapeHtml(p.nome)}</h2>
+    <p class="text-sm text-slate-600">${escapeHtml(p.descricao || "")}</p>
+    <div class="mt-3">
+      ${precoDe ? `<div class="price-strike text-xs">${precoDe}</div>` : ""}
+      <div class="text-xl font-extrabold text-blue-700">${preco || ""}</div>
     </div>
-  </article>`;
-}
-
-async function fetchProdutos() {
-  try {
-    const res = await fetch(API_URL, {cache: 'no-store'});
-    if (!res.ok) throw new Error('API retornou erro');
-    const data = await res.json(); // espera array de produtos
-    return Array.isArray(data) ? data : (data.produtos || []);
-  } catch (err) {
-    console.warn('[produtos] Falha API, usando fallback se houver.', err);
-    // fallback mínimo (opcional): retorna vazio
-    return [];
+    <a class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)] bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)] hover:brightness-110 transition mt-4 w-full"
+       href="${waHref}" target="_blank" rel="noopener">
+       Falar no WhatsApp
+    </a>
+  </div>
+</article>`;
   }
-}
 
-function aplicarFiltroInicial(grid, cards) {
-  const params = new URLSearchParams(location.search);
-  const q = (params.get('q') || '').trim().toLowerCase();
-  let visible = 0;
-  cards.forEach(card=>{
-    const hay = (card.getAttribute('data-search')||'').toLowerCase();
-    const show = q ? hay.includes(q) : true;
-    card.style.display = show ? '' : 'none';
-    if (show) visible++;
-  });
-  const countEl = document.getElementById('countVisible');
-  const empty = document.getElementById('emptyState');
-  const qHolders = document.querySelectorAll('[data-q]');
-  if (countEl) countEl.textContent = visible;
-  if (empty) empty.classList.toggle('hidden', visible !== 0);
-  qHolders.forEach(el => el.textContent = q || '');
-}
-
-(async function initCatalog(){
-  const grids = document.querySelectorAll('#gridProdutos, #gridCelulares, #gridPerfumes');
-  if (!grids.length) return;
-  const produtos = await fetchProdutos();
-
-  // Render
-  grids.forEach(grid=>{
-    const destino = grid.id.includes('Celulares') ? 'celulares'
-                   : grid.id.includes('Perfumes') ? 'perfumes'
-                   : 'all';
-
-    const list = produtos.filter(p=>{
-      const cat = (p.categoria||'').toLowerCase();
-      if (destino==='all') return true;
-      return cat === destino;
-    });
-
-    grid.innerHTML = list.map(createCard).join('') || `
-      <div class="col-span-full text-center text-slate-600">Nenhum produto disponível no momento.</div>
-    `;
-  });
-
-  // Filtro inicial (q=)
-  document.querySelectorAll('#gridProdutos').forEach(grid=>{
-    const cards = Array.from(grid.querySelectorAll('article[data-category]'));
-    aplicarFiltroInicial(grid, cards);
-  });
-
-  // Botões de filtro (tudo.html)
-  const filterButtons = Array.from(document.querySelectorAll('button[data-filter]'));
-  if (filterButtons.length) {
-    let activeCategory = 'all';
-    filterButtons.forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        activeCategory = btn.getAttribute('data-filter')||'all';
-        filterButtons.forEach(b => b.style.background = 'rgba(255,255,255,.10)');
-        btn.style.background = 'rgba(255,255,255,.22)';
-        const grid = document.getElementById('gridProdutos');
-        if (!grid) return;
-        const cards = Array.from(grid.querySelectorAll('article[data-category]'));
-        let visible = 0;
-        cards.forEach(card=>{
-          const cat = card.getAttribute('data-category');
-          const show = (activeCategory==='all') ? true : (cat===activeCategory);
-          card.style.display = show ? '' : 'none';
-          if (show) visible++;
-        });
-        const countEl = document.getElementById('countVisible');
-        const empty = document.getElementById('emptyState');
-        if (countEl) countEl.textContent = visible;
-        if (empty) empty.classList.toggle('hidden', visible !== 0);
-      });
-    });
+  function escapeHtml(s) {
+    return String(s || "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
   }
+
+  // =========================
+  // FONTE: PLANILHA
+  // =========================
+  async function fetchSheet() {
+    if (!SHEET_WEBAPP_URL) return [];
+    try {
+      const res = await fetch(SHEET_WEBAPP_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error(res.status + " " + res.statusText);
+      const data = await res.json();
+      if (!Array.isArray(data)) return [];
+      return data
+        .map(normalizeRow)
+        .filter((p) => p.status === "ativo" && p.nome && p.categoria);
+    } catch (err) {
+      console.warn("[NandoCatalog] Falha ao ler planilha:", err);
+      return [];
+    }
+  }
+
+  // =========================
+  // FONTE: LOCAL (opcional)
+  // =========================
+  // Se quiser usar local, defina window.LOCAL_PRODUCTS = [ { … } ] antes deste arquivo
+  function fetchLocal() {
+    const arr = Array.isArray(window.LOCAL_PRODUCTS) ? window.LOCAL_PRODUCTS : [];
+    return arr
+      .map(normalizeRow)
+      .filter((p) => p.status === "ativo" && p.nome && p.categoria);
+  }
+
+  // =========================
+  // PÚBLICO
+  // =========================
+  async function renderCatalogSimple({ pageLabel = "Catálogo", categoria = "tudo" } = {}) {
+    // Carrega fontes
+    const [fromSheet, fromLocal] = await Promise.all([fetchSheet(), fetchLocal()]);
+    // Merge (sheet tem prioridade sobre local por ID, se ID coincidir)
+    const map = new Map();
+    for (const p of fromLocal) map.set(p.id || `${p.nome}|${p.img}`, p);
+    for (const p of fromSheet) map.set(p.id || `${p.nome}|${p.img}`, p);
+    let items = Array.from(map.values());
+
+    // Filtra por categoria se não for "tudo"
+    if (lower(categoria) !== "tudo") {
+      items = items.filter((p) => inCategory(p.categoria, categoria));
+    }
+
+    // Render no grid existente
+    const grid = document.getElementById("gridProdutos");
+    const countEl = document.getElementById("countVisible");
+    const empty = document.getElementById("emptyState");
+
+    if (!grid) {
+      console.warn("[NandoCatalog] gridProdutos não encontrado.");
+      return;
+    }
+
+    if (!items.length) {
+      grid.innerHTML = "";
+      if (empty) empty.classList.remove("hidden");
+      if (countEl) countEl.textContent = "0";
+      return;
+    }
+
+    // monta HTML
+    grid.innerHTML = items.map(renderCard).join("");
+    if (empty) empty.classList.add("hidden");
+    if (countEl) countEl.textContent = String(items.length);
+
+    // aplica filtros/ordenação já existentes na página (se houver)
+    // — seu script da página mantém os listeners; aqui não duplicamos nada.
+  }
+
+  // expõe global
+  window.NandoCatalog = {
+    renderCatalogSimple,
+  };
 })();
