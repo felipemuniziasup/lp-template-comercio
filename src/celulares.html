@@ -194,54 +194,53 @@
     </div>
 
     <!-- Linha 3: CONTROLES -->
-    <div class="flex flex-wrap items-center gap-2">
-      <!-- Reset (Todos) -->
-      <button id="btnAll" class="chip active">Todos</button>
+<div class="flex flex-wrap items-center gap-2">
+  <!-- Reset (Todos) -->
+  <button id="btnAll" class="chip active">Todos</button>
 
-      <!-- Marca -->
-      <label class="sr-only" for="brand">Marca</label>
-      <select id="brand" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm">
-        <option value="all">Todas as marcas</option>
-        <option value="apple">Apple</option>
-        <option value="samsung">Samsung</option>
-        <option value="xiaomi">Xiaomi</option>
-        <option value="motorola">Motorola</option>
-        <option value="poco">POCO</option>
-      </select>
+  <!-- Marca -->
+  <label class="sr-only" for="brand">Marca</label>
+  <select id="brand" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm">
+    <option value="all">Todas as marcas</option>
+    <option value="apple">Apple</option>
+    <option value="samsung">Samsung</option>
+    <option value="xiaomi">Xiaomi</option>
+    <option value="motorola">Motorola</option>
+    <option value="poco">POCO</option>
+  </select>
 
-      <!-- Preço -->
-      <label class="sr-only" for="price">Faixa de preço</label>
-      <select id="price" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm">
-        <option value="all">Todos os preços</option>
-        <option value="<=2000">Até R$ 1.999</option>
-        <option value=">=2000">R$ 2.000+</option>
-      </select>
+  <!-- Preço -->
+  <label class="sr-only" for="price">Faixa de preço</label>
+  <select id="price" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm">
+    <option value="all">Todos os preços</option>
+    <option value="<=2000">Até R$ 1.999</option>
+    <option value=">=2000">R$ 2.000+</option>
+  </select>
 
-      <!-- Destaques -->
-      <button id="btnFeatured"
-              class="rounded-full border px-3 py-2 text-sm shadow-sm border-slate-300/70 bg-white hover:bg-slate-50"
-              data-featured="1">
-        Destaques
-      </button>
+  <!-- Destaques -->
+  <button id="btnFeatured"
+          class="rounded-full border px-3 py-2 text-sm shadow-sm border-slate-300/70 bg-white hover:bg-slate-50"
+          data-featured="1">
+    Destaques
+  </button>
 
-      <!-- Promoções -->
-      <button id="btnPromo"
-              class="rounded-full border px-3 py-2 text-sm shadow-sm border-slate-300/70 bg-white hover:bg-slate-50"
-              aria-pressed="false">
-        Promoções
-      </button>
+  <!-- Promoções -->
+  <button id="btnPromo"
+          class="rounded-full border px-3 py-2 text-sm shadow-sm border-slate-300/70 bg-white hover:bg-slate-50"
+          aria-pressed="false">
+    Promoções
+  </button>
 
-      <!-- Ordenação -->
-      <div class="ml-auto">
-        <label class="sr-only" for="sort">Ordenar</label>
-        <select id="sort" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm">
-          <option value="featured">Destaques (ordem padrão)</option>
-          <option value="price-asc">Menor preço</option>
-          <option value="price-desc">Maior preço</option>
-          <option value="newest">Mais novos</option>
-        </select>
-      </div>
-    </div>
+  <!-- Ordenação (agora ao lado de Promoções) -->
+  <label class="sr-only" for="sort">Ordenar</label>
+  <select id="sort" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm min-w-[180px]">
+    <option value="featured">Destaques (ordem padrão)</option>
+    <option value="price-asc">Menor preço</option>
+    <option value="price-desc">Maior preço</option>
+    <option value="newest">Mais novos</option>
+  </select>
+</div>
+
 
   </div>
 </section>
