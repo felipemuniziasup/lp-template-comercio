@@ -274,3 +274,22 @@ footer .payment-logos img:hover{ opacity:1; filter:none; }
 #catHero .hero-dot[aria-current="true"]{
   width: 12px; height: 12px; background: #fff;
 }
+/* Chips premium da toolbar */
+.chip{
+  border:1px solid #e6e8ec;
+  background:#f7f8fa;
+  color:#222;
+  padding:8px 14px;
+  border-radius:999px;
+  font-size:14px;
+  cursor:pointer;
+  transition:all .2s ease;
+  white-space:nowrap;
+}
+.chip:hover{ background:#eef2f7; }
+.chip.active{
+  background:#0a63ff;
+  border-color:#0a63ff;
+  color:#fff;
+  box-shadow:0 6px 16px rgba(10,99,255,.25);
+}
