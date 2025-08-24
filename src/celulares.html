@@ -28,7 +28,6 @@
   <!-- Pré-conexões/Performance -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
-  <!-- <link rel="dns-prefetch" href="https://script.google.com"> -->
 
   <!-- Tailwind via CDN (com fallback Twind) -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -138,17 +137,15 @@
     <ul id="catHeroSlides" class="absolute inset-0">
       <!-- SLIDE 1 -->
       <li class="absolute inset-0 opacity-100 transition-opacity duration-700">
-        <!-- teste com uma imagem que já existe -->
         <img
           src="assets/celulares/poco-x7-pro.jpg"
           alt="Teste carrossel"
           class="absolute inset-0 w-full h-full object-cover z-0"
           loading="eager" decoding="async" fetchpriority="high">
-        <!-- véu -->
         <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
       </li>
 
-      <!-- SLIDE 2 (deixe pronto para suas artes depois) -->
+      <!-- SLIDE 2 -->
       <li class="absolute inset-0 opacity-0 transition-opacity duration-700">
         <img src="assets/banners/celulares/hero-cel-2.jpg"
              alt="Ofertas premium"
@@ -177,15 +174,11 @@
 </section>
 <!-- ===================== /HERO ===================== -->
 
-<!-- ===================== HERO CELULARES ===================== -->
-
-<!-- ===================== /HERO ===================== -->
-
-<!-- ===================== TOOLBAR (BUSCA 100% + CTA + CHIPS) ===================== -->
+<!-- ===================== TOOLBAR (BUSCA 100% + CTA + CONTROLES) ===================== -->
 <section class="bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-slate-200 sticky top-14 z-40">
   <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3">
 
-    <!-- Linha 1: BUSCA LARGA (100%) -->
+    <!-- Linha 1: BUSCA LARGA -->
     <div class="relative w-full">
       <input id="search"
              class="w-full rounded-2xl border border-slate-300/70 bg-white px-5 py-3 pr-10 text-base focus:outline-none focus:ring-2 focus:ring-blue-500/25"
@@ -193,7 +186,7 @@
       <button id="searchClear" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500/70 hover:text-slate-700" aria-label="Limpar">✕</button>
     </div>
 
-    <!-- Linha 2: CTA WhatsApp (100%) -->
+    <!-- Linha 2: CTA WhatsApp -->
     <div>
       <a id="toolbarWA"
          class="inline-flex w-full items-center justify-center gap-2 px-5 py-3 rounded-full text-white font-extrabold border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)] bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)] hover:brightness-110 transition">
@@ -201,30 +194,47 @@
       </a>
     </div>
 
-    <!-- Linha 3: CHIPS (Marca + Preço + Destaques) -->
-    <div class="flex flex-wrap gap-2 overflow-x-auto -mx-1 px-1">
-      <!-- Marca -->
-      <button class="chip active" data-brand="all">Todos</button>
-      <button class="chip" data-brand="apple">Apple</button>
-      <button class="chip" data-brand="samsung">Samsung</button>
-      <button class="chip" data-brand="xiaomi">Xiaomi</button>
-      <button class="chip" data-brand="motorola">Motorola</button>
-      <button class="chip" data-brand="poco">POCO</button>
+    <!-- Linha 3: CONTROLES -->
+    <div class="flex flex-wrap items-center gap-2">
+      <!-- Reset (Todos) -->
+      <button id="btnAll" class="chip active">Todos</button>
 
-      <!-- Preço (somente 2 faixas) -->
-      <button class="chip" data-price-range="<=2000">Até R$ 1.999</button>
-      <button class="chip" data-price-range=">=2000">R$ 2.000+</button>
+      <!-- Marca -->
+      <label class="sr-only" for="brand">Marca</label>
+      <select id="brand" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm">
+        <option value="all">Todas as marcas</option>
+        <option value="apple">Apple</option>
+        <option value="samsung">Samsung</option>
+        <option value="xiaomi">Xiaomi</option>
+        <option value="motorola">Motorola</option>
+        <option value="poco">POCO</option>
+      </select>
+
+      <!-- Preço -->
+      <label class="sr-only" for="price">Faixa de preço</label>
+      <select id="price" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm">
+        <option value="all">Todos os preços</option>
+        <option value="<=2000">Até R$ 1.999</option>
+        <option value=">=2000">R$ 2.000+</option>
+      </select>
 
       <!-- Destaques -->
-      <button class="chip" data-featured="1">Destaques</button>
+      <button id="btnFeatured"
+              class="rounded-full border px-3 py-2 text-sm shadow-sm border-slate-300/70 bg-white hover:bg-slate-50"
+              data-featured="1">
+        Destaques
+      </button>
 
-      <!-- Ordenação (fica simples, sem tirar espaço da busca) -->
-      <select id="sort" class="ml-auto rounded-xl border border-slate-300/70 bg-white px-3 py-2 text-sm">
-        <option value="featured">Destaques (ordem padrão)</option>
-        <option value="price-asc">Menor preço</option>
-        <option value="price-desc">Maior preço</option>
-        <option value="newest">Mais novos</option>
-      </select>
+      <!-- Ordenação -->
+      <div class="ml-auto">
+        <label class="sr-only" for="sort">Ordenar</label>
+        <select id="sort" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm">
+          <option value="featured">Destaques (ordem padrão)</option>
+          <option value="price-asc">Menor preço</option>
+          <option value="price-desc">Maior preço</option>
+          <option value="newest">Mais novos</option>
+        </select>
+      </div>
     </div>
 
   </div>
@@ -458,24 +468,18 @@
     a.target = "_blank"; a.rel = "noopener";
   })();
 
-  // ========= <script>
-  // ========= BLOCO DE FILTROS (com preço + destaques) =========
+  // ========= BLOCO DE FILTROS (dropdowns + chip destaques) =========
   (function filtros(){
     // Helpers
     const moneyToNumber = (txt) => Number(String(txt||'').replace(/[^\d]/g,'')) || 0;
 
-    // Flags anti-loop
-    let isApplying = false;
-    let obsTimer = null;
-
-    // Estado inicial pela URL (mantemos compatível)
+    // Estado inicial (URL)
     const params = new URLSearchParams(location.search);
     let activeQuery = (params.get('q') || '').trim().toLowerCase();
     let activeBrand = (params.get('brand') || 'all').toLowerCase();
     let activeSort  = (params.get('sort')  || 'featured');
-    // Novos estados (podem vir via URL futuramente, mas por ora começam “sem filtro”)
-    let activePrice = 'all';     // 'all' | '<=2000' | '>=2000'
-    let featuredOnly = false;    // true = só data-featured="1"
+    let activePrice = 'all';      // 'all' | '<=2000' | '>=2000'
+    let featuredOnly = false;     // toggle
 
     // Elementos
     const grid = document.getElementById('gridProdutos');
@@ -485,9 +489,10 @@
     const search = document.getElementById('search');
     const searchClear = document.getElementById('searchClear');
     const sort = document.getElementById('sort');
-    const chipsBrand = Array.from(document.querySelectorAll('.chip[data-brand]'));
-    const chipsPrice = Array.from(document.querySelectorAll('.chip[data-price-range]'));
-    const chipFeatured = document.querySelector('.chip[data-featured="1"]');
+    const btnAll = document.getElementById('btnAll');
+    const selectBrand = document.getElementById('brand');
+    const selectPrice = document.getElementById('price');
+    const btnFeatured = document.getElementById('btnFeatured');
     const toolbarWA = document.getElementById('toolbarWA');
 
     // WA da toolbar
@@ -499,18 +504,18 @@
     // Hidratar UI
     if (search) search.value = activeQuery;
     if (sort) sort.value = activeSort;
-    chipsBrand.forEach(c => c.classList.toggle('active', (c.getAttribute('data-brand')||'') === activeBrand));
+    if (selectBrand) selectBrand.value = activeBrand;
+    if (selectPrice) selectPrice.value = activePrice;
     qHolders.forEach(el => el.textContent = activeQuery);
 
-    // Util: sempre ler os cards ATUAIS (após renderCatalogSimple)
+    // Util
     const getCards = () => Array.from(grid.querySelectorAll('article[data-brand]'));
 
     function syncURL(){
-      // Mantemos URL dos filtros originais (q, brand, sort).
       const p = new URLSearchParams(location.search);
       activeBrand ? p.set('brand', activeBrand) : p.delete('brand');
       activeQuery ? p.set('q', activeQuery) : p.delete('q');
-      activeSort  ? p.set('sort', activeSort)   : p.delete('sort');
+      activeSort  ? p.set('sort', activeSort) : p.delete('sort');
       history.replaceState(null, '', `${location.pathname}?${p.toString()}`);
     }
 
@@ -522,8 +527,6 @@
 
     function aplicar(){
       if (!grid) return;
-      if (isApplying) return;
-      isApplying = true;
 
       syncURL();
 
@@ -544,7 +547,7 @@
       });
       sorted.forEach(card => grid.appendChild(card));
 
-      // Filtro
+      // Filtros
       let visible = 0;
       cards.forEach(card=>{
         const br   = (card.getAttribute('data-brand') || '').toLowerCase();
@@ -565,41 +568,41 @@
       if (countEl) countEl.textContent = visible;
       if (empty) empty.classList.toggle('hidden', visible !== 0);
       qHolders.forEach(el => el.textContent = activeQuery || '');
-
-      isApplying = false;
     }
 
-    // Eventos — Marca
-    chipsBrand.forEach(btn => {
-      btn.addEventListener('click', () => {
-        activeBrand = btn.getAttribute('data-brand') || 'all';
-        chipsBrand.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+    // Eventos
+    if (btnAll) {
+      btnAll.addEventListener('click', () => {
+        activeBrand = 'all';
+        if (selectBrand) selectBrand.value = 'all';
         aplicar();
       });
-    });
+    }
 
-    // Eventos — Preço (2 faixas)
-    chipsPrice.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const val = btn.getAttribute('data-price-range');
-        // toggle: se clicar na mesma, desliga (volta 'all')
-        activePrice = (activePrice === val) ? 'all' : val;
-        chipsPrice.forEach(b => b.classList.toggle('active', b.getAttribute('data-price-range') === activePrice));
+    if (selectBrand) {
+      selectBrand.addEventListener('change', () => {
+        activeBrand = (selectBrand.value || 'all').toLowerCase();
         aplicar();
       });
-    });
+    }
 
-    // Evento — Destaques
-    if (chipFeatured) {
-      chipFeatured.addEventListener('click', () => {
+    if (selectPrice) {
+      selectPrice.addEventListener('change', () => {
+        activePrice = selectPrice.value || 'all';
+        aplicar();
+      });
+    }
+
+    if (btnFeatured) {
+      btnFeatured.addEventListener('click', () => {
         featuredOnly = !featuredOnly;
-        chipFeatured.classList.toggle('active', featuredOnly);
+        btnFeatured.classList.toggle('bg-sky-100', featuredOnly);
+        btnFeatured.classList.toggle('text-sky-800', featuredOnly);
+        btnFeatured.classList.toggle('border-sky-200', featuredOnly);
         aplicar();
       });
     }
 
-    // Busca
     let t=null;
     if (search) {
       search.addEventListener('input', () => {
@@ -619,16 +622,11 @@
       });
     }
 
-    // Ordenação
     if (sort) sort.addEventListener('change', () => { activeSort = sort.value; aplicar(); });
 
-    // Observer com throttle (anti-loop)
+    // Reaplicar quando o catálogo dinâmico alterar o grid
     if (grid) {
-      const mo = new MutationObserver(() => {
-        if (isApplying) return;
-        clearTimeout(obsTimer);
-        obsTimer = setTimeout(aplicar, 80);
-      });
+      const mo = new MutationObserver(() => aplicar());
       mo.observe(grid, { childList: true });
     }
 
