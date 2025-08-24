@@ -1,20 +1,146 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-@@include("_partials/head.html")
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Nando Importados — Celulares e Perfumes com NF e Garantia</title>
+  <meta name="description" content="Catálogo atualizado de celulares e perfumes originais com NF e 90 dias de garantia. Atendimento rápido no WhatsApp." />
+  <link rel="canonical" href="https://lp-template-comercio.pages.dev/" />
+
+  <!-- SEO base -->
+  <meta name="theme-color" content="#0ea5e9" />
+  <meta name="robots" content="index,follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Nando Importados — Ofertas selecionadas" />
+  <meta property="og:description" content="Celulares e perfumes com NF e garantia. Fale no WhatsApp e receba ofertas de hoje." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lp-template-comercio.pages.dev/" />
+  <meta property="og:image" content="https://lp-template-comercio.pages.dev/assets/og-cover.jpg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Nando Importados" />
+  <meta name="twitter:description" content="Catálogo atualizado com atendimento via WhatsApp." />
+  <meta name="twitter:image" content="https://lp-template-comercio.pages.dev/assets/og-cover.jpg" />
+
+  <!-- Pré-conexões/Performance -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <!-- <link rel="dns-prefetch" href="https://script.google.com"> -->
+
+  <!-- Tailwind via CDN (com fallback Twind) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    (function () {
+      var tried = false;
+      function ensure() {
+        if (window.tailwind || tried) return;
+        tried = true;
+        var s = document.createElement('script');
+        s.type = 'module';
+        s.src = 'https://cdn.skypack.dev/twind/shim';
+        document.head.appendChild(s);
+        console.log('[fallback] Twind shim carregado');
+      }
+      setTimeout(ensure, 500);
+      window.addEventListener('load', ensure);
+    })();
+  </script>
+
+  <!-- Manifesto / Ícones -->
+  <link rel="icon" href="assets/favicon.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/pwa-192.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+
+  <!-- CSS do tema -->
+  <link rel="stylesheet" href="assets/css/theme.css" />
+
+  <!-- JSON-LD básico -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"Nando Importados",
+    "url":"https://lp-template-comercio.pages.dev/",
+    "logo":"https://lp-template-comercio.pages.dev/assets/logo-monogram-512.png",
+    "sameAs":[]
+  }
+  </script>
+</head>
 
 <body class="bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-800 antialiased">
 
-  @@include("_partials/header.html")
+<header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200/60">
+  <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2">
+      <img src="assets/logo-monogram-512.png" alt="Nando" class="w-8 h-8 rounded-lg"/>
+      <span class="font-extrabold tracking-tight text-slate-900">Nando Importados</span>
+    </a>
 
-  <!-- ===================== HERO (Carrossel – Celulares) ===================== -->
+    <!-- Busca (apenas linka pro tudo com ?q=) -->
+    <form action="tudo.html" method="get" class="hidden md:flex items-center gap-2 w-[48%]">
+      <input name="q" type="search" placeholder="Buscar produtos…"
+             class="flex-1 rounded-xl border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400/50">
+      <button class="px-3 py-2 rounded-xl bg-sky-500 text-white font-semibold hover:brightness-110">Buscar</button>
+    </form>
+
+    <!-- Navegação -->
+    <nav class="hidden md:flex items-center gap-4">
+      <a href="tudo.html" class="px-3 py-1.5 rounded-lg font-semibold text-slate-700 hover:text-sky-600">Catálogo</a>
+      <a href="celulares.html" class="px-3 py-1.5 rounded-lg font-semibold text-slate-700 hover:text-sky-600">Celulares</a>
+      <a href="perfumes.html" class="px-3 py-1.5 rounded-lg font-semibold text-slate-700 hover:text-sky-600">Perfumes</a>
+      <a href="contato.html" class="px-3 py-1.5 rounded-lg font-semibold text-white bg-emerald-500 hover:brightness-110">Contato</a>
+    </nav>
+
+    <!-- Menu mobile -->
+    <button id="btnMenu" class="md:hidden p-2 rounded-lg border border-slate-200" aria-label="Abrir menu">☰</button>
+  </div>
+
+  <div id="mobileMenu" class="md:hidden hidden border-t border-slate-200 bg-white">
+    <div class="px-4 py-3 space-y-2">
+      <form action="tudo.html" class="flex items-center gap-2">
+        <input name="q" type="search" placeholder="Buscar produtos…"
+               class="flex-1 rounded-xl border border-slate-200 px-3 py-2 focus:outline-none">
+        <button class="px-3 py-2 rounded-xl bg-sky-500 text-white font-semibold">Buscar</button>
+      </form>
+      <a href="tudo.html" class="block px-3 py-2 rounded-lg font-semibold text-slate-700 hover:bg-slate-50">Catálogo</a>
+      <a href="celulares.html" class="block px-3 py-2 rounded-lg font-semibold text-slate-700 hover:bg-slate-50">Celulares</a>
+      <a href="perfumes.html" class="block px-3 py-2 rounded-lg font-semibold text-slate-700 hover:bg-slate-50">Perfumes</a>
+      <a href="contato.html" class="block px-3 py-2 rounded-lg font-semibold text-white bg-emerald-500">Contato</a>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const btn = document.getElementById('btnMenu');
+      const menu = document.getElementById('mobileMenu');
+      if(!btn || !menu) return;
+      btn.addEventListener('click', ()=> menu.classList.toggle('hidden'));
+      // marca ativo
+      const path = location.pathname.split('/').pop();
+      document.querySelectorAll('nav a, #mobileMenu a').forEach(a=>{
+        const href = a.getAttribute('href');
+        if (href && path === href) {
+          a.classList.add('text-sky-600');
+        }
+      });
+    })();
+  </script>
+</header>
+
+<!-- ===================== HERO (Carrossel – Celulares) ===================== -->
 <section id="catHero" class="relative overflow-hidden select-none">
-  <!-- Altura garantida por aspect ratio, sem depender de clamp -->
+  <!-- Altura garantida por aspect ratio -->
   <div class="relative w-full aspect-[21/9] md:aspect-[16/6] lg:aspect-[16/5]">
     <ul id="catHeroSlides" class="absolute inset-0">
       <!-- SLIDE 1 -->
       <li class="absolute inset-0 opacity-100 transition-opacity duration-700">
+        <!-- teste com uma imagem que já existe -->
         <img
-          src="assets/celulares/poco-x7-pro.jpg"  <!-- teste com uma imagem que já existe -->
+          src="assets/celulares/poco-x7-pro.jpg"
           alt="Teste carrossel"
           class="absolute inset-0 w-full h-full object-cover z-0"
           loading="eager" decoding="async" fetchpriority="high">
@@ -41,23 +167,6 @@
       </li>
     </ul>
 
-    <!-- CTA central -->
-    <div class="pointer-events-none absolute inset-0 grid place-items-center z-20">
-      <div class="pointer-events-auto">
-        <a href="https://wa.me/5521976950809?text=Ol%C3%A1%2C%20vi%20as%20ofertas%20na%20p%C3%A1gina%20*Celulares*%20e%20quero%20ajuda%20para%20escolher%20o%20melhor%20modelo.%20Pode%20me%20atender%3F"
-           target="_blank" rel="noopener"
-           class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-extrabold
-                  border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
-                  bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
-                  hover:brightness-110 transition">
-          <span class="w-7 h-7 rounded-full grid place-items-center bg-white/20 border border-white/40">
-            <svg viewBox="0 0 32 32" width="16" height="16" fill="white"><path d="M19.11 17.41c-.29-.14-1.7-.84-1.96-.94-.26-.1-.45-.14-.64.14-.19.29-.74.94-.9 1.13-.17.19-.33.22-.61.08-.29-.14-1.21-.45-2.3-1.45-.85-.76-1.43-1.7-1.6-1.98-.17-.29-.02-.45.13-.59.14-.14.29-.33.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.64-1.54-.88-2.1-.23-.55-.47-.48-.64-.48-.17 0-.36-.02-.55-.02s-.5.07-.76.36c-.26.29-1 .98-1 2.39s1.02 2.77 1.16 2.96c.14.19 2 3.05 4.85 4.28.68.29 1.21.46 1.62.59.68.22 1.3.19 1.79.12.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33z"/></svg>
-          </span>
-          Ver melhores ofertas no WhatsApp
-        </a>
-      </div>
-    </div>
-
     <!-- Dots -->
     <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-30">
       <button class="hero-dot" aria-current="true" aria-label="Slide 1"></button>
@@ -68,376 +177,422 @@
 </section>
 <!-- ===================== /HERO ===================== -->
 
-  <!-- ===================== HERO CELULARES ===================== -->
-  <section class="relative overflow-hidden bg-brand-gradient text-white">
-    <div class="max-w-6xl mx-auto px-4 py-10 md:py-14">
-      <nav class="text-sm text-white/80 mb-3">
-        <a href="index.html" class="hover:text-white">Início</a> <span class="opacity-70">/</span>
-        <span class="text-white font-medium">Celulares</span>
-      </nav>
-      <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">Celulares</h1>
-      <p class="mt-3 max-w-2xl text-white/90">
-        Modelos novos e seminovos com NF e garantia. Busque por marca, memória ou preço — e fale com a gente pelo WhatsApp.
-      </p>
+<!-- ===================== HERO CELULARES ===================== -->
+<section class="relative overflow-hidden bg-brand-gradient text-white">
+  <div class="max-w-6xl mx-auto px-4 py-10 md:py-14">
+    <nav class="text-sm text-white/80 mb-3">
+      <a href="index.html" class="hover:text-white">Início</a> <span class="opacity-70">/</span>
+      <span class="text-white font-medium">Celulares</span>
+    </nav>
+    <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight">Celulares</h1>
+    <p class="mt-3 max-w-2xl text-white/90">
+      Modelos novos e seminovos com NF e garantia. Busque por marca, memória ou preço — e fale com a gente pelo WhatsApp.
+    </p>
 
-      <!-- CTA rápido -->
-      <div class="mt-5">
-        <a data-wa
-           class="inline-flex items-center gap-2 px-5 py-3 rounded-full text-white font-extrabold
-                  border border-white/25 shadow-[0_12px_28px_rgba(16,185,129,.35)]
-                  bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
-                  hover:brightness-110 transition">
-          <span class="w-7 h-7 rounded-full grid place-items-center bg-white/20 border border-white/30">
-            <svg viewBox="0 0 32 32" width="16" height="16" fill="white"><path d="M19.11 17.41c-.29-.14-1.7-.84-1.96-.94-.26-.1-.45-.14-.64.14-.19.29-.74.94-.9 1.13-.17.19-.33.22-.61.08-.29-.14-1.21-.45-2.3-1.45-.85-.76-1.43-1.7-1.6-1.98-.17-.29-.02-.45.13-.59.14-.14.29-.33.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.64-1.54-.88-2.1-.23-.55-.47-.48-.64-.48-.17 0-.36-.02-.55-.02s-.5.07-.76.36c-.26.29-1 .98-1 2.39s1.02 2.77 1.16 2.96c.14.19 2 3.05 4.85 4.28.68.29 1.21.46 1.62.59.68.22 1.3.19 1.79.12.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33z"/></svg>
-          </span>
-          Ver melhores ofertas no WhatsApp
+    <!-- CTA rápido -->
+    <div class="mt-5">
+      <a data-wa
+         class="inline-flex items-center gap-2 px-5 py-3 rounded-full text-white font-extrabold
+                border border-white/25 shadow-[0_12px_28px_rgba(16,185,129,.35)]
+                bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
+                hover:brightness-110 transition">
+        <span class="w-7 h-7 rounded-full grid place-items-center bg-white/20 border border-white/30">
+          <svg viewBox="0 0 32 32" width="16" height="16" fill="white"><path d="M19.11 17.41c-.29-.14-1.7-.84-1.96-.94-.26-.1-.45-.14-.64.14-.19.29-.74.94-.9 1.13-.17.19-.33.22-.61.08-.29-.14-1.21-.45-2.3-1.45-.85-.76-1.43-1.7-1.6-1.98-.17-.29-.02-.45.13-.59.14-.14.29-.33.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.64-1.54-.88-2.1-.23-.55-.47-.48-.64-.48-.17 0-.36-.02-.55-.02s-.5.07-.76.36c-.26.29-1 .98-1 2.39s1.02 2.77 1.16 2.96c.14.19 2 3.05 4.85 4.28.68.29 1.21.46 1.62.59.68.22 1.3.19 1.79.12.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33z"/></svg>
+        </span>
+        Ver melhores ofertas no WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+<!-- ===================== /HERO ===================== -->
+
+<!-- ===================== BARRA DE FILTROS (STICKY) ===================== -->
+<section class="bg-white/75 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-slate-200 sticky top-14 z-40">
+  <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center gap-3">
+    <!-- Busca -->
+    <div class="relative flex-1 min-w-[220px]">
+      <input id="search"
+             class="w-full rounded-xl border border-slate-300/70 bg-white px-4 py-2.5 pr-9 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+             type="search" placeholder="Buscar por modelo, memória, cor... (ex: 256GB, 5G, iPhone)">
+      <svg class="absolute right-3 top-2.5 opacity-60" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m21 21-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="#334155" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </div>
+
+    <!-- Marcas -->
+    <div class="flex flex-wrap gap-2">
+      <button class="chip active" data-brand="all">Todos</button>
+      <button class="chip" data-brand="apple">Apple</button>
+      <button class="chip" data-brand="samsung">Samsung</button>
+      <button class="chip" data-brand="xiaomi">Xiaomi</button>
+      <button class="chip" data-brand="motorola">Motorola</button>
+      <button class="chip" data-brand="poco">POCO</button>
+    </div>
+
+    <!-- Ordenação -->
+    <div class="ml-auto">
+      <select id="sort" class="rounded-xl border border-slate-300/70 bg-white px-3 py-2 text-sm">
+        <option value="featured">Destaques</option>
+        <option value="price-asc">Menor preço</option>
+        <option value="price-desc">Maior preço</option>
+        <option value="newest">Mais novos</option>
+      </select>
+    </div>
+  </div>
+</section>
+<!-- ===================== /FILTROS ===================== -->
+
+<!-- ===================== GRID DE PRODUTOS ===================== -->
+<main class="max-w-6xl mx-auto px-4 py-8">
+  <div class="mb-4 text-sm text-slate-600">
+    <span id="countVisible">0</span> modelo(s) encontrado(s)
+    · <a href="tudo.html" class="text-blue-700 underline underline-offset-2">Ver catálogo completo</a>
+  </div>
+
+  <div id="gridProdutos" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- ======= CARDS ======= -->
+
+    <!-- POCO X7 PRO -->
+    <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+             data-brand="poco" data-price="1899" data-new="2024-03-01"
+             data-search="poco x7 pro 8gb 256gb snapdragon 7s gen 2 5g android">
+      <img src="assets/celulares/poco-x7-pro.jpg" alt="POCO X7 PRO"
+           class="w-full h-52 object-cover"
+           onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+      <div class="p-5">
+        <h2 class="font-bold text-lg">POCO X7 PRO</h2>
+        <p class="text-sm text-slate-600">8GB · 256GB · Snapdragon 7s Gen 2</p>
+        <div class="mt-3">
+          <div class="price-strike text-xs">R$ 2.199</div>
+          <div class="text-xl font-extrabold text-blue-700">R$ 1.899</div>
+        </div>
+        <a class="btn-wa mt-4 w-full" data-wa-product="POCO X7 PRO">Falar no WhatsApp</a>
+      </div>
+    </article>
+
+    <!-- iPhone 13 -->
+    <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+             data-brand="apple" data-price="3299" data-new="2023-10-01"
+             data-search="iphone 13 128gb ios apple 6.1 polegadas">
+      <img src="assets/celulares/iphone-13.jpg" alt="iPhone 13 128GB"
+           class="w-full h-52 object-cover"
+           onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+      <div class="p-5">
+        <h2 class="font-bold text-lg">iPhone 13 (128GB)</h2>
+        <p class="text-sm text-slate-600">Tela 6.1&quot; · Câmera dupla</p>
+        <div class="mt-3">
+          <div class="price-strike text-xs">R$ 3.499</div>
+          <div class="text-xl font-extrabold text-blue-700">R$ 3.299</div>
+        </div>
+        <a class="btn-wa mt-4 w-full" data-wa-product="iPhone 13 128GB">Falar no WhatsApp</a>
+      </div>
+    </article>
+
+    <!-- Galaxy A34 -->
+    <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+             data-brand="samsung" data-price="1499" data-new="2024-02-01"
+             data-search="samsung galaxy a34 128gb android 5g">
+      <img src="assets/celulares/galaxy-a34.jpg" alt="Galaxy A34"
+           class="w-full h-52 object-cover"
+           onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+      <div class="p-5">
+        <h2 class="font-bold text-lg">Galaxy A34</h2>
+        <p class="text-sm text-slate-600">128GB · Novo lacrado</p>
+        <div class="mt-3">
+          <div class="price-strike text-xs">R$ 1.699</div>
+          <div class="text-xl font-extrabold text-blue-700">R$ 1.499</div>
+        </div>
+        <a class="btn-wa mt-4 w-full" data-wa-product="Galaxy A34 128GB">Falar no WhatsApp</a>
+      </div>
+    </article>
+
+    <!-- Moto G84 -->
+    <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+             data-brand="motorola" data-price="1699" data-new="2024-01-15"
+             data-search="motorola moto g84 12gb 256gb 5g android">
+      <img src="assets/celulares/moto-g84.jpg" alt="Moto G84"
+           class="w-full h-52 object-cover"
+           onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+      <div class="p-5">
+        <h2 class="font-bold text-lg">Moto G84</h2>
+        <p class="text-sm text-slate-600">12GB · 256GB · 5G</p>
+        <div class="mt-3">
+          <div class="price-strike text-xs">R$ 1.899</div>
+          <div class="text-xl font-extrabold text-blue-700">R$ 1.699</div>
+        </div>
+        <a class="btn-wa mt-4 w-full" data-wa-product="Moto G84 256GB">Falar no WhatsApp</a>
+      </div>
+    </article>
+
+    <!-- Redmi Note 13 -->
+    <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+             data-brand="xiaomi" data-price="1399" data-new="2024-04-05"
+             data-search="xiaomi redmi note 13 8gb 256gb 5g">
+      <img src="assets/celulares/redmi-note-13.jpg" alt="Redmi Note 13"
+           class="w-full h-52 object-cover"
+           onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+      <div class="p-5">
+        <h2 class="font-bold text-lg">Redmi Note 13</h2>
+        <p class="text-sm text-slate-600">8GB · 256GB · 5G</p>
+        <div class="mt-3">
+          <div class="price-strike text-xs">R$ 1.599</div>
+          <div class="text-xl font-extrabold text-blue-700">R$ 1.399</div>
+        </div>
+        <a class="btn-wa mt-4 w-full" data-wa-product="Redmi Note 13 256GB">Falar no WhatsApp</a>
+      </div>
+    </article>
+
+    <!-- Galaxy S23 FE -->
+    <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+             data-brand="samsung" data-price="2499" data-new="2024-03-12"
+             data-search="samsung galaxy s23 fe 256gb 8gb 5g">
+      <img src="assets/celulares/galaxy-s23-fe.jpg" alt="Galaxy S23 FE"
+           class="w-full h-52 object-cover"
+           onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+      <div class="p-5">
+        <h2 class="font-bold text-lg">Galaxy S23 FE</h2>
+        <p class="text-sm text-slate-600">8GB · 256GB · 5G</p>
+        <div class="mt-3">
+          <div class="price-strike text-xs">R$ 2.799</div>
+          <div class="text-xl font-extrabold text-blue-700">R$ 2.499</div>
+        </div>
+        <a class="btn-wa mt-4 w-full" data-wa-product="Galaxy S23 FE 256GB">Falar no WhatsApp</a>
+      </div>
+    </article>
+
+    <!-- POCO M6 Pro -->
+    <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+             data-brand="poco" data-price="1299" data-new="2024-05-10"
+             data-search="poco m6 pro 8gb 256gb 5g">
+      <img src="assets/celulares/poco-m6-pro.jpg" alt="POCO M6 Pro"
+           class="w-full h-52 object-cover"
+           onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+      <div class="p-5">
+        <h2 class="font-bold text-lg">POCO M6 Pro</h2>
+        <p class="text-sm text-slate-600">8GB · 256GB · 5G</p>
+        <div class="mt-3">
+          <div class="price-strike text-xs">R$ 1.449</div>
+          <div class="text-xl font-extrabold text-blue-700">R$ 1.299</div>
+        </div>
+        <a class="btn-wa mt-4 w-full" data-wa-product="POCO M6 Pro 256GB">Falar no WhatsApp</a>
+      </div>
+    </article>
+
+    <!-- iPhone 14 -->
+    <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+             data-brand="apple" data-price="3999" data-new="2024-02-20"
+             data-search="iphone 14 128gb ios apple">
+      <img src="assets/celulares/iphone-14.jpg" alt="iPhone 14 128GB"
+           class="w-full h-52 object-cover"
+           onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+      <div class="p-5">
+        <h2 class="font-bold text-lg">iPhone 14 (128GB)</h2>
+        <p class="text-sm text-slate-600">Tela 6.1&quot; · Emergência SOS</p>
+        <div class="mt-3">
+          <div class="price-strike text-xs">R$ 4.299</div>
+          <div class="text-xl font-extrabold text-blue-700">R$ 3.999</div>
+        </div>
+        <a class="btn-wa mt-4 w-full" data-wa-product="iPhone 14 128GB">Falar no WhatsApp</a>
+      </div>
+    </article>
+
+    <!-- ======= /CARDS ======= -->
+  </div>
+
+  <!-- Vazio -->
+  <div id="emptyState" class="hidden mt-10 text-center text-slate-600">
+    <div class="inline-block px-4 py-2 rounded-full bg-slate-100 text-slate-700 font-medium">
+      Nenhum modelo encontrado para <span class="font-semibold" data-q></span>.
+    </div>
+    <div class="mt-3">
+      <a href="celulares.html" class="text-blue-700 underline">Limpar filtros</a>
+    </div>
+  </div>
+</main>
+<!-- ===================== /GRID ===================== -->
+
+<footer class="mt-16">
+  <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 text-slate-100">
+    <div class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-8">
+      <div>
+        <div class="flex items-center gap-3">
+          <img src="assets/logo-monogram-64.png" alt="" class="w-9 h-9 rounded-lg shadow-soft">
+          <strong class="text-lg">Nando Importados</strong>
+        </div>
+        <p class="mt-3 text-slate-300 leading-relaxed">
+          Modelos originais, novos e seminovos, com nota fiscal e garantia de 90 dias.
+        </p>
+        <div class="payment-logos mt-4 flex items-center gap-3 opacity-90">
+          <img src="assets/perfumes/brand.svg" alt="Bandeiras" />
+        </div>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-slate-100">Atendimento</h3>
+        <p class="mt-3 text-slate-300">Seg–Sáb • 9h às 20h<br>Rio de Janeiro – RJ</p>
+        <a href="https://wa.me/5521976950809?text=Ol%C3%A1%20Nando!%20Vim%20pelo%20site%20e%20preciso%20de%20um%20or%C3%A7amento.%20Pode%20me%20atender%3F"
+           target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-full bg-emerald-500 text-white font-semibold hover:brightness-110">
+          Falar no WhatsApp
         </a>
       </div>
-    </div>
-  </section>
-  <!-- ===================== /HERO ===================== -->
 
-  <!-- ===================== BARRA DE FILTROS (STICKY) ===================== -->
-  <section class="bg-white/75 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-slate-200 sticky top-14 z-40">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center gap-3">
-      <!-- Busca -->
-      <div class="relative flex-1 min-w-[220px]">
-        <input id="search"
-               class="w-full rounded-xl border border-slate-300/70 bg-white px-4 py-2.5 pr-9 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30"
-               type="search" placeholder="Buscar por modelo, memória, cor... (ex: 256GB, 5G, iPhone)">
-        <svg class="absolute right-3 top-2.5 opacity-60" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m21 21-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="#334155" stroke-width="1.8" stroke-linecap="round"/></svg>
-      </div>
-
-      <!-- Marcas -->
-      <div class="flex flex-wrap gap-2">
-        <button class="chip active" data-brand="all">Todos</button>
-        <button class="chip" data-brand="apple">Apple</button>
-        <button class="chip" data-brand="samsung">Samsung</button>
-        <button class="chip" data-brand="xiaomi">Xiaomi</button>
-        <button class="chip" data-brand="motorola">Motorola</button>
-        <button class="chip" data-brand="poco">POCO</button>
-      </div>
-
-      <!-- Ordenação -->
-      <div class="ml-auto">
-        <select id="sort" class="rounded-xl border border-slate-300/70 bg-white px-3 py-2 text-sm">
-          <option value="featured">Destaques</option>
-          <option value="price-asc">Menor preço</option>
-          <option value="price-desc">Maior preço</option>
-          <option value="newest">Mais novos</option>
-        </select>
+      <div>
+        <h3 class="font-semibold text-slate-100">Links</h3>
+        <ul class="mt-3 space-y-2 text-slate-300">
+          <li><a class="hover:text-white" href="index.html">Início</a></li>
+          <li><a class="hover:text-white" href="tudo.html">Catálogo completo</a></li>
+          <li><a class="hover:text-white" href="celulares.html">Celulares</a></li>
+          <li><a class="hover:text-white" href="perfumes.html">Perfumes</a></li>
+          <li><a class="hover:text-white" href="condicoes.html">Políticas</a></li>
+        </ul>
       </div>
     </div>
-  </section>
-  <!-- ===================== /FILTROS ===================== -->
 
-  <!-- ===================== GRID DE PRODUTOS ===================== -->
-  <main class="max-w-6xl mx-auto px-4 py-8">
-    <div class="mb-4 text-sm text-slate-600">
-      <span id="countVisible">0</span> modelo(s) encontrado(s)
-      · <a href="tudo.html" class="text-blue-700 underline underline-offset-2">Ver catálogo completo</a>
-    </div>
-
-    <div id="gridProdutos" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- ======= CARDS ======= -->
-
-      <!-- POCO X7 PRO -->
-      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
-               data-brand="poco" data-price="1899" data-new="2024-03-01"
-               data-search="poco x7 pro 8gb 256gb snapdragon 7s gen 2 5g android">
-        <img src="assets/celulares/poco-x7-pro.jpg" alt="POCO X7 PRO"
-             class="w-full h-52 object-cover"
-             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
-        <div class="p-5">
-          <h2 class="font-bold text-lg">POCO X7 PRO</h2>
-          <p class="text-sm text-slate-600">8GB · 256GB · Snapdragon 7s Gen 2</p>
-          <div class="mt-3">
-            <div class="price-strike text-xs">R$ 2.199</div>
-            <div class="text-xl font-extrabold text-blue-700">R$ 1.899</div>
-          </div>
-          <a class="btn-wa mt-4 w-full" data-wa-product="POCO X7 PRO">Falar no WhatsApp</a>
-        </div>
-      </article>
-
-      <!-- iPhone 13 -->
-      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
-               data-brand="apple" data-price="3299" data-new="2023-10-01"
-               data-search="iphone 13 128gb ios apple 6.1 polegadas">
-        <img src="assets/celulares/iphone-13.jpg" alt="iPhone 13 128GB"
-             class="w-full h-52 object-cover"
-             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
-        <div class="p-5">
-          <h2 class="font-bold text-lg">iPhone 13 (128GB)</h2>
-          <p class="text-sm text-slate-600">Tela 6.1" · Câmera dupla</p>
-          <div class="mt-3">
-            <div class="price-strike text-xs">R$ 3.499</div>
-            <div class="text-xl font-extrabold text-blue-700">R$ 3.299</div>
-          </div>
-          <a class="btn-wa mt-4 w-full" data-wa-product="iPhone 13 128GB">Falar no WhatsApp</a>
-        </div>
-      </article>
-
-      <!-- Galaxy A34 -->
-      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
-               data-brand="samsung" data-price="1499" data-new="2024-02-01"
-               data-search="samsung galaxy a34 128gb android 5g">
-        <img src="assets/celulares/galaxy-a34.jpg" alt="Galaxy A34"
-             class="w-full h-52 object-cover"
-             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
-        <div class="p-5">
-          <h2 class="font-bold text-lg">Galaxy A34</h2>
-          <p class="text-sm text-slate-600">128GB · Novo lacrado</p>
-          <div class="mt-3">
-            <div class="price-strike text-xs">R$ 1.699</div>
-            <div class="text-xl font-extrabold text-blue-700">R$ 1.499</div>
-          </div>
-          <a class="btn-wa mt-4 w-full" data-wa-product="Galaxy A34 128GB">Falar no WhatsApp</a>
-        </div>
-      </article>
-
-      <!-- Moto G84 -->
-      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
-               data-brand="motorola" data-price="1699" data-new="2024-01-15"
-               data-search="motorola moto g84 12gb 256gb 5g android">
-        <img src="assets/celulares/moto-g84.jpg" alt="Moto G84"
-             class="w-full h-52 object-cover"
-             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
-        <div class="p-5">
-          <h2 class="font-bold text-lg">Moto G84</h2>
-          <p class="text-sm text-slate-600">12GB · 256GB · 5G</p>
-          <div class="mt-3">
-            <div class="price-strike text-xs">R$ 1.899</div>
-            <div class="text-xl font-extrabold text-blue-700">R$ 1.699</div>
-          </div>
-          <a class="btn-wa mt-4 w-full" data-wa-product="Moto G84 256GB">Falar no WhatsApp</a>
-        </div>
-      </article>
-
-      <!-- Redmi Note 13 -->
-      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
-               data-brand="xiaomi" data-price="1399" data-new="2024-04-05"
-               data-search="xiaomi redmi note 13 8gb 256gb 5g">
-        <img src="assets/celulares/redmi-note-13.jpg" alt="Redmi Note 13"
-             class="w-full h-52 object-cover"
-             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
-        <div class="p-5">
-          <h2 class="font-bold text-lg">Redmi Note 13</h2>
-          <p class="text-sm text-slate-600">8GB · 256GB · 5G</p>
-          <div class="mt-3">
-            <div class="price-strike text-xs">R$ 1.599</div>
-            <div class="text-xl font-extrabold text-blue-700">R$ 1.399</div>
-          </div>
-          <a class="btn-wa mt-4 w-full" data-wa-product="Redmi Note 13 256GB">Falar no WhatsApp</a>
-        </div>
-      </article>
-
-      <!-- Galaxy S23 FE -->
-      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
-               data-brand="samsung" data-price="2499" data-new="2024-03-12"
-               data-search="samsung galaxy s23 fe 256gb 8gb 5g">
-        <img src="assets/celulares/galaxy-s23-fe.jpg" alt="Galaxy S23 FE"
-             class="w-full h-52 object-cover"
-             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
-        <div class="p-5">
-          <h2 class="font-bold text-lg">Galaxy S23 FE</h2>
-          <p class="text-sm text-slate-600">8GB · 256GB · 5G</p>
-          <div class="mt-3">
-            <div class="price-strike text-xs">R$ 2.799</div>
-            <div class="text-xl font-extrabold text-blue-700">R$ 2.499</div>
-          </div>
-          <a class="btn-wa mt-4 w-full" data-wa-product="Galaxy S23 FE 256GB">Falar no WhatsApp</a>
-        </div>
-      </article>
-
-      <!-- POCO M6 Pro -->
-      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
-               data-brand="poco" data-price="1299" data-new="2024-05-10"
-               data-search="poco m6 pro 8gb 256gb 5g">
-        <img src="assets/celulares/poco-m6-pro.jpg" alt="POCO M6 Pro"
-             class="w-full h-52 object-cover"
-             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
-        <div class="p-5">
-          <h2 class="font-bold text-lg">POCO M6 Pro</h2>
-          <p class="text-sm text-slate-600">8GB · 256GB · 5G</p>
-          <div class="mt-3">
-            <div class="price-strike text-xs">R$ 1.449</div>
-            <div class="text-xl font-extrabold text-blue-700">R$ 1.299</div>
-          </div>
-          <a class="btn-wa mt-4 w-full" data-wa-product="POCO M6 Pro 256GB">Falar no WhatsApp</a>
-        </div>
-      </article>
-
-      <!-- iPhone 14 -->
-      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
-               data-brand="apple" data-price="3999" data-new="2024-02-20"
-               data-search="iphone 14 128gb ios apple">
-        <img src="assets/celulares/iphone-14.jpg" alt="iPhone 14 128GB"
-             class="w-full h-52 object-cover"
-             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
-        <div class="p-5">
-          <h2 class="font-bold text-lg">iPhone 14 (128GB)</h2>
-          <p class="text-sm text-slate-600">Tela 6.1" · Emergência SOS</p>
-          <div class="mt-3">
-            <div class="price-strike text-xs">R$ 4.299</div>
-            <div class="text-xl font-extrabold text-blue-700">R$ 3.999</div>
-          </div>
-          <a class="btn-wa mt-4 w-full" data-wa-product="iPhone 14 128GB">Falar no WhatsApp</a>
-        </div>
-      </article>
-
-      <!-- ======= /CARDS ======= -->
-    </div>
-
-    <!-- Vazio -->
-    <div id="emptyState" class="hidden mt-10 text-center text-slate-600">
-      <div class="inline-block px-4 py-2 rounded-full bg-slate-100 text-slate-700 font-medium">
-        Nenhum modelo encontrado para <span class="font-semibold" data-q></span>.
-      </div>
-      <div class="mt-3">
-        <a href="celulares.html" class="text-blue-700 underline">Limpar filtros</a>
+    <div class="border-t border-white/10">
+      <div class="max-w-6xl mx-auto px-4 py-6 flex items-center justify-between text-slate-300">
+        <span class="copyright">© 2025 Nando Importados — NF e garantia.</span>
+        <a class="hover:text-white" href="condicoes.html">Políticas</a>
       </div>
     </div>
-  </main>
-  <!-- ===================== /GRID ===================== -->
+  </div>
+</footer>
 
-  @@include("_partials/footer.html")
+<!-- ===================== SCRIPTS ===================== -->
+<script>
+  // WhatsApp CTA geral (hero secundário)
+  (function waHero(){
+    const a = document.querySelector('a[data-wa]');
+    if(!a) return;
+    const msg = `Olá, Nando! Vim pelo site (página: Celulares). Pode me mostrar as melhores ofertas de hoje?`;
+    a.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
+    a.target = "_blank"; a.rel = "noopener";
+  })();
 
-  <!-- ===================== SCRIPTS ===================== -->
-  <script>
-    // WhatsApp CTA geral (hero)
-    (function waHero(){
-      const a = document.querySelector('a[data-wa]');
-      if(!a) return;
-      const msg = `Olá, Nando! Vim pelo site (página: Celulares). Pode me mostrar as melhores ofertas de hoje?`;
-      a.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
-      a.target = "_blank"; a.rel = "noopener";
-    })();
+  // Helpers
+  function moneyToNumber(txt){
+    if(!txt) return 0;
+    return Number(String(txt).replace(/[^\d]/g,''));
+  }
 
-    // Helpers
-    function moneyToNumber(txt){
-      // Recebe string tipo "R$ 1.899" -> 1899
-      if(!txt) return 0;
-      return Number(String(txt).replace(/[^\d]/g,''));
+  // Filtros + busca + ordenação
+  (function filtros(){
+    const params = new URLSearchParams(location.search);
+    const qParam = (params.get('q') || '').trim().toLowerCase();
+    const brandParam = (params.get('brand') || 'all').toLowerCase();
+    const sortParam = (params.get('sort') || 'featured');
+
+    const grid = document.getElementById('gridProdutos');
+    const cards = Array.from(grid.querySelectorAll('article[data-brand]'));
+    const countEl = document.getElementById('countVisible');
+    const empty = document.getElementById('emptyState');
+    const qHolders = document.querySelectorAll('[data-q]');
+
+    // Controles
+    const search = document.getElementById('search');
+    const sort = document.getElementById('sort');
+    const chips = Array.from(document.querySelectorAll('.chip[data-brand]'));
+
+    // Estado
+    let activeBrand = 'all';
+    let activeQuery = '';
+
+    // Preenche com querystring inicial
+    if (qParam) {
+      activeQuery = qParam;
+      search.value = qParam;
+      qHolders.forEach(el => el.textContent = qParam);
+    }
+    if (brandParam) {
+      activeBrand = brandParam;
+      chips.forEach(c => c.classList.toggle('active', c.getAttribute('data-brand') === activeBrand));
+    }
+    sort.value = sortParam;
+
+    // Clique nas marcas
+    chips.forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeBrand = btn.getAttribute('data-brand') || 'all';
+        chips.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        aplicar();
+      });
+    });
+
+    // Busca
+    let t;
+    search.addEventListener('input', () => {
+      clearTimeout(t);
+      t = setTimeout(()=> {
+        activeQuery = (search.value || '').trim().toLowerCase();
+        aplicar();
+      }, 180);
+    });
+
+    // Ordenação
+    sort.addEventListener('change', aplicar);
+
+    function aplicar(){
+      // Ordena DOM
+      const sorted = cards.slice().sort((a,b)=>{
+        const sa = a.querySelector('.text-xl')?.textContent || '';
+        const sb = b.querySelector('.text-xl')?.textContent || '';
+        const pa = Number(a.getAttribute('data-price') || moneyToNumber(sa));
+        const pb = Number(b.getAttribute('data-price') || moneyToNumber(sb));
+        const da = new Date(a.getAttribute('data-new') || '2000-01-01').getTime();
+        const db = new Date(b.getAttribute('data-new') || '2000-01-01').getTime();
+
+        switch (sort.value){
+          case 'price-asc': return pa - pb;
+          case 'price-desc': return pb - pa;
+          case 'newest': return db - da;
+          default: return 0; // featured = ordem original
+        }
+      });
+      sorted.forEach(card => grid.appendChild(card));
+
+      // Aplica filtros
+      let visible = 0;
+      cards.forEach(card => {
+        const brand = (card.getAttribute('data-brand') || '').toLowerCase();
+        const hay = (card.getAttribute('data-search') || '').toLowerCase();
+
+        const passBrand = activeBrand === 'all' ? true : (brand === activeBrand);
+        const passQuery = activeQuery ? hay.includes(activeQuery) : true;
+
+        const show = passBrand && passQuery;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+
+      countEl.textContent = visible;
+      empty.classList.toggle('hidden', visible !== 0);
+      qHolders.forEach(el => el.textContent = activeQuery || '');
     }
 
-    // Filtros + busca + ordenação
-    (function filtros(){
-      const params = new URLSearchParams(location.search);
-      const qParam = (params.get('q') || '').trim().toLowerCase();
-      const brandParam = (params.get('brand') || 'all').toLowerCase();
-      const sortParam = (params.get('sort') || 'featured');
+    aplicar();
+  })();
 
-      const grid = document.getElementById('gridProdutos');
-      const cards = Array.from(grid.querySelectorAll('article[data-brand]'));
-      const countEl = document.getElementById('countVisible');
-      const empty = document.getElementById('emptyState');
-      const qHolders = document.querySelectorAll('[data-q]');
+  // Gera link de WhatsApp por produto, com mensagem contextual
+  (function waProdutos(){
+    const links = document.querySelectorAll('a.btn-wa[data-wa-product]');
+    links.forEach(a => {
+      const name = a.getAttribute('data-wa-product') || 'Produto';
+      const msg = `Olá, Nando! Vim pelo site (página: Celulares) e me interessei por: ${name}. Pode me atender?`;
+      a.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.className = "inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)] bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)] hover:brightness-110 transition";
+    });
+  })();
+</script>
 
-      // Controles
-      const search = document.getElementById('search');
-      const sort = document.getElementById('sort');
-      const chips = Array.from(document.querySelectorAll('.chip[data-brand]'));
-
-      // Estado
-      let activeBrand = 'all';
-      let activeQuery = '';
-
-      // Preenche com querystring inicial
-      if (qParam) {
-        activeQuery = qParam;
-        search.value = qParam;
-        qHolders.forEach(el => el.textContent = qParam);
-      }
-      if (brandParam) {
-        activeBrand = brandParam;
-        chips.forEach(c => c.classList.toggle('active', c.getAttribute('data-brand') === activeBrand));
-      }
-      sort.value = sortParam;
-
-      // Clique nas marcas
-      chips.forEach(btn => {
-        btn.addEventListener('click', () => {
-          activeBrand = btn.getAttribute('data-brand') || 'all';
-          chips.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          aplicar();
-        });
-      });
-
-      // Busca
-      let t;
-      search.addEventListener('input', () => {
-        clearTimeout(t);
-        t = setTimeout(()=> {
-          activeQuery = (search.value || '').trim().toLowerCase();
-          aplicar();
-        }, 180);
-      });
-
-      // Ordenação
-      sort.addEventListener('change', aplicar);
-
-      function aplicar(){
-        // Ordena DOM (recria grid) conforme sort
-        const sorted = cards.slice().sort((a,b)=>{
-          const sa = a.querySelector('.text-xl')?.textContent || '';
-          const sb = b.querySelector('.text-xl')?.textContent || '';
-          const pa = Number(a.getAttribute('data-price') || moneyToNumber(sa));
-          const pb = Number(b.getAttribute('data-price') || moneyToNumber(sb));
-          const da = new Date(a.getAttribute('data-new') || '2000-01-01').getTime();
-          const db = new Date(b.getAttribute('data-new') || '2000-01-01').getTime();
-
-          switch (sort.value){
-            case 'price-asc': return pa - pb;
-            case 'price-desc': return pb - pa;
-            case 'newest': return db - da;
-            default: return 0; // featured = ordem original
-          }
-        });
-        sorted.forEach(card => grid.appendChild(card));
-
-        // Aplica filtros de brand + query
-        let visible = 0;
-        cards.forEach(card => {
-          const brand = (card.getAttribute('data-brand') || '').toLowerCase();
-          const hay = (card.getAttribute('data-search') || '').toLowerCase();
-
-          const passBrand = activeBrand === 'all' ? true : (brand === activeBrand);
-          const passQuery = activeQuery ? hay.includes(activeQuery) : true;
-
-          const show = passBrand && passQuery;
-          card.style.display = show ? '' : 'none';
-          if (show) visible++;
-        });
-
-        countEl.textContent = visible;
-        empty.classList.toggle('hidden', visible !== 0);
-        qHolders.forEach(el => el.textContent = activeQuery || '');
-      }
-
-      aplicar();
-    })();
-
-    // Gera link de WhatsApp por produto, com mensagem contextual
-    (function waProdutos(){
-      const links = document.querySelectorAll('a.btn-wa[data-wa-product]');
-      links.forEach(a => {
-        const name = a.getAttribute('data-wa-product') || 'Produto';
-        const msg = `Olá, Nando! Vim pelo site (página: Celulares) e me interessei por: ${name}. Pode me atender?`;
-        a.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
-        a.target = "_blank";
-        a.rel = "noopener";
-        a.className = "inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)] bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)] hover:brightness-110 transition";
-      });
-    })();
-  </script>
-  <script src="assets/js/produtos.js"></script>
+<script src="assets/js/produtos.js"></script>
 <script>
   NandoCatalog.renderCatalogSimple({
     pageLabel: 'Celulares',
     categoria: 'celulares'
   });
 </script>
+
 <script>
   // Carrossel da categoria (auto + touch + dots)
   (function catHeroCarousel(){
