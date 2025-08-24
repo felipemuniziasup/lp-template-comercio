@@ -181,45 +181,52 @@
 
 <!-- ===================== /HERO ===================== -->
 
-<!-- ===================== TOOLBAR (BUSCA + CHIPS + SORT + CTA) ===================== -->
+<!-- ===================== TOOLBAR (BUSCA 100% + CTA + CHIPS) ===================== -->
 <section class="bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-slate-200 sticky top-14 z-40">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col gap-3">
-    <!-- linha 1: busca + ordenação + CTA -->
-    <div class="flex flex-wrap items-center gap-3">
-      <div class="relative flex-1 min-w-[220px]">
-        <input id="search"
-               class="w-full rounded-xl border border-slate-300/70 bg-white px-4 py-2.5 pr-9 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30"
-               type="search" placeholder="Buscar por modelo, memória, cor...">
-        <button id="searchClear" class="absolute right-2.5 top-2.5 text-slate-500/70 hover:text-slate-700" aria-label="Limpar">✕</button>
-      </div>
+  <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3">
 
-      <div>
-        <select id="sort" class="rounded-xl border border-slate-300/70 bg-white px-3 py-2 text-sm">
-          <option value="featured">Destaques</option>
-          <option value="price-asc">Menor preço</option>
-          <option value="price-desc">Maior preço</option>
-          <option value="newest">Mais novos</option>
-        </select>
-      </div>
-
-      <!-- CTA WhatsApp -->
-      <div class="ml-auto w-full sm:w-auto">
-        <a id="toolbarWA"
-           class="inline-flex w-full sm:w-auto items-center justify-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)] bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)] hover:brightness-110 transition">
-          Ver melhores ofertas no WhatsApp
-        </a>
-      </div>
+    <!-- Linha 1: BUSCA LARGA (100%) -->
+    <div class="relative w-full">
+      <input id="search"
+             class="w-full rounded-2xl border border-slate-300/70 bg-white px-5 py-3 pr-10 text-base focus:outline-none focus:ring-2 focus:ring-blue-500/25"
+             type="search" placeholder="Buscar por modelo, memória, cor...">
+      <button id="searchClear" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500/70 hover:text-slate-700" aria-label="Limpar">✕</button>
     </div>
 
-    <!-- linha 2: chips -->
+    <!-- Linha 2: CTA WhatsApp (100%) -->
+    <div>
+      <a id="toolbarWA"
+         class="inline-flex w-full items-center justify-center gap-2 px-5 py-3 rounded-full text-white font-extrabold border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)] bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)] hover:brightness-110 transition">
+        Ver melhores ofertas no WhatsApp
+      </a>
+    </div>
+
+    <!-- Linha 3: CHIPS (Marca + Preço + Destaques) -->
     <div class="flex flex-wrap gap-2 overflow-x-auto -mx-1 px-1">
+      <!-- Marca -->
       <button class="chip active" data-brand="all">Todos</button>
       <button class="chip" data-brand="apple">Apple</button>
       <button class="chip" data-brand="samsung">Samsung</button>
       <button class="chip" data-brand="xiaomi">Xiaomi</button>
       <button class="chip" data-brand="motorola">Motorola</button>
       <button class="chip" data-brand="poco">POCO</button>
+
+      <!-- Preço (somente 2 faixas) -->
+      <button class="chip" data-price-range="<=2000">Até R$ 1.999</button>
+      <button class="chip" data-price-range=">=2000">R$ 2.000+</button>
+
+      <!-- Destaques -->
+      <button class="chip" data-featured="1">Destaques</button>
+
+      <!-- Ordenação (fica simples, sem tirar espaço da busca) -->
+      <select id="sort" class="ml-auto rounded-xl border border-slate-300/70 bg-white px-3 py-2 text-sm">
+        <option value="featured">Destaques (ordem padrão)</option>
+        <option value="price-asc">Menor preço</option>
+        <option value="price-desc">Maior preço</option>
+        <option value="newest">Mais novos</option>
+      </select>
     </div>
+
   </div>
 </section>
 <!-- ===================== /TOOLBAR ===================== -->
@@ -451,20 +458,24 @@
     a.target = "_blank"; a.rel = "noopener";
   })();
 
-  // ========= BLOCO DE FILTROS (com anti-loop e throttle) =========
+  // ========= <script>
+  // ========= BLOCO DE FILTROS (com preço + destaques) =========
   (function filtros(){
     // Helpers
     const moneyToNumber = (txt) => Number(String(txt||'').replace(/[^\d]/g,'')) || 0;
 
-    // Flags para evitar loop do observer
+    // Flags anti-loop
     let isApplying = false;
     let obsTimer = null;
 
-    // Estado inicial pela URL
+    // Estado inicial pela URL (mantemos compatível)
     const params = new URLSearchParams(location.search);
     let activeQuery = (params.get('q') || '').trim().toLowerCase();
     let activeBrand = (params.get('brand') || 'all').toLowerCase();
     let activeSort  = (params.get('sort')  || 'featured');
+    // Novos estados (podem vir via URL futuramente, mas por ora começam “sem filtro”)
+    let activePrice = 'all';     // 'all' | '<=2000' | '>=2000'
+    let featuredOnly = false;    // true = só data-featured="1"
 
     // Elementos
     const grid = document.getElementById('gridProdutos');
@@ -474,28 +485,28 @@
     const search = document.getElementById('search');
     const searchClear = document.getElementById('searchClear');
     const sort = document.getElementById('sort');
-    const chips = Array.from(document.querySelectorAll('.chip[data-brand]'));
+    const chipsBrand = Array.from(document.querySelectorAll('.chip[data-brand]'));
+    const chipsPrice = Array.from(document.querySelectorAll('.chip[data-price-range]'));
+    const chipFeatured = document.querySelector('.chip[data-featured="1"]');
     const toolbarWA = document.getElementById('toolbarWA');
 
     // WA da toolbar
     (function setWA(){
       const msg = `Olá, Nando! Vim pelo site (página: Celulares). Pode me mostrar as melhores ofertas de hoje?`;
-      if (toolbarWA) {
-        toolbarWA.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
-        toolbarWA.target = "_blank"; toolbarWA.rel = "noopener";
-      }
+      if (toolbarWA) { toolbarWA.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`; toolbarWA.target = "_blank"; toolbarWA.rel = "noopener"; }
     })();
 
     // Hidratar UI
     if (search) search.value = activeQuery;
     if (sort) sort.value = activeSort;
-    chips.forEach(c => c.classList.toggle('active', (c.getAttribute('data-brand')||'') === activeBrand));
+    chipsBrand.forEach(c => c.classList.toggle('active', (c.getAttribute('data-brand')||'') === activeBrand));
     qHolders.forEach(el => el.textContent = activeQuery);
 
     // Util: sempre ler os cards ATUAIS (após renderCatalogSimple)
     const getCards = () => Array.from(grid.querySelectorAll('article[data-brand]'));
 
     function syncURL(){
+      // Mantemos URL dos filtros originais (q, brand, sort).
       const p = new URLSearchParams(location.search);
       activeBrand ? p.set('brand', activeBrand) : p.delete('brand');
       activeQuery ? p.set('q', activeQuery) : p.delete('q');
@@ -503,9 +514,15 @@
       history.replaceState(null, '', `${location.pathname}?${p.toString()}`);
     }
 
+    function passPrice(price){
+      if (activePrice === '<=2000') return price <= 1999.99;
+      if (activePrice === '>=2000') return price >= 2000;
+      return true;
+    }
+
     function aplicar(){
       if (!grid) return;
-      if (isApplying) return;   // evita reentrância
+      if (isApplying) return;
       isApplying = true;
 
       syncURL();
@@ -525,17 +542,22 @@
           default: return 0; // featured
         }
       });
-      // reordenar causa mutation → protegido pelo isApplying
       sorted.forEach(card => grid.appendChild(card));
 
       // Filtro
       let visible = 0;
       cards.forEach(card=>{
-        const br  = (card.getAttribute('data-brand') || '').toLowerCase();
-        const hay = (card.getAttribute('data-search') || '').toLowerCase();
-        const passBrand = activeBrand === 'all' ? true : (br === activeBrand);
-        const passQuery = activeQuery ? hay.includes(activeQuery) : true;
-        const show = passBrand && passQuery;
+        const br   = (card.getAttribute('data-brand') || '').toLowerCase();
+        const hay  = (card.getAttribute('data-search') || '').toLowerCase();
+        const pnum = Number(card.getAttribute('data-price')) || 0;
+        const feat = (card.getAttribute('data-featured') || '0') === '1';
+
+        const passBrand   = activeBrand === 'all' ? true : (br === activeBrand);
+        const passQuery   = activeQuery ? hay.includes(activeQuery) : true;
+        const passFaixa   = passPrice(pnum);
+        const passDestaq  = featuredOnly ? feat : true;
+
+        const show = passBrand && passQuery && passFaixa && passDestaq;
         card.style.display = show ? '' : 'none';
         if (show) visible++;
       });
@@ -544,19 +566,40 @@
       if (empty) empty.classList.toggle('hidden', visible !== 0);
       qHolders.forEach(el => el.textContent = activeQuery || '');
 
-      isApplying = false; // libera
+      isApplying = false;
     }
 
-    // Eventos UI
-    chips.forEach(btn => {
+    // Eventos — Marca
+    chipsBrand.forEach(btn => {
       btn.addEventListener('click', () => {
         activeBrand = btn.getAttribute('data-brand') || 'all';
-        chips.forEach(b => b.classList.remove('active'));
+        chipsBrand.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         aplicar();
       });
     });
 
+    // Eventos — Preço (2 faixas)
+    chipsPrice.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const val = btn.getAttribute('data-price-range');
+        // toggle: se clicar na mesma, desliga (volta 'all')
+        activePrice = (activePrice === val) ? 'all' : val;
+        chipsPrice.forEach(b => b.classList.toggle('active', b.getAttribute('data-price-range') === activePrice));
+        aplicar();
+      });
+    });
+
+    // Evento — Destaques
+    if (chipFeatured) {
+      chipFeatured.addEventListener('click', () => {
+        featuredOnly = !featuredOnly;
+        chipFeatured.classList.toggle('active', featuredOnly);
+        aplicar();
+      });
+    }
+
+    // Busca
     let t=null;
     if (search) {
       search.addEventListener('input', () => {
@@ -575,11 +618,11 @@
         search.focus();
       });
     }
-    if (sort) {
-      sort.addEventListener('change', () => { activeSort = sort.value; aplicar(); });
-    }
 
-    // Observer com throttle (não reage às mudanças que nós mesmos causamos)
+    // Ordenação
+    if (sort) sort.addEventListener('change', () => { activeSort = sort.value; aplicar(); });
+
+    // Observer com throttle (anti-loop)
     if (grid) {
       const mo = new MutationObserver(() => {
         if (isApplying) return;

@@ -107,6 +107,7 @@
          data-brand="${lower(p.marca)}"
          data-price="${p.preco || 0}"
          data-new="${p.createdAt || ""}"
+         data-featured="${p.destaque ? '1' : '0'}"
          data-search="${searchAttr}">
   <img src="${p.img || "assets/celulares/fallback-celular.jpg"}"
        alt="${escapeHtml(p.nome)}"
