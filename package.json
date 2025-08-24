@@ -4,10 +4,17 @@
   "version": "1.0.0",
   "description": "Site estatico com build zero-deps",
   "scripts": {
-    "build": "node build.js"
+    "build": "node build.js",
+    "optimize:images": "node optimize-images.js"
   },
   "engines": {
     "node": ">=18"
   },
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "imagemin": "^9.0.1",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^10.0.0",
+    "imagemin-webp": "^8.0.0"
+  }
 }

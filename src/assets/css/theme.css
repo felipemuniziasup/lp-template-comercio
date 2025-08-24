@@ -263,3 +263,14 @@ footer .payment-logos img:hover{ opacity:1; filter:none; }
   header, .top-pills, #hero, .faq svg, .btn-conic { display: none !important; }
   a::after { content:" (" attr(href) ")"; font-size: 12px; color:#64748b; }
 }
+
+/* Hero categorias (altura fluida + dots) */
+#catHeroSlides { height: clamp(220px, 45vw, 380px); }
+#catHero .hero-dot{
+  width: 10px; height: 10px; border-radius: 9999px;
+  background: rgba(255,255,255,.65);
+  transition: all .2s ease;
+}
+#catHero .hero-dot[aria-current="true"]{
+  width: 12px; height: 12px; background: #fff;
+}

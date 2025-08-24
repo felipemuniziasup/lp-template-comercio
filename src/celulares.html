@@ -6,6 +6,68 @@
 
   @@include("_partials/header.html")
 
+  <!-- ===================== HERO (Carrossel – Celulares) ===================== -->
+<section id="catHero" class="relative overflow-hidden select-none">
+  <!-- Altura garantida por aspect ratio, sem depender de clamp -->
+  <div class="relative w-full aspect-[21/9] md:aspect-[16/6] lg:aspect-[16/5]">
+    <ul id="catHeroSlides" class="absolute inset-0">
+      <!-- SLIDE 1 -->
+      <li class="absolute inset-0 opacity-100 transition-opacity duration-700">
+        <img
+          src="assets/celulares/poco-x7-pro.jpg"  <!-- teste com uma imagem que já existe -->
+          alt="Teste carrossel"
+          class="absolute inset-0 w-full h-full object-cover z-0"
+          loading="eager" decoding="async" fetchpriority="high">
+        <!-- véu -->
+        <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
+      </li>
+
+      <!-- SLIDE 2 (deixe pronto para suas artes depois) -->
+      <li class="absolute inset-0 opacity-0 transition-opacity duration-700">
+        <img src="assets/banners/celulares/hero-cel-2.jpg"
+             alt="Ofertas premium"
+             class="absolute inset-0 w-full h-full object-cover z-0"
+             loading="lazy" decoding="async">
+        <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
+      </li>
+
+      <!-- SLIDE 3 -->
+      <li class="absolute inset-0 opacity-0 transition-opacity duration-700">
+        <img src="assets/banners/celulares/hero-cel-3.jpg"
+             alt="Smartphones com NF e garantia"
+             class="absolute inset-0 w-full h-full object-cover z-0"
+             loading="lazy" decoding="async">
+        <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
+      </li>
+    </ul>
+
+    <!-- CTA central -->
+    <div class="pointer-events-none absolute inset-0 grid place-items-center z-20">
+      <div class="pointer-events-auto">
+        <a href="https://wa.me/5521976950809?text=Ol%C3%A1%2C%20vi%20as%20ofertas%20na%20p%C3%A1gina%20*Celulares*%20e%20quero%20ajuda%20para%20escolher%20o%20melhor%20modelo.%20Pode%20me%20atender%3F"
+           target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white font-extrabold
+                  border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)]
+                  bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)]
+                  hover:brightness-110 transition">
+          <span class="w-7 h-7 rounded-full grid place-items-center bg-white/20 border border-white/40">
+            <svg viewBox="0 0 32 32" width="16" height="16" fill="white"><path d="M19.11 17.41c-.29-.14-1.7-.84-1.96-.94-.26-.1-.45-.14-.64.14-.19.29-.74.94-.9 1.13-.17.19-.33.22-.61.08-.29-.14-1.21-.45-2.3-1.45-.85-.76-1.43-1.7-1.6-1.98-.17-.29-.02-.45.13-.59.14-.14.29-.33.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.64-1.54-.88-2.1-.23-.55-.47-.48-.64-.48-.17 0-.36-.02-.55-.02s-.5.07-.76.36c-.26.29-1 .98-1 2.39s1.02 2.77 1.16 2.96c.14.19 2 3.05 4.85 4.28.68.29 1.21.46 1.62.59.68.22 1.3.19 1.79.12.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.33z"/></svg>
+          </span>
+          Ver melhores ofertas no WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- Dots -->
+    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-30">
+      <button class="hero-dot" aria-current="true" aria-label="Slide 1"></button>
+      <button class="hero-dot" aria-label="Slide 2"></button>
+      <button class="hero-dot" aria-label="Slide 3"></button>
+    </div>
+  </div>
+</section>
+<!-- ===================== /HERO ===================== -->
+
   <!-- ===================== HERO CELULARES ===================== -->
   <section class="relative overflow-hidden bg-brand-gradient text-white">
     <div class="max-w-6xl mx-auto px-4 py-10 md:py-14">
@@ -376,5 +438,39 @@
     categoria: 'celulares'
   });
 </script>
+<script>
+  // Carrossel da categoria (auto + touch + dots)
+  (function catHeroCarousel(){
+    const root = document.getElementById('catHero');
+    if (!root) return;
+    const slides = Array.from(root.querySelectorAll('#catHeroSlides > li'));
+    const dots   = Array.from(root.querySelectorAll('.hero-dot'));
+    let i = 0, timer = null, touch = {x:0}, hover=false;
+
+    function show(n){
+      i = (n + slides.length) % slides.length;
+      slides.forEach((el, idx) => el.style.opacity = idx === i ? '1' : '0');
+      dots.forEach((d, idx) => d.setAttribute('aria-current', idx === i ? 'true' : 'false'));
+    }
+    function play(){
+      clearInterval(timer);
+      timer = setInterval(()=>{ if(!hover) show(i+1); }, 5000);
+    }
+
+    dots.forEach((d, idx)=> d.addEventListener('click', ()=>{ show(idx); play(); }));
+    root.addEventListener('mouseenter', ()=>{ hover = true; });
+    root.addEventListener('mouseleave', ()=>{ hover = false; });
+
+    // swipe em touch
+    root.addEventListener('touchstart', e => { touch.x = e.touches[0].clientX; }, {passive:true});
+    root.addEventListener('touchend',   e => {
+      const dx = e.changedTouches[0].clientX - touch.x;
+      if (Math.abs(dx) > 40){ show(i + (dx < 0 ? 1 : -1)); play(); }
+    }, {passive:true});
+
+    show(0); play();
+  })();
+</script>
+
 </body>
 </html>
