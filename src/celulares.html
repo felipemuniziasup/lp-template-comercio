@@ -225,6 +225,13 @@
         Destaques
       </button>
 
+      <!-- Promoções (NOVO) -->
+      <button id="btnPromo"
+              class="rounded-full border px-3 py-2 text-sm shadow-sm border-slate-300/70 bg-white hover:bg-slate-50"
+              aria-pressed="false">
+        Promoções
+      </button>
+
       <!-- Ordenação -->
       <div class="ml-auto">
         <label class="sr-only" for="sort">Ordenar</label>
@@ -249,7 +256,7 @@
   </div>
 
   <div id="gridProdutos" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <!-- ======= CARDS ======= -->
+    <!-- ======= CARDS de exemplo (estáticos) ======= -->
 
     <!-- POCO X7 PRO -->
     <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
@@ -459,7 +466,7 @@
 
 <!-- ===================== SCRIPTS ===================== -->
 <script>
-  // WhatsApp CTA geral (hero secundário) — mantém
+  // WhatsApp CTA geral (hero secundário)
   (function waHero(){
     const a = document.querySelector('a[data-wa]');
     if(!a) return;
@@ -468,60 +475,56 @@
     a.target = "_blank"; a.rel = "noopener";
   })();
 
-  // ========= BLOCO DE FILTROS (com proteção de loop + reordenação em lote) =========
+  // ========= BLOCO DE FILTROS (dropdowns + chips) =========
   (function filtros(){
     // Helpers
     const moneyToNumber = (txt) => Number(String(txt||'').replace(/[^\d]/g,'')) || 0;
 
     // Estado inicial (URL)
     const params = new URLSearchParams(location.search);
-    let activeQuery   = (params.get('q') || '').trim().toLowerCase();
-    let activeBrand   = (params.get('brand') || 'all').toLowerCase();
-    let activeSort    = (params.get('sort')  || 'featured');
-    let activePrice   = 'all';      // 'all' | '<=2000' | '>=2000'
-    let featuredOnly  = false;      // toggle
+    let activeQuery = (params.get('q') || '').trim().toLowerCase();
+    let activeBrand = (params.get('brand') || 'all').toLowerCase();
+    let activeSort  = (params.get('sort')  || 'featured');
+    let activePrice = 'all';          // 'all' | '<=2000' | '>=2000'
+    let featuredOnly = false;         // Destaques
+    let promoOnly = false;            // (NOVO) Promoções
 
     // Elementos
-    const grid        = document.getElementById('gridProdutos');
-    const countEl     = document.getElementById('countVisible');
-    const empty       = document.getElementById('emptyState');
-    const qHolders    = document.querySelectorAll('[data-q]');
-    const search      = document.getElementById('search');
+    const grid = document.getElementById('gridProdutos');
+    const countEl = document.getElementById('countVisible');
+    const empty = document.getElementById('emptyState');
+    const qHolders = document.querySelectorAll('[data-q]');
+    const search = document.getElementById('search');
     const searchClear = document.getElementById('searchClear');
-    const sort        = document.getElementById('sort');
-    const btnAll      = document.getElementById('btnAll');
+    const sort = document.getElementById('sort');
+    const btnAll = document.getElementById('btnAll');
     const selectBrand = document.getElementById('brand');
     const selectPrice = document.getElementById('price');
     const btnFeatured = document.getElementById('btnFeatured');
-    const toolbarWA   = document.getElementById('toolbarWA');
+    const btnPromo = document.getElementById('btnPromo'); // (NOVO)
+    const toolbarWA = document.getElementById('toolbarWA');
 
-    // Flag anti-reentrada (evita loop com MutationObserver)
-    let isApplying = false;
-
-    // WhatsApp da toolbar (mantém)
+    // WA da toolbar
     (function setWA(){
       const msg = `Olá, Nando! Vim pelo site (página: Celulares). Pode me mostrar as melhores ofertas de hoje?`;
-      if (toolbarWA) {
-        toolbarWA.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
-        toolbarWA.target = "_blank"; toolbarWA.rel = "noopener";
-      }
+      if (toolbarWA) { toolbarWA.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`; toolbarWA.target = "_blank"; toolbarWA.rel = "noopener"; }
     })();
 
     // Hidratar UI
-    if (search)      search.value      = activeQuery;
-    if (sort)        sort.value        = activeSort;
+    if (search) search.value = activeQuery;
+    if (sort) sort.value = activeSort;
     if (selectBrand) selectBrand.value = activeBrand;
     if (selectPrice) selectPrice.value = activePrice;
     qHolders.forEach(el => el.textContent = activeQuery);
 
-    // Utils
+    // Util
     const getCards = () => Array.from(grid.querySelectorAll('article[data-brand]'));
 
     function syncURL(){
       const p = new URLSearchParams(location.search);
       activeBrand ? p.set('brand', activeBrand) : p.delete('brand');
-      activeQuery ? p.set('q', activeQuery)     : p.delete('q');
-      activeSort  ? p.set('sort', activeSort)   : p.delete('sort');
+      activeQuery ? p.set('q', activeQuery) : p.delete('q');
+      activeSort  ? p.set('sort', activeSort) : p.delete('sort');
       history.replaceState(null, '', `${location.pathname}?${p.toString()}`);
     }
 
@@ -534,57 +537,48 @@
     function aplicar(){
       if (!grid) return;
 
-      // evita reentrar se já estamos aplicando (quebra loop)
-      if (isApplying) return;
-      isApplying = true;
-
       syncURL();
 
       const cards = getCards();
 
-      // ===== ORDENAR (só por atributos; sem ler texto do DOM)
+      // Ordenação
       const sorted = cards.slice().sort((a,b)=>{
-        const pa = Number(a.getAttribute('data-price')) || 0;
-        const pb = Number(b.getAttribute('data-price')) || 0;
+        const pa = Number(a.getAttribute('data-price')) || moneyToNumber(a.querySelector('.text-xl')?.textContent);
+        const pb = Number(b.getAttribute('data-price')) || moneyToNumber(b.querySelector('.text-xl')?.textContent);
         const da = new Date(a.getAttribute('data-new') || '2000-01-01').getTime();
         const db = new Date(b.getAttribute('data-new') || '2000-01-01').getTime();
         switch (activeSort){
-          case 'price-asc':  return pa - pb;
+          case 'price-asc': return pa - pb;
           case 'price-desc': return pb - pa;
-          case 'newest':     return db - da;
-          default:           return 0; // featured
+          case 'newest': return db - da;
+          default: return 0; // featured
         }
       });
+      sorted.forEach(card => grid.appendChild(card));
 
-      // 🧩 reanexa em lote para gerar UMA mutação só (reduz disparos do observer)
-      const frag = document.createDocumentFragment();
-      sorted.forEach(card => frag.appendChild(card));
-      grid.appendChild(frag);
-
-      // ===== FILTRAR
-      let visiveis = 0;
+      // Filtros
+      let visible = 0;
       cards.forEach(card=>{
-        const br   = (card.getAttribute('data-brand')   || '').toLowerCase();
-        const hay  = (card.getAttribute('data-search')  || '').toLowerCase();
+        const br   = (card.getAttribute('data-brand') || '').toLowerCase();
+        const hay  = (card.getAttribute('data-search') || '').toLowerCase();
         const pnum = Number(card.getAttribute('data-price')) || 0;
         const feat = (card.getAttribute('data-featured') || '0') === '1';
+        const hasPromo = !!card.querySelector('.price-strike'); // (NOVO)
 
-        const passaMarca  = activeBrand === 'all' ? true : (br === activeBrand);
-        const passaBusca  = activeQuery ? hay.includes(activeQuery) : true;
-        const passaPreco  = passPrice(pnum);
-        const passaDestaq = featuredOnly ? feat : true;
+        const passBrand   = activeBrand === 'all' ? true : (br === activeBrand);
+        const passQuery   = activeQuery ? hay.includes(activeQuery) : true;
+        const passFaixa   = passPrice(pnum);
+        const passDestaq  = featuredOnly ? feat : true;
+        const passPromo   = promoOnly ? hasPromo : true;        // (NOVO)
 
-        const show = passaMarca && passaBusca && passaPreco && passaDestaq;
+        const show = passBrand && passQuery && passFaixa && passDestaq && passPromo; // (AJUSTE)
         card.style.display = show ? '' : 'none';
-        if (show) visiveis++;
+        if (show) visible++;
       });
 
-      if (countEl) countEl.textContent = visiveis;
-      if (empty)   empty.classList.toggle('hidden', visiveis !== 0);
+      if (countEl) countEl.textContent = visible;
+      if (empty) empty.classList.toggle('hidden', visible !== 0);
       qHolders.forEach(el => el.textContent = activeQuery || '');
-
-      // libera a flag após o ciclo de mutação
-      setTimeout(()=>{ isApplying = false; }, 0);
     }
 
     // Eventos
@@ -620,6 +614,18 @@
       });
     }
 
+    // (NOVO) Botão Promoções
+    if (btnPromo) {
+      btnPromo.addEventListener('click', () => {
+        promoOnly = !promoOnly;
+        btnPromo.setAttribute('aria-pressed', String(promoOnly));
+        btnPromo.classList.toggle('bg-sky-100',  promoOnly);
+        btnPromo.classList.toggle('text-sky-800', promoOnly);
+        btnPromo.classList.toggle('border-sky-200', promoOnly);
+        aplicar();
+      });
+    }
+
     let t=null;
     if (search) {
       search.addEventListener('input', () => {
@@ -641,14 +647,9 @@
 
     if (sort) sort.addEventListener('change', () => { activeSort = sort.value; aplicar(); });
 
-    // Reaplicar quando o catálogo dinâmico alterar o grid (com debounce + flag)
+    // Reaplicar quando o catálogo dinâmico alterar o grid
     if (grid) {
-      let obsTimer = null;
-      const mo = new MutationObserver(() => {
-        if (isApplying) return;              // ignora mutações disparadas por nós mesmos
-        clearTimeout(obsTimer);
-        obsTimer = setTimeout(() => { aplicar(); }, 80);
-      });
+      const mo = new MutationObserver(() => aplicar());
       mo.observe(grid, { childList: true });
     }
 
@@ -657,7 +658,7 @@
     aplicar();
   })();
 
-  // Gera link de WhatsApp por produto (mantém)
+  // Gera link de WhatsApp por produto
   (function waProdutos(){
     const links = document.querySelectorAll('a.btn-wa[data-wa-product]');
     links.forEach(a => {
