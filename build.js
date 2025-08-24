@@ -1,174 +1,133 @@
-// build.js — zero-deps
-// Expande includes dos HTML em src/ e gera dist/
+// build.js  (ESM)
+// Build zero-deps: processa @@include de src/ para dist/ e copia assets/ + arquivos soltos
 
-const fs = require('fs');
-const fsp = fs.promises;
-const path = require('path');
+import fs from 'fs/promises';
+import fssync from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const SRC = path.join(__dirname, 'src');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname  = path.dirname(__filename);
+
+const SRC  = path.join(__dirname, 'src');
 const DIST = path.join(__dirname, 'dist');
-const PARTIALS_DIR = path.join(SRC, '_partials');
 
 async function rimraf(dir) {
-  if (fs.existsSync(dir)) {
-    const entries = await fsp.readdir(dir, { withFileTypes: true });
-    await Promise.all(entries.map(entry => {
-      const p = path.join(dir, entry.name);
-      return entry.isDirectory() ? rimraf(p) : fsp.unlink(p);
-    }));
-    await fsp.rmdir(dir);
-  }
+  try {
+    await fs.rm(dir, { recursive: true, force: true });
+  } catch {}
 }
 
-async function mkdirp(dir) {
-  await fsp.mkdir(dir, { recursive: true });
+async function ensureDir(dir) {
+  await fs.mkdir(dir, { recursive: true });
 }
 
-function withHtmlExt(p) {
-  return path.extname(p) ? p : `${p}.html`;
+async function copyFile(src, dest) {
+  await ensureDir(path.dirname(dest));
+  await fs.copyFile(src, dest);
 }
 
-function resolveIncludePath(baseDir, raw) {
-  // remove comentários/espacos
-  let inc = raw.trim();
-
-  // se veio só 'head.html' ou 'header.html', procurar em _partials
-  if (!inc.includes('/') && !inc.startsWith('_partials')) {
-    inc = path.join(PARTIALS_DIR, withHtmlExt(inc));
-  } else {
-    // normalizar relativo ao SRC se vier com _partials/...
-    if (inc.startsWith('_partials')) {
-      inc = path.join(SRC, withHtmlExt(inc));
+async function copyDir(srcDir, destDir) {
+  const entries = await fs.readdir(srcDir, { withFileTypes: true });
+  await ensureDir(destDir);
+  for (const e of entries) {
+    const s = path.join(srcDir, e.name);
+    const d = path.join(destDir, e.name);
+    if (e.isDirectory()) {
+      await copyDir(s, d);
     } else {
-      // caminho relativo ao arquivo base
-      inc = path.join(baseDir, withHtmlExt(inc));
+      await copyFile(s, d);
     }
   }
-
-  return path.normalize(inc);
 }
 
-function expandIncludesOnce(html, fileDir, warnings) {
-  // Suporta:
-  // 1) @@include("caminho")
-  // 2) <!-- @@include caminho -->
-  // 3) <!-- @include "caminho" -->
-  const patterns = [
-    // @@include("...") ou @@include('...')
-    /@@include\(\s*["']?\s*([^"')\s]+)\s*["']?\s*\)/g,
-    // <!-- @@include caminho -->
-    /<!--\s*@@include\s+["']?\s*([^"'>\s]+)\s*["']?\s*-->/g,
-    // <!-- @include "caminho" -->
-    /<!--\s*@include\s+["']?\s*([^"'>\s]+)\s*["']?\s*-->/g,
-  ];
-
-  let changed = false;
-
-  for (const rx of patterns) {
-    html = html.replace(rx, (m, p1) => {
-      try {
-        const incPath = resolveIncludePath(fileDir, p1);
-        if (!fs.existsSync(incPath)) {
-          warnings.push(`WARN: include não encontrado: ${p1} (resolvido: ${incPath})`);
-          return `<!-- include NÃO encontrado: ${p1} -->`;
-        }
-        const incContent = fs.readFileSync(incPath, 'utf8');
-        changed = true;
-        return incContent;
-      } catch (e) {
-        warnings.push(`WARN: falha ao incluir ${p1}: ${e.message}`);
-        return `<!-- erro ao incluir: ${p1} -->`;
-      }
-    });
-  }
-
-  return { html, changed };
+async function listHtmlAtRoot() {
+  const entries = await fs.readdir(SRC, { withFileTypes: true });
+  return entries
+    .filter(e => e.isFile() && e.name.endsWith('.html'))
+    .map(e => path.join(SRC, e.name));
 }
 
-function expandIncludesAll(html, fileDir, warnings) {
-  // Faz múltiplas passagens até não restar includes
-  let pass = 0;
-  while (pass < 10) {
-    const { html: out, changed } = expandIncludesOnce(html, fileDir, warnings);
-    html = out;
-    if (!changed) break;
-    pass++;
-  }
+// resolve @@include("...") ou @@include('...') ou @@include _partials/...
+const includeRe = /@@include\((?:"|')([^"')]+)(?:"|')\)|@@include\(([^)]+)\)|@@include\s+([^\s>]+)\s*/g;
+
+async function readFileUtf8(p) {
+  return fs.readFile(p, 'utf8');
+}
+
+async function resolveInclude(baseDir, includePath, depth = 0) {
+  if (depth > 10) throw new Error('Include muito profundo (possível loop).');
+  const abs = path.isAbsolute(includePath)
+    ? includePath
+    : path.join(baseDir, includePath);
+  let html = await readFileUtf8(abs);
+  // Resolve includes aninhados
+  html = await processIncludes(html, path.dirname(abs), depth + 1);
   return html;
 }
 
-async function collectHtmlFiles(dir) {
-  const out = [];
-  const entries = await fsp.readdir(dir, { withFileTypes: true });
-  for (const e of entries) {
-    const p = path.join(dir, e.name);
-    if (e.isDirectory()) {
-      if (p === PARTIALS_DIR) continue; // não builda parciais
-      out.push(...await collectHtmlFiles(p));
-    } else if (e.isFile() && e.name.toLowerCase().endsWith('.html')) {
-      out.push(p);
-    }
+async function processIncludes(content, baseDir, depth = 0) {
+  const parts = [];
+  let lastIdx = 0;
+  for (const m of content.matchAll(includeRe)) {
+    parts.push(content.slice(lastIdx, m.index));
+    const raw = (m[1] || m[2] || m[3] || '').trim().replace(/^["']|["']$/g, '');
+    const inc = await resolveInclude(baseDir, raw, depth);
+    parts.push(inc);
+    lastIdx = m.index + m[0].length;
   }
-  return out;
+  parts.push(content.slice(lastIdx));
+  return parts.join('');
 }
 
-async function copyIfExists(from, to) {
-  if (!fs.existsSync(from)) return false;
-  const stat = await fsp.stat(from);
-  if (stat.isDirectory()) {
-    await mkdirp(to);
-    const entries = await fsp.readdir(from, { withFileTypes: true });
-    for (const ent of entries) {
-      await copyIfExists(path.join(from, ent.name), path.join(to, ent.name));
-    }
-  } else {
-    await mkdirp(path.dirname(to));
-    await fsp.copyFile(from, to);
-  }
-  return true;
+async function buildHtmlFile(srcHtml) {
+  const rel = path.relative(SRC, srcHtml);
+  const out = path.join(DIST, rel);
+  const raw = await readFileUtf8(srcHtml);
+  const html = await processIncludes(raw, path.dirname(srcHtml));
+  await ensureDir(path.dirname(out));
+  await fs.writeFile(out, html, 'utf8');
+  console.log(`✓ HTML: ${rel}`);
 }
 
-(async function build() {
-  const t0 = Date.now();
-  const warnings = [];
+async function main() {
+  // sanidade SRC
+  if (!fssync.existsSync(SRC)) {
+    console.error('✖ Pasta src/ não encontrada.');
+    process.exit(1);
+  }
 
-  // 1) limpar e recriar dist
+  // limpa dist e recria
   await rimraf(DIST);
-  await mkdirp(DIST);
+  await ensureDir(DIST);
 
-  // 2) processar todos os HTML de src (menos _partials)
-  const htmlFiles = await collectHtmlFiles(SRC);
-
-  for (const abs of htmlFiles) {
-    const relFromSrc = path.relative(SRC, abs); // ex: "tudo.html" ou "sub/arquivo.html"
-    const outPath = path.join(DIST, relFromSrc);
-    const outDir = path.dirname(outPath);
-    await mkdirp(outDir);
-
-    const raw = await fsp.readFile(abs, 'utf8');
-    const fileDir = path.dirname(abs);
-
-    const finalHtml = expandIncludesAll(raw, fileDir, warnings);
-    await fsp.writeFile(outPath, finalHtml, 'utf8');
-    console.log(`✓ HTML: ${relFromSrc}`);
+  // processa HTML do root
+  const htmls = await listHtmlAtRoot();
+  for (const h of htmls) {
+    await buildHtmlFile(h);
   }
 
-  // 3) copiar estáticos
-  const copied = [];
-  if (await copyIfExists(path.join(__dirname, 'assets'), path.join(DIST, 'assets'))) copied.push('assets/');
-  if (await copyIfExists(path.join(__dirname, 'manifest.webmanifest'), path.join(DIST, 'manifest.webmanifest'))) copied.push('manifest.webmanifest');
-  if (await copyIfExists(path.join(__dirname, 'sw.js'), path.join(DIST, 'sw.js'))) copied.push('sw.js');
-
-  copied.forEach(x => console.log(`✓ Copiado: ${x}`));
-
-  // 4) avisos
-  if (warnings.length) {
-    console.log('\n--- AVISOS ---');
-    warnings.forEach(w => console.warn(w));
+  // copia assets/ se existir
+  const assetsSrc = path.join(SRC, 'assets');
+  if (fssync.existsSync(assetsSrc)) {
+    await copyDir(assetsSrc, path.join(DIST, 'assets'));
+    console.log('✓ Copiado: assets/');
   }
 
-  console.log(`\nBuild concluído em ${((Date.now() - t0) / 1000).toFixed(2)}s. Saída em dist/.`);
-})().catch(err => {
-  console.error('ERRO no build:', err);
+  // copia manifest.webmanifest e sw.js se existirem
+  const extraFiles = ['manifest.webmanifest', 'sw.js'];
+  for (const fname of extraFiles) {
+    const s = path.join(SRC, fname);
+    if (fssync.existsSync(s)) {
+      await copyFile(s, path.join(DIST, fname));
+      console.log(`✓ Copiado: ${fname}`);
+    }
+  }
+
+  console.log('\nBuild concluído. Saída em dist/.');
+}
+
+main().catch(err => {
+  console.error('✖ Erro no build:', err);
   process.exit(1);
 });
