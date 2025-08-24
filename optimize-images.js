@@ -1,8 +1,7 @@
 // optimize-images.js (ESM)
 // Otimiza JPG/PNG e gera WEBP dentro de dist/ preservando estrutura
 
-import fs from 'fs/promises';
-import fssync from 'fs';
+import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import imagemin from 'imagemin';
@@ -11,7 +10,8 @@ import imageminMozjpeg from 'imagemin-mozjpeg';
 import imageminPngquant from 'imagemin-pngquant';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname  = path.dirname(__filename);
+const __dirname = path.dirname(__filename);
+const fsp = fs.promises;
 
 const DIST_DIR = path.join(__dirname, 'dist');
 
@@ -23,14 +23,12 @@ const QUALITY = {
   webpFromPng: 82,
 };
 
-async function ensureDir(dir) {
-  await fs.mkdir(dir, { recursive: true });
-}
+async function ensureDir(dir) { await fsp.mkdir(dir, { recursive: true }); }
 
 async function listFilesRec(root) {
   const out = [];
   async function walk(dir) {
-    const entries = await fs.readdir(dir, { withFileTypes: true });
+    const entries = await fsp.readdir(dir, { withFileTypes: true });
     for (const e of entries) {
       const full = path.join(dir, e.name);
       if (e.isDirectory()) await walk(full);
@@ -52,20 +50,22 @@ async function optimizeJpgPng(file) {
   const ext = path.extname(file).toLowerCase();
   if (!['.jpg', '.jpeg', '.png'].includes(ext)) return null;
 
-  const bufIn  = await fs.readFile(file);
+  const bufInRaw = await fsp.readFile(file);
+  const bufIn = Buffer.isBuffer(bufInRaw) ? bufInRaw : Buffer.from(bufInRaw);
   const sizeIn = bufIn.length;
 
-  // recomprime original
-  let optimized;
+  let optimized = null;
   try {
     if (ext === '.jpg' || ext === '.jpeg') {
-      optimized = await imagemin.buffer(bufIn, {
+      const out = await imagemin.buffer(bufIn, {
         plugins: [imageminMozjpeg({ quality: QUALITY.jpg, progressive: true })],
       });
+      optimized = Buffer.isBuffer(out) ? out : Buffer.from(out);
     } else {
-      optimized = await imagemin.buffer(bufIn, {
+      const out = await imagemin.buffer(bufIn, {
         plugins: [imageminPngquant({ quality: [QUALITY.pngMin, QUALITY.pngMax], strip: true })],
       });
+      optimized = Buffer.isBuffer(out) ? out : Buffer.from(out);
     }
   } catch (e) {
     console.warn(`! Falha ao otimizar ${rel(file)}:`, e.message);
@@ -74,17 +74,23 @@ async function optimizeJpgPng(file) {
 
   let savedOriginal = false;
   if (optimized && optimized.length > 0 && optimized.length < sizeIn * 0.99) {
-    await fs.writeFile(file, optimized);
+    await fsp.writeFile(file, optimized);
     savedOriginal = true;
   }
 
-  // gera WEBP
+  // WEBP
   const webpTarget = file.replace(/\.(jpe?g|png)$/i, '.webp');
   try {
-    const webpBuf = await imagemin.buffer(savedOriginal ? optimized : bufIn, {
-      plugins: [imageminWebp({ quality: ext === '.png' ? QUALITY.webpFromPng : QUALITY.webpFromJpg })],
+    const srcForWebp = savedOriginal && optimized ? optimized : bufIn;
+    const out = await imagemin.buffer(srcForWebp, {
+      plugins: [
+        imageminWebp({
+          quality: ext === '.png' ? QUALITY.webpFromPng : QUALITY.webpFromJpg,
+        }),
+      ],
     });
-    await fs.writeFile(webpTarget, webpBuf);
+    const webpBuf = Buffer.isBuffer(out) ? out : Buffer.from(out);
+    await fsp.writeFile(webpTarget, webpBuf);
   } catch (e) {
     console.warn(`! Falha ao gerar WEBP para ${rel(file)}:`, e.message);
   }
@@ -93,50 +99,60 @@ async function optimizeJpgPng(file) {
     file,
     before: sizeIn,
     after: savedOriginal ? (optimized ? optimized.length : sizeIn) : sizeIn,
+    webp: webpTarget,
   };
 }
 
-async function main() {
-  if (!fssync.existsSync(DIST_DIR)) {
+(async function main() {
+  const t0 = Date.now();
+
+  try {
+    const stat = await fsp.stat(DIST_DIR);
+    if (!stat.isDirectory()) {
+      console.error('✖ dist/ não é diretório. Rode antes: npm run build');
+      process.exit(1);
+    }
+  } catch {
     console.error('✖ Pasta dist/ não encontrada. Rode antes: npm run build');
     process.exit(1);
   }
 
   console.log('🔎 Varredura de imagens em dist/ ...');
   const all = await listFilesRec(DIST_DIR);
-  const candidates = all.filter(f => /\.(jpe?g|png)$/i.test(f));
+  const candidates = all.filter((f) => /\.(jpe?g|png)$/i.test(f));
 
   if (candidates.length === 0) {
-    console.log('ℹ️ Nenhuma JPG/PNG encontrada em dist/.');
-    return;
+    console.log('ℹ️ Nenhuma JPG/PNG encontrada em dist/. Nada a fazer.');
+    process.exit(0);
   }
 
   await ensureDir(DIST_DIR);
 
   let totalBefore = 0, totalAfter = 0, done = 0;
 
-  for (const f of candidates) {
-    const res = await optimizeJpgPng(f);
+  for (const file of candidates) {
+    const res = await optimizeJpgPng(file);
     if (res) {
       done++;
       totalBefore += res.before;
-      totalAfter  += res.after;
+      totalAfter += res.after;
       const delta = res.before - res.after;
       const savedPct = ((delta / res.before) * 100).toFixed(1);
-      console.log(`✔ ${rel(f)}  ${fmtBytes(res.before)} → ${fmtBytes(res.after)}  (−${fmtBytes(delta)} / ${savedPct}%)  +WEBP`);
+      console.log(`✔ ${rel(file)}  ${fmtBytes(res.before)} → ${fmtBytes(res.after)}  (−${fmtBytes(delta)} / ${savedPct}%)  +WEBP`);
     }
   }
 
+  const dt = ((Date.now() - t0) / 1000).toFixed(2);
   const deltaTotal = totalBefore - totalAfter;
-  const pctTotal   = totalBefore ? ((deltaTotal / totalBefore) * 100).toFixed(1) : '0.0';
+  const pctTotal = totalBefore ? ((deltaTotal / totalBefore) * 100).toFixed(1) : '0.0';
+
   console.log('\n— Resumo —');
   console.log(`Arquivos processados: ${done}`);
   console.log(`Antes:  ${fmtBytes(totalBefore)}`);
   console.log(`Depois: ${fmtBytes(totalAfter)}  (economia ${fmtBytes(deltaTotal)} / ${pctTotal}%)`);
-  console.log('🎯 Pronto! Imagens otimizadas e .webp gerados em dist/.');
-}
-
-main().catch(err => {
+  console.log(`Tempo: ${dt}s`);
+  console.log('\n🎯 Pronto! Imagens otimizadas e .webp gerados em dist/.');
+})().catch((err) => {
   console.error('✖ Erro inesperado:', err);
   process.exit(1);
 });
