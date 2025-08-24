@@ -468,54 +468,60 @@
     a.target = "_blank"; a.rel = "noopener";
   })();
 
-  // ========= BLOCO DE FILTROS (dropdowns + chip destaques) =========
+  // ========= BLOCO DE FILTROS (com proteção de loop + reordenação em lote) =========
   (function filtros(){
     // Helpers
     const moneyToNumber = (txt) => Number(String(txt||'').replace(/[^\d]/g,'')) || 0;
 
     // Estado inicial (URL)
     const params = new URLSearchParams(location.search);
-    let activeQuery = (params.get('q') || '').trim().toLowerCase();
-    let activeBrand = (params.get('brand') || 'all').toLowerCase();
-    let activeSort  = (params.get('sort')  || 'featured');
-    let activePrice = 'all';      // 'all' | '<=2000' | '>=2000'
-    let featuredOnly = false;     // toggle
+    let activeQuery   = (params.get('q') || '').trim().toLowerCase();
+    let activeBrand   = (params.get('brand') || 'all').toLowerCase();
+    let activeSort    = (params.get('sort')  || 'featured');
+    let activePrice   = 'all';      // 'all' | '<=2000' | '>=2000'
+    let featuredOnly  = false;      // toggle
 
     // Elementos
-    const grid = document.getElementById('gridProdutos');
-    const countEl = document.getElementById('countVisible');
-    const empty = document.getElementById('emptyState');
-    const qHolders = document.querySelectorAll('[data-q]');
-    const search = document.getElementById('search');
+    const grid        = document.getElementById('gridProdutos');
+    const countEl     = document.getElementById('countVisible');
+    const empty       = document.getElementById('emptyState');
+    const qHolders    = document.querySelectorAll('[data-q]');
+    const search      = document.getElementById('search');
     const searchClear = document.getElementById('searchClear');
-    const sort = document.getElementById('sort');
-    const btnAll = document.getElementById('btnAll');
+    const sort        = document.getElementById('sort');
+    const btnAll      = document.getElementById('btnAll');
     const selectBrand = document.getElementById('brand');
     const selectPrice = document.getElementById('price');
     const btnFeatured = document.getElementById('btnFeatured');
-    const toolbarWA = document.getElementById('toolbarWA');
+    const toolbarWA   = document.getElementById('toolbarWA');
 
-    // WA da toolbar
+    // Flag anti-reentrada (evita loop com MutationObserver)
+    let isApplying = false;
+
+    // WhatsApp da toolbar (mantém)
     (function setWA(){
       const msg = `Olá, Nando! Vim pelo site (página: Celulares). Pode me mostrar as melhores ofertas de hoje?`;
-      if (toolbarWA) { toolbarWA.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`; toolbarWA.target = "_blank"; toolbarWA.rel = "noopener"; }
+      if (toolbarWA) {
+        toolbarWA.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
+        toolbarWA.target = "_blank"; toolbarWA.rel = "noopener";
+      }
     })();
 
     // Hidratar UI
-    if (search) search.value = activeQuery;
-    if (sort) sort.value = activeSort;
+    if (search)      search.value      = activeQuery;
+    if (sort)        sort.value        = activeSort;
     if (selectBrand) selectBrand.value = activeBrand;
     if (selectPrice) selectPrice.value = activePrice;
     qHolders.forEach(el => el.textContent = activeQuery);
 
-    // Util
+    // Utils
     const getCards = () => Array.from(grid.querySelectorAll('article[data-brand]'));
 
     function syncURL(){
       const p = new URLSearchParams(location.search);
       activeBrand ? p.set('brand', activeBrand) : p.delete('brand');
-      activeQuery ? p.set('q', activeQuery) : p.delete('q');
-      activeSort  ? p.set('sort', activeSort) : p.delete('sort');
+      activeQuery ? p.set('q', activeQuery)     : p.delete('q');
+      activeSort  ? p.set('sort', activeSort)   : p.delete('sort');
       history.replaceState(null, '', `${location.pathname}?${p.toString()}`);
     }
 
@@ -528,46 +534,57 @@
     function aplicar(){
       if (!grid) return;
 
+      // evita reentrar se já estamos aplicando (quebra loop)
+      if (isApplying) return;
+      isApplying = true;
+
       syncURL();
 
       const cards = getCards();
 
-      // Ordenação
+      // ===== ORDENAR (só por atributos; sem ler texto do DOM)
       const sorted = cards.slice().sort((a,b)=>{
-        const pa = Number(a.getAttribute('data-price')) || moneyToNumber(a.querySelector('.text-xl')?.textContent);
-        const pb = Number(b.getAttribute('data-price')) || moneyToNumber(b.querySelector('.text-xl')?.textContent);
+        const pa = Number(a.getAttribute('data-price')) || 0;
+        const pb = Number(b.getAttribute('data-price')) || 0;
         const da = new Date(a.getAttribute('data-new') || '2000-01-01').getTime();
         const db = new Date(b.getAttribute('data-new') || '2000-01-01').getTime();
         switch (activeSort){
-          case 'price-asc': return pa - pb;
+          case 'price-asc':  return pa - pb;
           case 'price-desc': return pb - pa;
-          case 'newest': return db - da;
-          default: return 0; // featured
+          case 'newest':     return db - da;
+          default:           return 0; // featured
         }
       });
-      sorted.forEach(card => grid.appendChild(card));
 
-      // Filtros
-      let visible = 0;
+      // 🧩 reanexa em lote para gerar UMA mutação só (reduz disparos do observer)
+      const frag = document.createDocumentFragment();
+      sorted.forEach(card => frag.appendChild(card));
+      grid.appendChild(frag);
+
+      // ===== FILTRAR
+      let visiveis = 0;
       cards.forEach(card=>{
-        const br   = (card.getAttribute('data-brand') || '').toLowerCase();
-        const hay  = (card.getAttribute('data-search') || '').toLowerCase();
+        const br   = (card.getAttribute('data-brand')   || '').toLowerCase();
+        const hay  = (card.getAttribute('data-search')  || '').toLowerCase();
         const pnum = Number(card.getAttribute('data-price')) || 0;
         const feat = (card.getAttribute('data-featured') || '0') === '1';
 
-        const passBrand   = activeBrand === 'all' ? true : (br === activeBrand);
-        const passQuery   = activeQuery ? hay.includes(activeQuery) : true;
-        const passFaixa   = passPrice(pnum);
-        const passDestaq  = featuredOnly ? feat : true;
+        const passaMarca  = activeBrand === 'all' ? true : (br === activeBrand);
+        const passaBusca  = activeQuery ? hay.includes(activeQuery) : true;
+        const passaPreco  = passPrice(pnum);
+        const passaDestaq = featuredOnly ? feat : true;
 
-        const show = passBrand && passQuery && passFaixa && passDestaq;
+        const show = passaMarca && passaBusca && passaPreco && passaDestaq;
         card.style.display = show ? '' : 'none';
-        if (show) visible++;
+        if (show) visiveis++;
       });
 
-      if (countEl) countEl.textContent = visible;
-      if (empty) empty.classList.toggle('hidden', visible !== 0);
+      if (countEl) countEl.textContent = visiveis;
+      if (empty)   empty.classList.toggle('hidden', visiveis !== 0);
       qHolders.forEach(el => el.textContent = activeQuery || '');
+
+      // libera a flag após o ciclo de mutação
+      setTimeout(()=>{ isApplying = false; }, 0);
     }
 
     // Eventos
@@ -596,7 +613,7 @@
     if (btnFeatured) {
       btnFeatured.addEventListener('click', () => {
         featuredOnly = !featuredOnly;
-        btnFeatured.classList.toggle('bg-sky-100', featuredOnly);
+        btnFeatured.classList.toggle('bg-sky-100',  featuredOnly);
         btnFeatured.classList.toggle('text-sky-800', featuredOnly);
         btnFeatured.classList.toggle('border-sky-200', featuredOnly);
         aplicar();
@@ -624,9 +641,14 @@
 
     if (sort) sort.addEventListener('change', () => { activeSort = sort.value; aplicar(); });
 
-    // Reaplicar quando o catálogo dinâmico alterar o grid
+    // Reaplicar quando o catálogo dinâmico alterar o grid (com debounce + flag)
     if (grid) {
-      const mo = new MutationObserver(() => aplicar());
+      let obsTimer = null;
+      const mo = new MutationObserver(() => {
+        if (isApplying) return;              // ignora mutações disparadas por nós mesmos
+        clearTimeout(obsTimer);
+        obsTimer = setTimeout(() => { aplicar(); }, 80);
+      });
       mo.observe(grid, { childList: true });
     }
 
