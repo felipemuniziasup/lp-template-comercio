@@ -218,27 +218,28 @@
   </select>
 
   <!-- Destaques -->
-  <button id="btnFeatured"
-          class="rounded-full border px-3 py-2 text-sm shadow-sm border-slate-300/70 bg-white hover:bg-slate-50"
-          data-featured="1">
-    Destaques
-  </button>
+<button id="btnFeatured"
+        class="rounded-full border px-3 py-2 text-sm shadow-sm border-slate-300/70 bg-white hover:bg-slate-50"
+        data-featured="1">
+  Destaques
+</button>
 
-  <!-- Promoções -->
+<!-- Grupo Promoções + Ordenação -->
+<div class="flex items-center gap-2 ml-auto">
   <button id="btnPromo"
           class="rounded-full border px-3 py-2 text-sm shadow-sm border-slate-300/70 bg-white hover:bg-slate-50"
           aria-pressed="false">
     Promoções
   </button>
-
-  <!-- Ordenação (agora ao lado de Promoções) -->
   <label class="sr-only" for="sort">Ordenar</label>
-  <select id="sort" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm min-w-[180px]">
+  <select id="sort" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm min-w-[150px]">
     <option value="featured">Destaques (ordem padrão)</option>
     <option value="price-asc">Menor preço</option>
     <option value="price-desc">Maior preço</option>
     <option value="newest">Mais novos</option>
   </select>
+</div>
+
 </div>
 
 
