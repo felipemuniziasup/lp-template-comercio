@@ -451,12 +451,16 @@
     a.target = "_blank"; a.rel = "noopener";
   })();
 
-  // ========= NOVO BLOCO DE FILTROS (robusto, compatível com catálogo dinâmico) =========
+  // ========= BLOCO DE FILTROS (com anti-loop e throttle) =========
   (function filtros(){
-    // Helpers locais
+    // Helpers
     const moneyToNumber = (txt) => Number(String(txt||'').replace(/[^\d]/g,'')) || 0;
 
-    // Estado inicial a partir da URL
+    // Flags para evitar loop do observer
+    let isApplying = false;
+    let obsTimer = null;
+
+    // Estado inicial pela URL
     const params = new URLSearchParams(location.search);
     let activeQuery = (params.get('q') || '').trim().toLowerCase();
     let activeBrand = (params.get('brand') || 'all').toLowerCase();
@@ -501,6 +505,8 @@
 
     function aplicar(){
       if (!grid) return;
+      if (isApplying) return;   // evita reentrância
+      isApplying = true;
 
       syncURL();
 
@@ -519,6 +525,7 @@
           default: return 0; // featured
         }
       });
+      // reordenar causa mutation → protegido pelo isApplying
       sorted.forEach(card => grid.appendChild(card));
 
       // Filtro
@@ -536,6 +543,8 @@
       if (countEl) countEl.textContent = visible;
       if (empty) empty.classList.toggle('hidden', visible !== 0);
       qHolders.forEach(el => el.textContent = activeQuery || '');
+
+      isApplying = false; // libera
     }
 
     // Eventos UI
@@ -570,10 +579,14 @@
       sort.addEventListener('change', () => { activeSort = sort.value; aplicar(); });
     }
 
-    // Reaplicar quando o catálogo dinâmico alterar o grid
+    // Observer com throttle (não reage às mudanças que nós mesmos causamos)
     if (grid) {
-      const mo = new MutationObserver(() => aplicar());
-      mo.observe(grid, { childList: true, subtree: false });
+      const mo = new MutationObserver(() => {
+        if (isApplying) return;
+        clearTimeout(obsTimer);
+        obsTimer = setTimeout(aplicar, 80);
+      });
+      mo.observe(grid, { childList: true });
     }
 
     // Primeira aplicação
