@@ -55,9 +55,7 @@
       const path = location.pathname.split('/').pop();
       document.querySelectorAll('nav a, #mobileMenu a').forEach(a=>{
         const href = a.getAttribute('href');
-        if (href && path === href) {
-          a.classList.add('text-sky-600');
-        }
+        if (href && path === href) a.classList.add('text-sky-600');
       });
     })();
   </script>
@@ -66,9 +64,9 @@
 
   <!-- ===================== HERO (Carrossel – Geral) ===================== -->
   <section id="catHero" class="relative overflow-hidden select-none">
-    <!-- Damos altura ao wrapper (igual ao theme.css) -->
-    <div class="relative w-full h-[clamp(220px,45vw,380px)]">
-      <ul id="catHeroSlides" class="absolute inset-0">
+    <!-- Agora o UL é quem tem a altura (via theme.css) -->
+    <div class="relative w-full">
+      <ul id="catHeroSlides" class="relative">
         <!-- Slide 1 (eager/high) -->
         <li class="absolute inset-0 opacity-100 transition-opacity duration-700">
           <picture>
@@ -86,7 +84,6 @@
             <source type="image/jpeg"
                     srcset="assets/banners/geral/hero-all-1-mobile-640.jpg 640w,
                             assets/banners/geral/hero-all-1-mobile-960.jpg 960w" sizes="100vw">
-            <!-- Fallback -->
             <img src="assets/banners/geral/hero-all-1.jpg"
                  alt="Ofertas especiais — Nando Importados"
                  class="absolute inset-0 w-full h-full object-cover z-0"
@@ -156,31 +153,31 @@
   <section class="bg-white/75 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-slate-200 sticky top-14 z-40">
     <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center gap-3">
 
-      <!-- Busca (ordem 1) -->
-      <div class="relative flex-1 min-w-[240px] order-1">
+      <!-- Busca -->
+      <div class="relative flex-1 min-w-[240px]">
         <input id="search"
                class="w-full rounded-xl border border-slate-300/70 bg-white px-4 py-2.5 pr-9 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                type="search" placeholder="Buscar (ex: iPhone 13, POCO X7, Sauvage, EDP…)">
         <svg class="absolute right-3 top-2.5 opacity-60" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m21 21-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="#334155" stroke-width="1.8" stroke-linecap="round"/></svg>
       </div>
 
-      <!-- CTA WhatsApp (ordem 2) -->
-      <div class="w-full order-2">
+      <!-- CTA WhatsApp -->
+      <div class="w-full">
         <a data-wa
-           class="inline-flex w-full items-center justify-center gap-2 px-4 py-3 rounded-2xl text-white font-extrabold shadow-[0_14px_28px_rgba(16,185,129,.35)] bg-[linear-gradient(135deg,#16a34a,#10b981,#06b6d4)] hover:brightness-110 transition">
+           class="inline-flex w-full items-center justify-center gap-2 px-4 py-3 rounded-2xl text-white font-extrabold shadow-lg shadow-emerald-500/30 ring-1 ring-white/20 bg-gradient-to-r from-emerald-600 via-emerald-500 to-cyan-500 hover:brightness-110 transition">
           Ver melhores ofertas no WhatsApp
         </a>
       </div>
 
-      <!-- Categoria (ordem 3) -->
-      <div class="flex flex-wrap gap-2 order-3">
+      <!-- Categoria -->
+      <div class="flex flex-wrap gap-2">
         <button class="chip active" data-cat="all">Tudo</button>
         <button class="chip" data-cat="celulares">Celulares</button>
         <button class="chip" data-cat="perfumes">Perfumes</button>
       </div>
 
-      <!-- Marca (ordem 4) -->
-      <div class="order-4">
+      <!-- Marca (dinâmico por categoria) -->
+      <div>
         <select id="brand" class="rounded-xl border border-slate-300/70 bg-white px-3 py-2 text-sm">
           <option value="all">Todas as marcas</option>
           <!-- celulares -->
@@ -199,8 +196,8 @@
         </select>
       </div>
 
-      <!-- Ordenação (ordem 5) -->
-      <div class="ml-auto order-5">
+      <!-- Ordenação -->
+      <div class="ml-auto">
         <select id="sort" class="rounded-xl border border-slate-300/70 bg-white px-3 py-2 text-sm">
           <option value="featured">Ordem padrão do filtro</option>
           <option value="price-asc">Menor preço</option>
@@ -221,9 +218,10 @@
     </div>
 
     <div id="gridProdutos" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- (cards iguais aos seus)… -->
+      <!-- ==================== CELULARES ==================== -->
+
       <!-- POCO X7 PRO -->
-      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+      <article class="group offer-card rounded-2xl bg-gradient-to-b from-white to-slate-50 ring-1 ring-slate-100/80 shadow-md shadow-slate-200/70 hover:shadow-xl transition overflow-hidden"
                data-cat="celulares" data-brand="xiaomi" data-price="1899" data-new="2024-04-01"
                data-search="poco x7 pro 8gb 256gb snapdragon 7s gen 2 celular android smartphone">
         <img src="assets/celulares/poco-x7-pro.jpg" alt="POCO X7 PRO"
@@ -241,7 +239,7 @@
       </article>
 
       <!-- iPhone 13 -->
-      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+      <article class="group offer-card rounded-2xl bg-gradient-to-b from-white to-slate-50 ring-1 ring-slate-100/80 shadow-md shadow-slate-200/70 hover:shadow-xl transition overflow-hidden"
                data-cat="celulares" data-brand="apple" data-price="3299" data-new="2024-03-10"
                data-search="iphone 13 128gb ios apple celular smartphone 6.1 polegadas">
         <img src="assets/celulares/iphone-13.jpg" alt="iPhone 13 128GB"
@@ -259,7 +257,7 @@
       </article>
 
       <!-- Moto G84 -->
-      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+      <article class="group offer-card rounded-2xl bg-gradient-to-b from-white to-slate-50 ring-1 ring-slate-100/80 shadow-md shadow-slate-200/70 hover:shadow-xl transition overflow-hidden"
                data-cat="celulares" data-brand="motorola" data-price="1699" data-new="2024-02-22"
                data-search="motorola moto g84 256gb 12gb ram android celular smartphone">
         <img src="assets/celulares/moto-g84.jpg" alt="Moto G84"
@@ -277,7 +275,7 @@
       </article>
 
       <!-- Galaxy A34 -->
-      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+      <article class="group offer-card rounded-2xl bg-gradient-to-b from-white to-slate-50 ring-1 ring-slate-100/80 shadow-md shadow-slate-200/70 hover:shadow-xl transition overflow-hidden"
                data-cat="celulares" data-brand="samsung" data-price="1499" data-new="2024-04-20"
                data-search="samsung galaxy a34 128gb android celular smartphone">
         <img src="assets/celulares/galaxy-a34.jpg" alt="Galaxy A34"
@@ -294,8 +292,10 @@
         </div>
       </article>
 
-      <!-- ==================== PERFUMES (idem aos seus) ==================== -->
-      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+      <!-- ==================== PERFUMES ==================== -->
+
+      <!-- Dior Sauvage -->
+      <article class="group offer-card rounded-2xl bg-gradient-to-b from-white to-slate-50 ring-1 ring-slate-100/80 shadow-md shadow-slate-200/70 hover:shadow-xl transition overflow-hidden"
                data-cat="perfumes" data-brand="dior" data-price="649" data-new="2024-04-01"
                data-search="dior sauvage eau de toilette edt 100ml masculino fresco amadeirado">
         <img src="assets/perfumes/dior-sauvage.jpg" alt="Dior Sauvage EDT 100ml"
@@ -312,7 +312,8 @@
         </div>
       </article>
 
-      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+      <!-- Dylan Blue -->
+      <article class="group offer-card rounded-2xl bg-gradient-to-b from-white to-slate-50 ring-1 ring-slate-100/80 shadow-md shadow-slate-200/70 hover:shadow-xl transition overflow-hidden"
                data-cat="perfumes" data-brand="versace" data-price="549" data-new="2024-03-12"
                data-search="versace dylan blue 100ml masculino fougere moderno">
         <img src="assets/perfumes/versace-dylan-blue.jpg" alt="Versace Dylan Blue 100ml"
@@ -329,7 +330,8 @@
         </div>
       </article>
 
-      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+      <!-- Bleu de Chanel -->
+      <article class="group offer-card rounded-2xl bg-gradient-to-b from-white to-slate-50 ring-1 ring-slate-100/80 shadow-md shadow-slate-200/70 hover:shadow-xl transition overflow-hidden"
                data-cat="perfumes" data-brand="chanel" data-price="1099" data-new="2024-01-30"
                data-search="bleu de chanel eau de parfum edp 100ml masculino amadeirado citrico">
         <img src="assets/perfumes/bleu-de-chanel.jpg" alt="Bleu de Chanel EDP 100ml"
@@ -346,7 +348,8 @@
         </div>
       </article>
 
-      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+      <!-- YSL Libre -->
+      <article class="group offer-card rounded-2xl bg-gradient-to-b from-white to-slate-50 ring-1 ring-slate-100/80 shadow-md shadow-slate-200/70 hover:shadow-xl transition overflow-hidden"
                data-cat="perfumes" data-brand="ysl" data-price="799" data-new="2024-03-22"
                data-search="ysl libre eau de parfum edp 90ml feminino floral baunilha lavanda">
         <img src="assets/perfumes/ysl-libre.jpg" alt="YSL Libre EDP 90ml"
@@ -552,12 +555,12 @@
         const msg = `Olá, Nando! Vim pelo site (página: Catálogo completo) e me interessei por: ${name}. Pode me atender?`;
         a.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
         a.target = "_blank"; a.rel = "noopener";
-        a.className = "inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)] bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)] hover:brightness-110 transition";
+        a.className = "inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-white font-semibold ring-1 ring-white/20 shadow-lg shadow-emerald-500/30 bg-gradient-to-r from-emerald-600 via-emerald-500 to-cyan-500 hover:brightness-110 transition";
       });
     }
     enhanceWA(); // primeira aplicação
-
   </script>
+
   <script src="assets/js/produtos.js"></script>
 
   <!-- Alias do catálogo: garante compat e padronização -->
