@@ -264,7 +264,9 @@ footer .payment-logos img:hover{ opacity:1; filter:none; }
   a::after { content:" (" attr(href) ")"; font-size: 12px; color:#64748b; }
 }
 
-/* Hero categorias (altura fluida + dots) */
+/* -------------------------
+   Hero categorias (altura fluida + dots)
+   ------------------------- */
 #catHeroSlides { height: clamp(220px, 45vw, 380px); }
 #catHero .hero-dot{
   width: 10px; height: 10px; border-radius: 9999px;
@@ -274,6 +276,7 @@ footer .payment-logos img:hover{ opacity:1; filter:none; }
 #catHero .hero-dot[aria-current="true"]{
   width: 12px; height: 12px; background: #fff;
 }
+
 /* Chips premium da toolbar */
 .chip{
   border:1px solid #e6e8ec;
@@ -292,4 +295,57 @@ footer .payment-logos img:hover{ opacity:1; filter:none; }
   border-color:#0a63ff;
   color:#fff;
   box-shadow:0 6px 16px rgba(10,99,255,.25);
+}
+
+/* ===================================================================
+   AJUSTES ESPECÍFICOS – Celulares (hero + toolbar mobile horizontal)
+   =================================================================== */
+
+/* 1) Reduz altura do hero em todas as larguras, SEM remover o carrossel.
+      Força o container do aspect-ratio a usar altura limitada. */
+#catHero .aspect-\[21\/9\],
+#catHero .md\:aspect-\[16\/7\],
+#catHero .lg\:aspect-\[16\/6\]{
+  aspect-ratio: auto !important;           /* ignora o aspect para poder limitar a altura */
+  height: clamp(220px, 34vw, 340px);       /* valor base para telas menores */
+}
+
+/* refina por breakpoint (mais compacto no desktop) */
+@media (min-width: 768px){
+  #catHero .md\:aspect-\[16\/7\]{ height: clamp(220px, 28vw, 320px); }
+}
+@media (min-width: 1024px){
+  #catHero .lg\:aspect-\[16\/6\]{ height: clamp(220px, 24vw, 300px); }
+}
+@media (min-width: 1280px){
+  #catHero .lg\:aspect-\[16\/6\]{ height: 280px; }
+}
+
+/* 2) Segunda fileira de filtros SEM QUEBRA no celular deitado,
+      com espaço compacto e sem “buraco” visual. */
+@media (orientation: landscape) and (max-width: 915px){
+  .flex-nowrap.overflow-x-auto{
+    gap: .375rem;                        /* ~6px entre itens */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .flex-nowrap.overflow-x-auto::-webkit-scrollbar{ display: none; }
+  .flex-nowrap.overflow-x-auto > *{ flex: 0 0 auto; }   /* evita quebra */
+  #sort{ min-width: 150px; }                               /* select mais enxuto cabe ao lado */
+}
+
+/* 3) Altura dos selects dentro da toolbar levemente compacta
+      (coerente com os chips) */
+section.sticky.top-14 select{
+  height: 36px;
+}
+
+/* 4) (Opcional, mas útil) Se algum container horizontal usar .scrollbar-hide,
+      aplica o mesmo “sumir scrollbar” usado nos cards */
+.flex-nowrap.overflow-x-auto.scrollbar-hide{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.flex-nowrap.overflow-x-auto.scrollbar-hide::-webkit-scrollbar{
+  display: none;
 }

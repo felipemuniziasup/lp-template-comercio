@@ -1,217 +1,67 @@
-// ====================================================================
-// produtos.js — NandoCatalog (dual-source: Planilha + Local)
-// Lê a planilha (todas as colunas) e/ou um array local e renderiza o grid
-// ====================================================================
+// assets/js/produtos.js
+// ESM: fornece apenas `produtosLocais` para o catalog-hibrido.js
 
-(function () {
-  // =========================
-  // CONFIG
-  // =========================
-  // 1) Coloque aqui a URL do seu Google Apps Script (Web App) que retorna JSON
-  //    Formato esperado: array de objetos com colunas:
-  //    ID, Status, Categoria, Marca, Nome, Descricao, Preco, PrecoDe,
-  //    Destaque, ImagemURL, LinkWA, CreatedAt, UpdateAt
-  const SHEET_WEBAPP_URL = ""; // ex: "https://script.google.com/macros/s/AKfycbx.../exec"
-  // Se estiver vazio, o catálogo será apenas local (se definido).
-
-  // 2) Mapeamento de categorias aceitas (ajusta nomes se quiser)
-  const CATEGORY_ALIASES = {
-    celulares: ["celular", "celulares", "smartphone", "smartphones", "phone", "phones"],
-    perfumes: ["perfume", "perfumes", "fragrancia", "fragrâncias", "fragrance", "parfum", "eau"],
-    tudo: ["tudo", "catalogo", "catálogo", "todos", "all"],
-  };
-
-  // =========================
-  // HELPERS
-  // =========================
-  const norm = (v) => (v == null ? "" : String(v).trim());
-  const lower = (v) => norm(v).toLowerCase();
-  const isTruthy = (v) => ["1", "true", "sim", "yes", "y"].includes(lower(v));
-  const moneyToNumber = (txt) => {
-    if (txt == null) return 0;
-    const s = String(txt).replace(/[^\d,.\-]/g, "");
-    // tenta "1.234,56" (BR) -> 1234.56
-    if (s.includes(",") && s.lastIndexOf(",") > s.lastIndexOf(".")) {
-      return Number(s.replace(/\./g, "").replace(",", "."));
-    }
-    return Number(s.replace(/,/g, ""));
-  };
-  const formatPriceBRL = (n) =>
-    isFinite(n) && n > 0
-      ? n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
-      : "";
-
-  const inCategory = (itemCat, target) => {
-    const ic = lower(itemCat);
-    const tg = lower(target);
-    if (!ic || !tg) return false;
-    const aliases = CATEGORY_ALIASES[tg] || [tg];
-    return [ic, ic.replace(/s$/, "")].some((c) => aliases.includes(c));
-  };
-
-  // Normaliza um registro bruto da planilha para o formato interno
-  function normalizeRow(row) {
-    return {
-      id: norm(row.ID),
-      status: lower(row.Status) || "ativo",
-      categoria: norm(row.Categoria),
-      marca: norm(row.Marca),
-      nome: norm(row.Nome),
-      descricao: norm(row.Descricao),
-      preco: moneyToNumber(row.Preco),
-      precoDe: moneyToNumber(row.PrecoDe),
-      destaque: isTruthy(row.Destaque),
-      img: norm(row.ImagemURL),
-      wa: norm(row.LinkWA),
-      createdAt: norm(row.CreatedAt),
-      updatedAt: norm(row.UpdateAt),
-      // para busca:
-      haystack: [
-        row.ID,
-        row.Categoria,
-        row.Marca,
-        row.Nome,
-        row.Descricao,
-        row.Preco,
-        row.PrecoDe,
-      ]
-        .map(norm)
-        .join(" ")
-        .toLowerCase(),
-    };
+// Converte "2.199,90" / "2199,90" / "2199" em Number
+function parsePrecoBR(v) {
+  if (v == null) return 0;
+  let s = String(v).trim();
+  if (!s) return 0;
+  s = s.replace(/[R$\s]/g, "");
+  if (s.indexOf(",") > -1 && s.lastIndexOf(",") > s.lastIndexOf(".")) {
+    s = s.replace(/\./g, "").replace(",", ".");
+  } else {
+    s = s.replace(/,/g, "");
   }
+  const n = Number(s);
+  return Number.isFinite(n) ? n : 0;
+}
 
-  // Render de um card
-  function renderCard(p) {
-    const preco = formatPriceBRL(p.preco);
-    const precoDe = p.precoDe && p.precoDe > p.preco ? formatPriceBRL(p.precoDe) : "";
-    const searchAttr = [
-      p.nome,
-      p.descricao,
-      p.marca,
-      p.categoria,
-      preco,
-      precoDe,
-    ]
-      .join(" ")
-      .toLowerCase();
+// "1","true","sim","yes"
+function parseBool(v) {
+  if (v == null) return false;
+  const s = String(v).trim().toLowerCase();
+  return s === "1" || s === "true" || s === "sim" || s === "yes";
+}
 
-    const waHref =
-      p.wa ||
-      `https://wa.me/5521976950809?text=${encodeURIComponent(
-        `Olá, Nando! Vim pelo site e me interessei por: ${p.nome}. Pode me atender?`
-      )}`;
+// Normaliza qualquer objeto (se vier de window.LOCAL_PRODUCTS) para o contrato esperado
+function mapToContrato(x = {}) {
+  const nome = x.nome ?? x.titulo ?? x.Nome ?? x.Titulo ?? "Produto";
+  const preco = parsePrecoBR(x.preco ?? x.Preco ?? x.price);
+  const precoDe = parsePrecoBR(x.precoDe ?? x.PrecoDe ?? x.de);
+  const marca =
+    (x.marca ?? x.Marca ?? x.brand ?? x.Brand ?? "outros").toString().toLowerCase();
+  const imagem = x.imagem ?? x.image ?? x.ImagemURL ?? x.img ?? "";
+  const descricao = x.descricao ?? x.desc ?? x.Descricao ?? "";
+  const novo = x.novo ?? x.data ?? x.createdAt ?? x.CreatedAt ?? "2000-01-01";
+  const featured = !!(x.featured ?? x.destaque ?? x.Destaque);
+  const promo = !!(x.promo ?? x.promocao ?? x["promoção"]);
 
-    return `
-<article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
-         data-brand="${lower(p.marca)}"
-         data-price="${p.preco || 0}"
-         data-new="${p.createdAt || ""}"
-         data-featured="${p.destaque ? '1' : '0'}"
-         data-search="${searchAttr}">
-  <img src="${p.img || "assets/celulares/fallback-celular.jpg"}"
-       alt="${escapeHtml(p.nome)}"
-       class="w-full h-52 object-cover"
-       onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
-  <div class="p-5">
-    <h2 class="font-bold text-lg">${escapeHtml(p.nome)}</h2>
-    <p class="text-sm text-slate-600">${escapeHtml(p.descricao || "")}</p>
-    <div class="mt-3">
-      ${precoDe ? `<div class="price-strike text-xs">${precoDe}</div>` : ""}
-      <div class="text-xl font-extrabold text-blue-700">${preco || ""}</div>
-    </div>
-    <a class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)] bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)] hover:brightness-110 transition mt-4 w-full"
-       href="${waHref}" target="_blank" rel="noopener">
-       Falar no WhatsApp
-    </a>
-  </div>
-</article>`;
-  }
+  return { nome, preco, precoDe, marca, imagem, descricao, novo, featured, promo };
+}
 
-  function escapeHtml(s) {
-    return String(s || "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
+// Se você quiser declarar produtos locais direto no HTML, pode fazer:
+// <script>window.LOCAL_PRODUCTS = [ { Nome:"POCO X7 Pro", Preco:"1899", Marca:"POCO", ImagemURL:"assets/celulares/poco-x7-pro.jpg", Descricao:"8GB · 256GB" } ]</script>
+// Este arquivo irá normalizar esses itens automaticamente.
+const produtosDeJanela = Array.isArray(window?.LOCAL_PRODUCTS)
+  ? window.LOCAL_PRODUCTS.map(mapToContrato)
+  : [];
 
-  // =========================
-  // FONTE: PLANILHA
-  // =========================
-  async function fetchSheet() {
-    if (!SHEET_WEBAPP_URL) return [];
-    try {
-      const res = await fetch(SHEET_WEBAPP_URL, { cache: "no-store" });
-      if (!res.ok) throw new Error(res.status + " " + res.statusText);
-      const data = await res.json();
-      if (!Array.isArray(data)) return [];
-      return data
-        .map(normalizeRow)
-        .filter((p) => p.status === "ativo" && p.nome && p.categoria);
-    } catch (err) {
-      console.warn("[NandoCatalog] Falha ao ler planilha:", err);
-      return [];
-    }
-  }
+// Se quiser manter este arquivo só como “vazio” e deixar os cards mock do HTML,
+// deixe o array abaixo como [].
+const produtosFixos = [
+  // Exemplo comentado (opcional):
+  // mapToContrato({
+  //   nome: "POCO X7 Pro",
+  //   preco: 1899,
+  //   precoDe: 2199,
+  //   marca: "poco",
+  //   imagem: "assets/celulares/poco-x7-pro.jpg",
+  //   descricao: "8GB · 256GB · Snapdragon 7s Gen 2",
+  //   novo: "2024-03-01",
+  //   featured: true,
+  //   promo: true
+  // }),
+];
 
-  // =========================
-  // FONTE: LOCAL (opcional)
-  // =========================
-  // Se quiser usar local, defina window.LOCAL_PRODUCTS = [ { … } ] antes deste arquivo
-  function fetchLocal() {
-    const arr = Array.isArray(window.LOCAL_PRODUCTS) ? window.LOCAL_PRODUCTS : [];
-    return arr
-      .map(normalizeRow)
-      .filter((p) => p.status === "ativo" && p.nome && p.categoria);
-  }
-
-  // =========================
-  // PÚBLICO
-  // =========================
-  async function renderCatalogSimple({ pageLabel = "Catálogo", categoria = "tudo" } = {}) {
-    // Carrega fontes
-    const [fromSheet, fromLocal] = await Promise.all([fetchSheet(), fetchLocal()]);
-    // Merge (sheet tem prioridade sobre local por ID, se ID coincidir)
-    const map = new Map();
-    for (const p of fromLocal) map.set(p.id || `${p.nome}|${p.img}`, p);
-    for (const p of fromSheet) map.set(p.id || `${p.nome}|${p.img}`, p);
-    let items = Array.from(map.values());
-
-    // Filtra por categoria se não for "tudo"
-    if (lower(categoria) !== "tudo") {
-      items = items.filter((p) => inCategory(p.categoria, categoria));
-    }
-
-    // Render no grid existente
-    const grid = document.getElementById("gridProdutos");
-    const countEl = document.getElementById("countVisible");
-    const empty = document.getElementById("emptyState");
-
-    if (!grid) {
-      console.warn("[NandoCatalog] gridProdutos não encontrado.");
-      return;
-    }
-
-    if (!items.length) {
-      grid.innerHTML = "";
-      if (empty) empty.classList.remove("hidden");
-      if (countEl) countEl.textContent = "0";
-      return;
-    }
-
-    // monta HTML
-    grid.innerHTML = items.map(renderCard).join("");
-    if (empty) empty.classList.add("hidden");
-    if (countEl) countEl.textContent = String(items.length);
-
-    // aplica filtros/ordenação já existentes na página (se houver)
-    // — seu script da página mantém os listeners; aqui não duplicamos nada.
-  }
-
-  // expõe global
-  window.NandoCatalog = {
-    renderCatalogSimple,
-  };
-})();
+// Exporta o que o catalog-hibrido.js consome
+export const produtosLocais = [...produtosFixos, ...produtosDeJanela];
