@@ -57,44 +57,6 @@
   <!-- CSS do tema -->
   <link rel="stylesheet" href="assets/css/theme.css" />
 
-  <style>
-  /* Ajustes apenas em telas largas (desktop) */
-  @media (min-width: 1024px) {
-    /* Toolbar mais compacta */
-    section.bg-white\/80 {
-      padding-top: 0.5rem !important;
-      padding-bottom: 0.5rem !important;
-    }
-
-    /* Busca mais baixa */
-    #search {
-      padding-top: 0.55rem;
-      padding-bottom: 0.55rem;
-      font-size: 0.95rem;
-    }
-
-    /* Botão limpar busca menor */
-    #searchClear {
-      font-size: 0.9rem;
-    }
-
-    /* Botão WhatsApp compacto no desktop */
-    #toolbarWA {
-      padding-top: 0.6rem !important;
-      padding-bottom: 0.6rem !important;
-      font-size: 0.95rem !important;
-    }
-
-    /* Selects e botões do filtro menores */
-    #brand, #price, #sort, 
-    #btnAll, #btnFeatured, #btnPromo {
-      padding-top: 0.35rem !important;
-      padding-bottom: 0.35rem !important;
-      font-size: 0.9rem !important;
-    }
-  }
-</style>
-
   <!-- JSON-LD básico -->
   <script type="application/ld+json">
   {
@@ -106,6 +68,40 @@
     "sameAs":[]
   }
   </script>
+
+  <!-- Ajustes: compactar toolbar apenas no desktop -->
+  <style>
+    @media (min-width:1024px){
+      /* reduz o padding vertical do container interno da barra */
+      #toolbar .py-4{ padding-top:.5rem !important; padding-bottom:.5rem !important; }
+
+      /* inputs/botões levemente menores no desktop */
+      #toolbar #search{ padding-top:.55rem; padding-bottom:.55rem; font-size:.95rem; }
+      #toolbar #toolbarWA{ padding-top:.6rem !important; padding-bottom:.6rem !important; font-size:.95rem !important; }
+
+      #toolbar #brand,
+      #toolbar #price,
+      #toolbar #sort,
+      #toolbar #btnAll,
+      #toolbar #btnFeatured,
+      #toolbar #btnPromo{
+        padding-top:.35rem !important;
+        padding-bottom:.35rem !important;
+        font-size:.9rem !important;
+      }
+    }
+
+    /* Linha B sempre na mesma linha em telas estreitas deitadas */
+    @media (orientation: landscape) and (max-width: 915px){
+      #toolbar .row-b{
+        display:flex; flex-wrap:nowrap; gap:.5rem;
+        overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+      }
+      #toolbar .row-b::-webkit-scrollbar{ display:none; }
+      #toolbar .row-b > *{ flex:0 0 auto; }
+      #toolbar #sort{ min-width:170px; }
+    }
+  </style>
 </head>
 
 <body class="bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-800 antialiased">
@@ -201,7 +197,7 @@
 <!-- ===================== /HERO ===================== -->
 
 <!-- ===================== TOOLBAR (BUSCA + CTA + CONTROLES) ===================== -->
-<section class="bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-slate-200 sticky top-14 z-40">
+<section id="toolbar" class="bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-slate-200 sticky top-14 z-40">
   <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3">
 
     <!-- Linha 1: BUSCA LARGA -->
@@ -246,7 +242,7 @@
       </div>
 
       <!-- Sub-linha B: Destaques + Promoções + Ordenação (SEM QUEBRAR) -->
-      <div class="flex items-center gap-2 flex-nowrap overflow-x-auto whitespace-nowrap">
+      <div class="row-b flex items-center gap-2 flex-nowrap overflow-x-auto whitespace-nowrap">
         <button id="btnFeatured"
                 class="rounded-full border px-3 py-2 text-sm shadow-sm border-slate-300/70 bg-white hover:bg-slate-50"
                 data-featured="1">
@@ -262,7 +258,7 @@
         <label class="sr-only" for="sort">Ordenar</label>
         <select id="sort"
                 class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm min-w-[170px]">
-          <option value="featured">Destaques (ordem padrão)</option>
+          <option value="featured">Ordem padrão do filtro</option>
           <option value="price-asc">Menor preço</option>
           <option value="price-desc">Maior preço</option>
           <option value="newest">Mais novos</option>
@@ -318,7 +314,7 @@
       </div>
     </article>
 
-    <!-- ...demais cards (sem alterações estruturais) ... -->
+    <!-- ...demais cards... -->
 
   </div>
 
