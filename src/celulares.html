@@ -57,6 +57,44 @@
   <!-- CSS do tema -->
   <link rel="stylesheet" href="assets/css/theme.css" />
 
+  <style>
+  /* Ajustes apenas em telas largas (desktop) */
+  @media (min-width: 1024px) {
+    /* Toolbar mais compacta */
+    section.bg-white\/80 {
+      padding-top: 0.5rem !important;
+      padding-bottom: 0.5rem !important;
+    }
+
+    /* Busca mais baixa */
+    #search {
+      padding-top: 0.55rem;
+      padding-bottom: 0.55rem;
+      font-size: 0.95rem;
+    }
+
+    /* Botão limpar busca menor */
+    #searchClear {
+      font-size: 0.9rem;
+    }
+
+    /* Botão WhatsApp compacto no desktop */
+    #toolbarWA {
+      padding-top: 0.6rem !important;
+      padding-bottom: 0.6rem !important;
+      font-size: 0.95rem !important;
+    }
+
+    /* Selects e botões do filtro menores */
+    #brand, #price, #sort, 
+    #btnAll, #btnFeatured, #btnPromo {
+      padding-top: 0.35rem !important;
+      padding-bottom: 0.35rem !important;
+      font-size: 0.9rem !important;
+    }
+  }
+</style>
+
   <!-- JSON-LD básico -->
   <script type="application/ld+json">
   {
