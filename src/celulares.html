@@ -25,11 +25,11 @@
   <meta name="twitter:description" content="Catálogo atualizado com atendimento via WhatsApp." />
   <meta name="twitter:image" content="https://lp-template-comercio.pages.dev/assets/og-cover.jpg" />
 
-  <!-- Performance -->
+  <!-- Pré-conexões/Performance -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
 
-  <!-- Tailwind via CDN (fallback Twind) -->
+  <!-- Tailwind via CDN (com fallback Twind) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     (function () {
@@ -68,45 +68,6 @@
     "sameAs":[]
   }
   </script>
-
-  <!-- Ajustes de layout: foco em celular na horizontal -->
-  <style>
-    /* Mantém a segunda fileira (Destaques/Promoções/Ordenação) alinhada em uma linha no celular deitado */
-    @media (orientation: landscape) and (max-width: 915px){
-      #rowB{
-        display:flex;
-        flex-wrap:nowrap;
-        gap:.375rem;              /* ~6px */
-        overflow-x:auto;
-        -webkit-overflow-scrolling:touch;
-        scrollbar-width:none;
-      }
-      #rowB::-webkit-scrollbar{ display:none; }
-      #rowB > *{ flex:0 0 auto; }
-
-      /* compactar um pouco os botões na horizontal */
-      #btnFeatured,#btnPromo{
-        padding:.45rem .6rem;
-        font-size:.90rem;
-      }
-      /* select mais estreito pra caber ao lado do Promoções */
-      #sort{
-        min-width:150px;
-        padding-left:.6rem;
-        padding-right:1.5rem;
-      }
-    }
-
-    /* Tira “buracos” entre linhas em telas estreitas sem depender da orientação */
-    @media (max-width: 420px){
-      .toolbar-grid-3{
-        display:grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap:.5rem;
-      }
-      .toolbar-grid-3 > * { min-width:0; }
-    }
-  </style>
 </head>
 
 <body class="bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-800 antialiased">
@@ -118,7 +79,7 @@
       <span class="font-extrabold tracking-tight text-slate-900">Nando Importados</span>
     </a>
 
-    <!-- Busca (vai para tudo.html?q=...) -->
+    <!-- Busca (apenas linka pro tudo com ?q=) -->
     <form action="tudo.html" method="get" class="hidden md:flex items-center gap-2 w-[48%]">
       <input name="q" type="search" placeholder="Buscar produtos…"
              class="flex-1 rounded-xl border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400/50">
@@ -157,10 +118,13 @@
       const menu = document.getElementById('mobileMenu');
       if(!btn || !menu) return;
       btn.addEventListener('click', ()=> menu.classList.toggle('hidden'));
+      // marca ativo
       const path = location.pathname.split('/').pop();
       document.querySelectorAll('nav a, #mobileMenu a').forEach(a=>{
         const href = a.getAttribute('href');
-        if (href && path === href) a.classList.add('text-sky-600');
+        if (href && path === href) {
+          a.classList.add('text-sky-600');
+        }
       });
     })();
   </script>
@@ -170,20 +134,29 @@
 <section id="catHero" class="relative overflow-hidden select-none">
   <div class="relative w-full aspect-[21/9] md:aspect-[16/6] lg:aspect-[16/5]">
     <ul id="catHeroSlides" class="absolute inset-0">
+      <!-- SLIDE 1 -->
       <li class="absolute inset-0 opacity-100 transition-opacity duration-700">
-        <img src="assets/celulares/poco-x7-pro.jpg" alt="Teste carrossel"
-             class="absolute inset-0 w-full h-full object-cover z-0"
-             loading="eager" decoding="async" fetchpriority="high">
+        <img
+          src="assets/celulares/poco-x7-pro.jpg"
+          alt="Teste carrossel"
+          class="absolute inset-0 w-full h-full object-cover z-0"
+          loading="eager" decoding="async" fetchpriority="high">
         <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
       </li>
+
+      <!-- SLIDE 2 -->
       <li class="absolute inset-0 opacity-0 transition-opacity duration-700">
-        <img src="assets/banners/celulares/hero-cel-2.jpg" alt="Ofertas premium"
+        <img src="assets/banners/celulares/hero-cel-2.jpg"
+             alt="Ofertas premium"
              class="absolute inset-0 w-full h-full object-cover z-0"
              loading="lazy" decoding="async">
         <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
       </li>
+
+      <!-- SLIDE 3 -->
       <li class="absolute inset-0 opacity-0 transition-opacity duration-700">
-        <img src="assets/banners/celulares/hero-cel-3.jpg" alt="Smartphones com NF e garantia"
+        <img src="assets/banners/celulares/hero-cel-3.jpg"
+             alt="Smartphones com NF e garantia"
              class="absolute inset-0 w-full h-full object-cover z-0"
              loading="lazy" decoding="async">
         <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
@@ -200,7 +173,7 @@
 </section>
 <!-- ===================== /HERO ===================== -->
 
-<!-- ========== TOOLBAR (BUSCA 100% + CTA + CONTROLES em 2 linhas / 3 colunas) ========== -->
+<!-- ===================== TOOLBAR (BUSCA 100% + CTA + CONTROLES) ===================== -->
 <section class="bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-slate-200 sticky top-14 z-40">
   <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3">
 
@@ -221,54 +194,55 @@
     </div>
 
     <!-- Linha 3: CONTROLES -->
-    <div class="space-y-2">
-      <!-- Linha A -->
-      <div class="toolbar-grid-3 items-center">
-        <button id="btnAll" class="chip active w-full">Todos</button>
+    <div class="flex flex-wrap items-center gap-2">
+      <!-- Reset (Todos) -->
+      <button id="btnAll" class="chip active">Todos</button>
 
-        <label class="sr-only" for="brand">Marca</label>
-        <select id="brand" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm w-full">
-          <option value="all">Todas as marcas</option>
-          <option value="apple">Apple</option>
-          <option value="samsung">Samsung</option>
-          <option value="xiaomi">Xiaomi</option>
-          <option value="motorola">Motorola</option>
-          <option value="poco">POCO</option>
+      <!-- Marca -->
+      <label class="sr-only" for="brand">Marca</label>
+      <select id="brand" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm">
+        <option value="all">Todas as marcas</option>
+        <option value="apple">Apple</option>
+        <option value="samsung">Samsung</option>
+        <option value="xiaomi">Xiaomi</option>
+        <option value="motorola">Motorola</option>
+        <option value="poco">POCO</option>
+      </select>
+
+      <!-- Preço -->
+      <label class="sr-only" for="price">Faixa de preço</label>
+      <select id="price" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm">
+        <option value="all">Todos os preços</option>
+        <option value="<=2000">Até R$ 1.999</option>
+        <option value=">=2000">R$ 2.000+</option>
+      </select>
+
+      <!-- Destaques -->
+      <button id="btnFeatured"
+              class="rounded-full border px-3 py-2 text-sm shadow-sm border-slate-300/70 bg-white hover:bg-slate-50"
+              data-featured="1">
+        Destaques
+      </button>
+
+      <!-- Promoções -->
+      <button id="btnPromo"
+              class="rounded-full border px-3 py-2 text-sm shadow-sm border-slate-300/70 bg-white hover:bg-slate-50"
+              aria-pressed="false">
+        Promoções
+      </button>
+
+      <!-- Ordenação -->
+      <div class="ml-auto">
+        <label class="sr-only" for="sort">Ordenar</label>
+        <select id="sort" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm">
+          <option value="featured">Destaques (ordem padrão)</option>
+          <option value="price-asc">Menor preço</option>
+          <option value="price-desc">Maior preço</option>
+          <option value="newest">Mais novos</option>
         </select>
-
-        <label class="sr-only" for="price">Faixa de preço</label>
-        <select id="price" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm w-full">
-          <option value="all">Todos os preços</option>
-          <option value="<=2000">Até R$ 1.999</option>
-          <option value=">=2000">R$ 2.000+</option>
-        </select>
-      </div>
-
-      <!-- Linha B (mantém 3 colunas mesmo no landscape) -->
-      <div id="rowB" class="toolbar-grid-3 items-center">
-        <button id="btnFeatured"
-                class="rounded-full border px-3 py-2 text-sm shadow-sm border-slate-300/70 bg-white hover:bg-slate-50 w-full"
-                data-featured="1">
-          Destaques
-        </button>
-
-        <button id="btnPromo"
-                class="rounded-full border px-3 py-2 text-sm shadow-sm border-slate-300/70 bg-white hover:bg-slate-50 w-full"
-                data-promo="1" aria-pressed="false">
-          Promoções
-        </button>
-
-        <div>
-          <label class="sr-only" for="sort">Ordenar</label>
-          <select id="sort" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm w-full min-w-[170px]">
-            <option value="featured">Ordem padrão</option>
-            <option value="price-asc">Menor preço</option>
-            <option value="price-desc">Maior preço</option>
-            <option value="newest">Mais novos</option>
-          </select>
-        </div>
       </div>
     </div>
+
   </div>
 </section>
 <!-- ===================== /TOOLBAR ===================== -->
@@ -281,12 +255,12 @@
   </div>
 
   <div id="gridProdutos" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <!-- ======= CARDS MOCK (ficam, mas serão substituídos quando o catálogo híbrido renderizar) ======= -->
+    <!-- ======= CARDS ======= -->
 
     <!-- POCO X7 PRO -->
     <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
              data-brand="poco" data-price="1899" data-new="2024-03-01"
-             data-search="poco x7 pro 8gb 256gb snapdragon 7s gen 2 5g android" data-featured="1">
+             data-search="poco x7 pro 8gb 256gb snapdragon 7s gen 2 5g android">
       <img src="assets/celulares/poco-x7-pro.jpg" alt="POCO X7 PRO"
            class="w-full h-52 object-cover"
            onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
@@ -304,7 +278,7 @@
     <!-- iPhone 13 -->
     <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
              data-brand="apple" data-price="3299" data-new="2023-10-01"
-             data-search="iphone 13 128gb ios apple 6.1 polegadas" data-featured="1">
+             data-search="iphone 13 128gb ios apple 6.1 polegadas">
       <img src="assets/celulares/iphone-13.jpg" alt="iPhone 13 128GB"
            class="w-full h-52 object-cover"
            onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
@@ -412,7 +386,7 @@
     <!-- iPhone 14 -->
     <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
              data-brand="apple" data-price="3999" data-new="2024-02-20"
-             data-search="iphone 14 128gb ios apple" data-featured="1">
+             data-search="iphone 14 128gb ios apple">
       <img src="assets/celulares/iphone-14.jpg" alt="iPhone 14 128GB"
            class="w-full h-52 object-cover"
            onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
@@ -426,6 +400,7 @@
         <a class="btn-wa mt-4 w-full" data-wa-product="iPhone 14 128GB">Falar no WhatsApp</a>
       </div>
     </article>
+
     <!-- ======= /CARDS ======= -->
   </div>
 
@@ -490,7 +465,7 @@
 
 <!-- ===================== SCRIPTS ===================== -->
 <script>
-  // WhatsApp CTA do hero secundário (mantém)
+  // WhatsApp CTA geral (se houver âncora com data-wa em algum ponto)
   (function waHero(){
     const a = document.querySelector('a[data-wa]');
     if(!a) return;
@@ -499,170 +474,203 @@
     a.target = "_blank"; a.rel = "noopener";
   })();
 
-  // ========= FILTROS (duas linhas, 3 colunas; seguro e sem loops) =========
+  /* =========================================================================
+     BLOCO DE FILTROS — versão segura (anti-loop) p/ Nando Importados
+     Busca (debounce), Marca, Preço, Destaques, Promoções, Ordenação,
+     contador/estado vazio, atualização de URL e proteção com MutationObserver.
+     ======================================================================= */
   (function filtros(){
+    // Helpers
     const moneyToNumber = (txt) => Number(String(txt||'').replace(/[^\d]/g,'')) || 0;
+    const qs  = (sel, root=document) => root.querySelector(sel);
+    const qsa = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 
-    // Estado inicial via URL
-    const params = new URLSearchParams(location.search);
-    let activeQuery = (params.get('q') || '').trim().toLowerCase();
-    let activeBrand = (params.get('brand') || 'all').toLowerCase();
-    let activeSort  = (params.get('sort')  || 'featured');
-    let activePrice = 'all';      // 'all' | '<=2000' | '>=2000'
-    let featuredOnly = false;
-    let promoOnly    = false;
+    // Estado inicial (URL)
+    const params       = new URLSearchParams(location.search);
+    let activeQuery    = (params.get('q') || '').trim().toLowerCase();
+    let activeBrand    = (params.get('brand') || 'all').toLowerCase();
+    let activeSort     = (params.get('sort')  || 'featured');
+    let activePrice    = 'all';        // 'all' | '<=2000' | '>=2000'
+    let featuredOnly   = false;        // toggle
+    let promoOnly      = false;        // toggle
 
     // Elementos
-    const grid        = document.getElementById('gridProdutos');
-    const countEl     = document.getElementById('countVisible');
-    const empty       = document.getElementById('emptyState');
-    const qHolders    = document.querySelectorAll('[data-q]');
-    const search      = document.getElementById('search');
-    const searchClear = document.getElementById('searchClear');
-    const sort        = document.getElementById('sort');
-    const btnAll      = document.getElementById('btnAll');
-    const selectBrand = document.getElementById('brand');
-    const selectPrice = document.getElementById('price');
-    const btnFeatured = document.getElementById('btnFeatured');
-    const btnPromo    = document.getElementById('btnPromo');
-    const toolbarWA   = document.getElementById('toolbarWA');
+    const grid         = qs('#gridProdutos');
+    const countEl      = qs('#countVisible');
+    const empty        = qs('#emptyState');
+    const qHolders     = qsa('[data-q]');
+    const search       = qs('#search');
+    const searchClear  = qs('#searchClear');
+    const sort         = qs('#sort');
+    const btnAll       = qs('#btnAll');
+    const selectBrand  = qs('#brand');
+    const selectPrice  = qs('#price');
+    const btnFeatured  = qs('#btnFeatured');
+    const btnPromo     = qs('#btnPromo');
+    const toolbarWA    = qs('#toolbarWA');
+
+    if (!grid) { console.warn('[filtros] #gridProdutos não encontrado. Abortando.'); return; }
 
     // CTA WhatsApp da toolbar
     (function setWA(){
       const msg = `Olá, Nando! Vim pelo site (página: Celulares). Pode me mostrar as melhores ofertas de hoje?`;
       if (toolbarWA) {
-        toolbarWA.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
-        toolbarWA.target = "_blank"; toolbarWA.rel = "noopener";
+        toolbarWA.href   = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
+        toolbarWA.target = '_blank';
+        toolbarWA.rel    = 'noopener';
       }
     })();
 
     // Hidratar UI
-    if (search) search.value = activeQuery;
-    if (sort) sort.value = activeSort;
+    if (search)      search.value = activeQuery;
+    if (sort)        sort.value   = activeSort;
     if (selectBrand) selectBrand.value = activeBrand;
     if (selectPrice) selectPrice.value = activePrice;
     qHolders.forEach(el => el.textContent = activeQuery);
 
-    // Util
-    const getCards = () => Array.from(grid.querySelectorAll('article[data-brand]'));
+    // Utils
+    const getCards = () => qsa('article[data-brand]', grid);
 
     function syncURL(){
-      const p = new URLSearchParams(location.search);
-      activeBrand ? p.set('brand', activeBrand) : p.delete('brand');
-      activeQuery ? p.set('q', activeQuery) : p.delete('q');
-      activeSort  ? p.set('sort', activeSort)   : p.delete('sort');
-      history.replaceState(null, '', `${location.pathname}?${p.toString()}`);
+      const p   = new URLSearchParams(location.search);
+      const set = (k, v) => (v && String(v).length) ? p.set(k, v) : p.delete(k);
+      set('brand', activeBrand !== 'all' ? activeBrand : '');
+      set('q',     activeQuery);
+      set('sort',  activeSort !== 'featured' ? activeSort : '');
+      const qsStr = p.toString();
+      const next  = qsStr ? `${location.pathname}?${qsStr}` : location.pathname;
+      history.replaceState(null, '', next);
     }
 
     function passPrice(price){
       if (activePrice === '<=2000') return price <= 1999.99;
       if (activePrice === '>=2000') return price >= 2000;
-      return true;
+      return true; // 'all'
     }
 
-    function isPromo(card){
-      if ((card.getAttribute('data-promo') || '0') === '1') return true;
-      return !!card.querySelector('.price-strike'); // preço riscado indica promoção
-    }
-
+    // Anti-loop
     let isApplying = false;
+    let obsTimer   = null;
+
     function aplicar(){
-      if (!grid || isApplying) return;
+      if (isApplying) return;
       isApplying = true;
 
-      syncURL();
+      try {
+        syncURL();
 
-      const cards = getCards();
+        const cards = getCards();
 
-      // Ordenação
-      const sorted = cards.slice().sort((a,b)=>{
-        const pa = Number(a.getAttribute('data-price')) || moneyToNumber(a.querySelector('.text-xl')?.textContent);
-        const pb = Number(b.getAttribute('data-price')) || moneyToNumber(b.querySelector('.text-xl')?.textContent);
-        const da = new Date(a.getAttribute('data-new') || '2000-01-01').getTime();
-        const db = new Date(b.getAttribute('data-new') || '2000-01-01').getTime();
-        switch (activeSort){
-          case 'price-asc': return pa - pb;
-          case 'price-desc': return pb - pa;
-          case 'newest': return db - da;
-          default: return 0;
-        }
-      });
-      sorted.forEach(card => grid.appendChild(card));
+        // Ordenação
+        const sorted = cards.slice().sort((a,b)=>{
+          const pa = Number(a.getAttribute('data-price')) || moneyToNumber(a.querySelector('.text-xl')?.textContent);
+          const pb = Number(b.getAttribute('data-price')) || moneyToNumber(b.querySelector('.text-xl')?.textContent);
+          const da = new Date(a.getAttribute('data-new') || '2000-01-01').getTime();
+          const db = new Date(b.getAttribute('data-new') || '2000-01-01').getTime();
+          switch (activeSort){
+            case 'price-asc':  return pa - pb;
+            case 'price-desc': return pb - pa;
+            case 'newest':     return db - da;
+            default:           return 0; // featured
+          }
+        });
+        sorted.forEach(card => grid.appendChild(card)); // reanexa sem recriar
 
-      // Filtros
-      let visible = 0;
-      cards.forEach(card=>{
-        const br   = (card.getAttribute('data-brand') || '').toLowerCase();
-        const hay  = (card.getAttribute('data-search') || '').toLowerCase();
-        const pnum = Number(card.getAttribute('data-price')) || 0;
-        const feat = (card.getAttribute('data-featured') || '0') === '1';
+        // Filtros
+        let visible = 0;
+        cards.forEach(card=>{
+          const br       = (card.getAttribute('data-brand') || '').toLowerCase();
+          const hay      = (card.getAttribute('data-search') || '').toLowerCase();
+          const pnum     = Number(card.getAttribute('data-price')) || 0;
+          const feat     = (card.getAttribute('data-featured') || '0') === '1';
+          const hasPromo = !!card.querySelector('.price-strike');
 
-        const passBrand   = activeBrand === 'all' ? true : (br === activeBrand);
-        const passQuery   = activeQuery ? hay.includes(activeQuery) : true;
-        const passFaixa   = passPrice(pnum);
-        const passDestaq  = featuredOnly ? feat : true;
-        const passPromo   = promoOnly ? isPromo(card) : true;
+          const okBrand  = activeBrand === 'all' ? true : (br === activeBrand);
+          const okQuery  = activeQuery ? hay.includes(activeQuery) : true;
+          const okFaixa  = passPrice(pnum);
+          const okFeat   = featuredOnly ? feat : true;
+          const okPromo  = promoOnly ? hasPromo : true;
 
-        const show = passBrand && passQuery && passFaixa && passDestaq && passPromo;
-        card.style.display = show ? '' : 'none';
-        if (show) visible++;
-      });
+          const show = okBrand && okQuery && okFaixa && okFeat && okPromo;
+          card.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
 
-      if (countEl) countEl.textContent = visible;
-      if (empty) empty.classList.toggle('hidden', visible !== 0);
-      qHolders.forEach(el => el.textContent = activeQuery || '');
-
-      isApplying = false;
+        if (countEl) countEl.textContent = visible;
+        if (empty)   empty.classList.toggle('hidden', visible !== 0);
+        qHolders.forEach(el => el.textContent = activeQuery || '');
+      } finally {
+        requestAnimationFrame(()=>{ isApplying = false; });
+      }
     }
 
-    // Eventos
-    if (btnAll) btnAll.addEventListener('click', () => { activeBrand = 'all'; if (selectBrand) selectBrand.value = 'all'; aplicar(); });
-    if (selectBrand) selectBrand.addEventListener('change', () => { activeBrand = (selectBrand.value || 'all').toLowerCase(); aplicar(); });
-    if (selectPrice) selectPrice.addEventListener('change', () => { activePrice = selectPrice.value || 'all'; aplicar(); });
+    // Eventos UI
+    if (btnAll) btnAll.addEventListener('click', () => {
+      activeBrand = 'all';
+      if (selectBrand) selectBrand.value = 'all';
+      aplicar();
+    });
 
-    if (btnFeatured) {
-      btnFeatured.addEventListener('click', () => {
-        featuredOnly = !featuredOnly;
-        btnFeatured.classList.toggle('bg-sky-100', featuredOnly);
-        btnFeatured.classList.toggle('text-sky-800', featuredOnly);
-        btnFeatured.classList.toggle('border-sky-200', featuredOnly);
-        aplicar();
-      });
-    }
-    if (btnPromo) {
-      btnPromo.addEventListener('click', () => {
-        promoOnly = !promoOnly;
-        btnPromo.classList.toggle('bg-sky-100', promoOnly);
-        btnPromo.classList.toggle('text-sky-800', promoOnly);
-        btnPromo.classList.toggle('border-sky-200', promoOnly);
-        btnPromo.setAttribute('aria-pressed', String(promoOnly));
-        aplicar();
-      });
-    }
+    if (selectBrand) selectBrand.addEventListener('change', () => {
+      activeBrand = (selectBrand.value || 'all').toLowerCase();
+      aplicar();
+    });
+
+    if (selectPrice) selectPrice.addEventListener('change', () => {
+      activePrice = selectPrice.value || 'all';
+      aplicar();
+    });
+
+    if (btnFeatured) btnFeatured.addEventListener('click', () => {
+      featuredOnly = !featuredOnly;
+      btnFeatured.classList.toggle('bg-sky-100',  featuredOnly);
+      btnFeatured.classList.toggle('text-sky-800', featuredOnly);
+      btnFeatured.classList.toggle('border-sky-200', featuredOnly);
+      aplicar();
+    });
+
+    if (btnPromo) btnPromo.addEventListener('click', () => {
+      promoOnly = !promoOnly;
+      btnPromo.setAttribute('aria-pressed', String(promoOnly));
+      btnPromo.classList.toggle('bg-sky-100',  promoOnly);
+      btnPromo.classList.toggle('text-sky-800', promoOnly);
+      btnPromo.classList.toggle('border-sky-200', promoOnly);
+      aplicar();
+    });
 
     let t=null;
-    if (search) {
-      search.addEventListener('input', () => {
-        clearTimeout(t);
-        t = setTimeout(()=>{ activeQuery = (search.value || '').trim().toLowerCase(); aplicar(); }, 180);
-      });
-    }
-    if (searchClear) {
-      searchClear.addEventListener('click', () => { search.value = ''; activeQuery = ''; aplicar(); search.focus(); });
-    }
+    if (search) search.addEventListener('input', () => {
+      clearTimeout(t);
+      t = setTimeout(()=>{
+        activeQuery = (search.value || '').trim().toLowerCase();
+        aplicar();
+      }, 180);
+    });
+
+    if (searchClear) searchClear.addEventListener('click', () => {
+      if (!search) return;
+      search.value = '';
+      activeQuery  = '';
+      aplicar();
+      search.focus();
+    });
+
     if (sort) sort.addEventListener('change', () => { activeSort = sort.value; aplicar(); });
 
-    // Reaplica sempre que o catálogo dinâmico trocar os cards
-    if (grid) {
-      const mo = new MutationObserver(() => aplicar());
-      mo.observe(grid, { childList: true });
-    }
+    // Observer (anti-loop)
+    const mo = new MutationObserver(() => {
+      if (isApplying) return;
+      clearTimeout(obsTimer);
+      obsTimer = setTimeout(aplicar, 80);
+    });
+    mo.observe(grid, { childList: true }); // subtree off reduz ruído
 
+    // Primeira aplicação
     window.addEventListener('load', aplicar);
     aplicar();
   })();
 
-  // Gera link de WhatsApp por produto (mantém)
+  // Gera link de WhatsApp por produto (cards)
   (function waProdutos(){
     const links = document.querySelectorAll('a.btn-wa[data-wa-product]');
     links.forEach(a => {
@@ -676,7 +684,6 @@
   })();
 </script>
 
-<!-- Catálogo dinâmico -->
 <script type="module" src="assets/js/catalog-hibrido.js"></script>
 <script>
   NandoCatalog.renderCatalogSimple({
@@ -685,8 +692,8 @@
   });
 </script>
 
-<!-- Carrossel da categoria (auto + touch + dots) -->
 <script>
+  // Carrossel da categoria (auto + touch + dots)
   (function catHeroCarousel(){
     const root = document.getElementById('catHero');
     if (!root) return;
@@ -708,6 +715,7 @@
     root.addEventListener('mouseenter', ()=>{ hover = true; });
     root.addEventListener('mouseleave', ()=>{ hover = false; });
 
+    // swipe em touch
     root.addEventListener('touchstart', e => { touch.x = e.touches[0].clientX; }, {passive:true});
     root.addEventListener('touchend',   e => {
       const dx = e.changedTouches[0].clientX - touch.x;
