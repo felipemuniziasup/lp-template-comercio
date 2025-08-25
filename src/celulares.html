@@ -73,10 +73,12 @@
   <style>
     /* Mantém a segunda fileira (Destaques/Promoções/Ordenação) alinhada em uma linha no celular deitado */
     @media (orientation: landscape) and (max-width: 915px){
+      /* Linha B em uma linha só */
       #rowB{
         display:flex;
+        align-items:center;
         flex-wrap:nowrap;
-        gap:.375rem;              /* ~6px */
+        gap:.5rem; /* 8px */
         overflow-x:auto;
         -webkit-overflow-scrolling:touch;
         scrollbar-width:none;
@@ -84,20 +86,25 @@
       #rowB::-webkit-scrollbar{ display:none; }
       #rowB > *{ flex:0 0 auto; }
 
-      /* compactar um pouco os botões na horizontal */
+      /* Remove o efeito do w-full dentro da linha B, para não “esticar” nem quebrar */
+      #rowB .w-full{ width:auto !important; }
+
+      /* Botões mais compactos e coerentes lado a lado */
       #btnFeatured,#btnPromo{
         padding:.45rem .6rem;
         font-size:.90rem;
+        white-space:nowrap;
       }
-      /* select mais estreito pra caber ao lado do Promoções */
+
+      /* Ordenação com largura mínima estável */
       #sort{
-        min-width:150px;
+        min-width: 170px;
         padding-left:.6rem;
         padding-right:1.5rem;
       }
     }
 
-    /* Tira “buracos” entre linhas em telas estreitas sem depender da orientação */
+    /* Tira “buracos” entre linhas em telas estreitas (modo retrato muito estreito) */
     @media (max-width: 420px){
       .toolbar-grid-3{
         display:grid;
@@ -423,7 +430,7 @@
           <div class="price-strike text-xs">R$ 4.299</div>
           <div class="text-xl font-extrabold text-blue-700">R$ 3.999</div>
         </div>
-        <a class="btn-wa mt-4 w-full" data-wa-product="iPhone 14 128GB">Falar no WhatsApp</a>
+        <a class="btn-wa mt-4 w-full" data-wa-product="IPhone 14 128GB">Falar no WhatsApp</a>
       </div>
     </article>
     <!-- ======= /CARDS ======= -->
@@ -514,6 +521,7 @@
 
     // Elementos
     const grid        = document.getElementById('gridProdutos');
+    if (!grid) return; // proteção extra
     const countEl     = document.getElementById('countVisible');
     const empty       = document.getElementById('emptyState');
     const qHolders    = document.querySelectorAll('[data-q]');
@@ -562,19 +570,19 @@
 
     function isPromo(card){
       if ((card.getAttribute('data-promo') || '0') === '1') return true;
-      return !!card.querySelector('.price-strike'); // preço riscado indica promoção
+      return !!card.querySelector('.price-strike');
     }
 
     let isApplying = false;
     function aplicar(){
-      if (!grid || isApplying) return;
+      if (isApplying) return;
       isApplying = true;
 
       syncURL();
 
       const cards = getCards();
 
-      // Ordenação
+      // Ordenação (apenas reanexa quando necessário)
       const sorted = cards.slice().sort((a,b)=>{
         const pa = Number(a.getAttribute('data-price')) || moneyToNumber(a.querySelector('.text-xl')?.textContent);
         const pb = Number(b.getAttribute('data-price')) || moneyToNumber(b.querySelector('.text-xl')?.textContent);
@@ -587,7 +595,7 @@
           default: return 0;
         }
       });
-      sorted.forEach(card => grid.appendChild(card));
+      sorted.forEach(card => { if (grid.lastElementChild !== card) grid.appendChild(card); });
 
       // Filtros
       let visible = 0;
@@ -601,9 +609,9 @@
         const passQuery   = activeQuery ? hay.includes(activeQuery) : true;
         const passFaixa   = passPrice(pnum);
         const passDestaq  = featuredOnly ? feat : true;
-        const passPromo   = promoOnly ? isPromo(card) : true;
+        const passProm    = promoOnly ? isPromo(card) : true;
 
-        const show = passBrand && passQuery && passFaixa && passDestaq && passPromo;
+        const show = passBrand && passQuery && passFaixa && passDestaq && passProm;
         card.style.display = show ? '' : 'none';
         if (show) visible++;
       });
@@ -652,11 +660,9 @@
     }
     if (sort) sort.addEventListener('change', () => { activeSort = sort.value; aplicar(); });
 
-    // Reaplica sempre que o catálogo dinâmico trocar os cards
-    if (grid) {
-      const mo = new MutationObserver(() => aplicar());
-      mo.observe(grid, { childList: true });
-    }
+    // Reaplica sempre que o catálogo dinâmico trocar os cards (sem subtree para evitar excesso)
+    const mo = new MutationObserver(() => aplicar());
+    mo.observe(grid, { childList: true, subtree: false });
 
     window.addEventListener('load', aplicar);
     aplicar();
@@ -679,10 +685,23 @@
 <!-- Catálogo dinâmico -->
 <script type="module" src="assets/js/catalog-hibrido.js"></script>
 <script>
-  NandoCatalog.renderCatalogSimple({
-    pageLabel: 'Celulares',
-    categoria: 'celulares'
-  });
+  (function initCatalog(){
+    function start(){
+      try{
+        const api = window.NandoCatalog || (typeof NandoCatalog !== 'undefined' ? NandoCatalog : null);
+        if (!api || !api.renderCatalogSimple) return false;
+        api.renderCatalogSimple({ pageLabel: 'Celulares', categoria: 'celulares' });
+        return true;
+      }catch(e){ return false; }
+    }
+    if (start()) return;
+    window.addEventListener('load', () => { if (start()) return; });
+    let tries = 0;
+    const t = setInterval(() => {
+      if (start() || ++tries > 20) clearInterval(t);
+    }, 150);
+    window.addEventListener('nando:catalog-ready', start, { once:true });
+  })();
 </script>
 
 <!-- Carrossel da categoria (auto + touch + dots) -->
