@@ -66,7 +66,8 @@
 
   <!-- ===================== HERO (Carrossel – Geral) ===================== -->
   <section id="catHero" class="relative overflow-hidden select-none">
-    <div class="relative w-full aspect-[21/9] md:aspect-[16/7] lg:aspect-[16/6]">
+    <!-- ALTURA PADRÃO: vem do CSS (#catHeroSlides { height: clamp(...) }) -->
+    <div class="relative w-full">
       <ul id="catHeroSlides" class="absolute inset-0">
         <!-- Slide 1 (eager/high) -->
         <li class="absolute inset-0 opacity-100 transition-opacity duration-700">
@@ -155,23 +156,31 @@
   <section class="bg-white/75 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-slate-200 sticky top-14 z-40">
     <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center gap-3">
 
-      <!-- Busca -->
-      <div class="relative flex-1 min-w-[240px]">
+      <!-- Busca (ordem 1) -->
+      <div class="relative flex-1 min-w-[240px] order-1">
         <input id="search"
                class="w-full rounded-xl border border-slate-300/70 bg-white px-4 py-2.5 pr-9 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30"
                type="search" placeholder="Buscar (ex: iPhone 13, POCO X7, Sauvage, EDP…)">
         <svg class="absolute right-3 top-2.5 opacity-60" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m21 21-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="#334155" stroke-width="1.8" stroke-linecap="round"/></svg>
       </div>
 
-      <!-- Categoria -->
-      <div class="flex flex-wrap gap-2">
+      <!-- CTA WhatsApp (ordem 2) -->
+      <div class="w-full order-2">
+        <a data-wa
+           class="inline-flex w-full items-center justify-center gap-2 px-4 py-3 rounded-2xl text-white font-extrabold shadow-[0_14px_28px_rgba(16,185,129,.35)] bg-[linear-gradient(135deg,#16a34a,#10b981,#06b6d4)] hover:brightness-110 transition">
+          Ver melhores ofertas no WhatsApp
+        </a>
+      </div>
+
+      <!-- Categoria (ordem 3) -->
+      <div class="flex flex-wrap gap-2 order-3">
         <button class="chip active" data-cat="all">Tudo</button>
         <button class="chip" data-cat="celulares">Celulares</button>
         <button class="chip" data-cat="perfumes">Perfumes</button>
       </div>
 
-      <!-- Marca (dinâmico por categoria) -->
-      <div>
+      <!-- Marca (ordem 4) -->
+      <div class="order-4">
         <select id="brand" class="rounded-xl border border-slate-300/70 bg-white px-3 py-2 text-sm">
           <option value="all">Todas as marcas</option>
           <!-- celulares -->
@@ -190,8 +199,8 @@
         </select>
       </div>
 
-      <!-- Ordenação -->
-      <div class="ml-auto">
+      <!-- Ordenação (ordem 5) -->
+      <div class="ml-auto order-5">
         <select id="sort" class="rounded-xl border border-slate-300/70 bg-white px-3 py-2 text-sm">
           <option value="featured">Ordem padrão do filtro</option>
           <option value="price-asc">Menor preço</option>
@@ -424,7 +433,7 @@
 
   <!-- ===================== SCRIPTS ===================== -->
   <script>
-    // CTA WhatsApp (hero)
+    // CTA WhatsApp (hero/toolbar)
     (function waHero(){
       const a = document.querySelector('a[data-wa]');
       if(!a) return;
