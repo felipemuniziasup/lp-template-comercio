@@ -1,81 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>Nando Importados — Celulares e Perfumes com NF e Garantia</title>
-  <meta name="description" content="Catálogo atualizado de celulares e perfumes originais com NF e 90 dias de garantia. Atendimento rápido no WhatsApp." />
-  <link rel="canonical" href="https://lp-template-comercio.pages.dev/" />
-
-  <!-- SEO base -->
-  <meta name="theme-color" content="#0ea5e9" />
-  <meta name="robots" content="index,follow" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Nando Importados — Ofertas selecionadas" />
-  <meta property="og:description" content="Celulares e perfumes com NF e garantia. Fale no WhatsApp e receba ofertas de hoje." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://lp-template-comercio.pages.dev/" />
-  <meta property="og:image" content="https://lp-template-comercio.pages.dev/assets/og-cover.jpg" />
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Nando Importados" />
-  <meta name="twitter:description" content="Catálogo atualizado com atendimento via WhatsApp." />
-  <meta name="twitter:image" content="https://lp-template-comercio.pages.dev/assets/og-cover.jpg" />
-
-  <!-- Pré-conexões/Performance -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
-  <!-- Se você usar o Apps Script, coloque também um dns-prefetch para o domínio do seu Web App -->
-  <!-- <link rel="dns-prefetch" href="https://script.google.com"> -->
-
-  <!-- Tailwind via CDN (com fallback Twind) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    (function () {
-      var tried = false;
-      function ensure() {
-        if (window.tailwind || tried) return;
-        tried = true;
-        var s = document.createElement('script');
-        s.type = 'module';
-        s.src = 'https://cdn.skypack.dev/twind/shim';
-        document.head.appendChild(s);
-        console.log('[fallback] Twind shim carregado');
-      }
-      setTimeout(ensure, 500);
-      window.addEventListener('load', ensure);
-    })();
-  </script>
-
-  <!-- Manifesto / Ícones -->
-  <link rel="icon" href="assets/favicon.png" sizes="32x32" type="image/png" />
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="assets/pwa-192.png" />
-  <link rel="manifest" href="manifest.webmanifest" />
-
-  <!-- CSS do tema (build copia pra dist/assets/css/theme.css) -->
-  <link rel="stylesheet" href="assets/css/theme.css" />
-
-  <!-- JSON-LD básico (ajuda no SEO de marca) -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Organization",
-    "name":"Nando Importados",
-    "url":"https://lp-template-comercio.pages.dev/",
-    "logo":"https://lp-template-comercio.pages.dev/assets/logo-monogram-512.png",
-    "sameAs":[]
-  }
-  </script>
-
-  <!-- Analytics leve (Plausible – opcional; se não usar, remova) -->
-  <!-- <script defer data-domain="lp-template-comercio.pages.dev" src="https://plausible.io/js/script.js"></script> -->
-</head>
-
-
+@@include("_partials/head.html")
 <body class="bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-800 antialiased">
 
   <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200/60">
@@ -143,20 +68,75 @@
   <section id="catHero" class="relative overflow-hidden select-none">
     <div class="relative w-full aspect-[21/9] md:aspect-[16/7] lg:aspect-[16/6]">
       <ul id="catHeroSlides" class="absolute inset-0">
+        <!-- Slide 1 (eager/high) -->
         <li class="absolute inset-0 opacity-100 transition-opacity duration-700">
-          <img src="assets/banners/geral/hero-all-1.jpg" alt="Ofertas especiais — Nando Importados"
-               class="absolute inset-0 w-full h-full object-cover z-0"
-               loading="eager" decoding="async" fetchpriority="high">
+          <picture>
+            <!-- Desktop (>=1024px) -->
+            <source type="image/webp" media="(min-width:1024px)"
+                    srcset="assets/banners/geral/hero-all-1-desktop-1280.webp 1280w,
+                            assets/banners/geral/hero-all-1-desktop-1920.webp 1920w" sizes="100vw">
+            <source type="image/jpeg" media="(min-width:1024px)"
+                    srcset="assets/banners/geral/hero-all-1-desktop-1280.jpg 1280w,
+                            assets/banners/geral/hero-all-1-desktop-1920.jpg 1920w" sizes="100vw">
+            <!-- Mobile -->
+            <source type="image/webp"
+                    srcset="assets/banners/geral/hero-all-1-mobile-640.webp 640w,
+                            assets/banners/geral/hero-all-1-mobile-960.webp 960w" sizes="100vw">
+            <source type="image/jpeg"
+                    srcset="assets/banners/geral/hero-all-1-mobile-640.jpg 640w,
+                            assets/banners/geral/hero-all-1-mobile-960.jpg 960w" sizes="100vw">
+            <!-- Fallback (mantém seu arquivo atual) -->
+            <img src="assets/banners/geral/hero-all-1.jpg"
+                 alt="Ofertas especiais — Nando Importados"
+                 class="absolute inset-0 w-full h-full object-cover z-0"
+                 loading="eager" decoding="async" fetchpriority="high">
+          </picture>
           <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
         </li>
+
+        <!-- Slide 2 (lazy) -->
         <li class="absolute inset-0 opacity-0 transition-opacity duration-700">
-          <img src="assets/banners/geral/hero-all-2.jpg" alt="Celulares e perfumes com NF e garantia"
-               class="absolute inset-0 w-full h-full object-cover z-0" loading="lazy" decoding="async">
+          <picture>
+            <source type="image/webp" media="(min-width:1024px)"
+                    srcset="assets/banners/geral/hero-all-2-desktop-1280.webp 1280w,
+                            assets/banners/geral/hero-all-2-desktop-1920.webp 1920w" sizes="100vw">
+            <source type="image/jpeg" media="(min-width:1024px)"
+                    srcset="assets/banners/geral/hero-all-2-desktop-1280.jpg 1280w,
+                            assets/banners/geral/hero-all-2-desktop-1920.jpg 1920w" sizes="100vw">
+            <source type="image/webp"
+                    srcset="assets/banners/geral/hero-all-2-mobile-640.webp 640w,
+                            assets/banners/geral/hero-all-2-mobile-960.webp 960w" sizes="100vw">
+            <source type="image/jpeg"
+                    srcset="assets/banners/geral/hero-all-2-mobile-640.jpg 640w,
+                            assets/banners/geral/hero-all-2-mobile-960.jpg 960w" sizes="100vw">
+            <img src="assets/banners/geral/hero-all-2.jpg"
+                 alt="Celulares e perfumes com NF e garantia"
+                 class="absolute inset-0 w-full h-full object-cover z-0"
+                 loading="lazy" decoding="async">
+          </picture>
           <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
         </li>
+
+        <!-- Slide 3 (lazy) -->
         <li class="absolute inset-0 opacity-0 transition-opacity duration-700">
-          <img src="assets/banners/geral/hero-all-3.jpg" alt="Atendimento no WhatsApp — Nando Importados"
-               class="absolute inset-0 w-full h-full object-cover z-0" loading="lazy" decoding="async">
+          <picture>
+            <source type="image/webp" media="(min-width:1024px)"
+                    srcset="assets/banners/geral/hero-all-3-desktop-1280.webp 1280w,
+                            assets/banners/geral/hero-all-3-desktop-1920.webp 1920w" sizes="100vw">
+            <source type="image/jpeg" media="(min-width:1024px)"
+                    srcset="assets/banners/geral/hero-all-3-desktop-1280.jpg 1280w,
+                            assets/banners/geral/hero-all-3-desktop-1920.jpg 1920w" sizes="100vw">
+            <source type="image/webp"
+                    srcset="assets/banners/geral/hero-all-3-mobile-640.webp 640w,
+                            assets/banners/geral/hero-all-3-mobile-960.webp 960w" sizes="100vw">
+            <source type="image/jpeg"
+                    srcset="assets/banners/geral/hero-all-3-mobile-640.jpg 640w,
+                            assets/banners/geral/hero-all-3-mobile-960.jpg 960w" sizes="100vw">
+            <img src="assets/banners/geral/hero-all-3.jpg"
+                 alt="Atendimento no WhatsApp — Nando Importados"
+                 class="absolute inset-0 w-full h-full object-cover z-0"
+                 loading="lazy" decoding="async">
+          </picture>
           <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
         </li>
       </ul>
@@ -213,7 +193,7 @@
       <!-- Ordenação -->
       <div class="ml-auto">
         <select id="sort" class="rounded-xl border border-slate-300/70 bg-white px-3 py-2 text-sm">
-          <option value="featured">Destaques</option>
+          <option value="featured">Ordem padrão do filtro</option>
           <option value="price-asc">Menor preço</option>
           <option value="price-desc">Maior preço</option>
           <option value="newest">Mais novos</option>
@@ -575,6 +555,19 @@
     })();
   </script>
   <script src="assets/js/produtos.js"></script>
+
+  <!-- Alias do catálogo: garante compat e padronização -->
+  <script>
+    (function(){
+      if (!window.NandoCatalog) window.NandoCatalog = {};
+      if (typeof window.NandoCatalog.renderCatalogFull !== 'function'
+          && typeof window.NandoCatalog.renderCatalogSimple === 'function') {
+        window.NandoCatalog.renderCatalogFull = (cfg) =>
+          window.NandoCatalog.renderCatalogSimple({ ...cfg, categoria: 'tudo' });
+      }
+    })();
+  </script>
+
 <script>
   // tudo.html — catálogo completo com filtros
   NandoCatalog.renderCatalogFull({
