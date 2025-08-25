@@ -4,30 +4,32 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Nando Importados — Catálogo completo</title>
-  <meta name="description" content="Catálogo completo de celulares e perfumes com NF e 90 dias de garantia. Atendimento rápido no WhatsApp." />
-  <link rel="canonical" href="https://lp-template-comercio.pages.dev/tudo.html" />
+  <title>Nando Importados — Celulares e Perfumes com NF e Garantia</title>
+  <meta name="description" content="Catálogo atualizado de celulares e perfumes originais com NF e 90 dias de garantia. Atendimento rápido no WhatsApp." />
+  <link rel="canonical" href="https://lp-template-comercio.pages.dev/" />
 
   <!-- SEO base -->
   <meta name="theme-color" content="#0ea5e9" />
   <meta name="robots" content="index,follow" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Nando Importados — Catálogo completo" />
-  <meta property="og:description" content="Celulares e perfumes com NF e garantia. Fale no WhatsApp e receba as ofertas de hoje." />
+  <meta property="og:title" content="Nando Importados — Ofertas selecionadas" />
+  <meta property="og:description" content="Celulares e perfumes com NF e garantia. Fale no WhatsApp e receba ofertas de hoje." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://lp-template-comercio.pages.dev/tudo.html" />
+  <meta property="og:url" content="https://lp-template-comercio.pages.dev/" />
   <meta property="og:image" content="https://lp-template-comercio.pages.dev/assets/og-cover.jpg" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Nando Importados — Catálogo completo" />
+  <meta name="twitter:title" content="Nando Importados" />
   <meta name="twitter:description" content="Catálogo atualizado com atendimento via WhatsApp." />
   <meta name="twitter:image" content="https://lp-template-comercio.pages.dev/assets/og-cover.jpg" />
 
   <!-- Pré-conexões/Performance -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+  <!-- Se você usar o Apps Script, coloque também um dns-prefetch para o domínio do seu Web App -->
+  <!-- <link rel="dns-prefetch" href="https://script.google.com"> -->
 
   <!-- Tailwind via CDN (com fallback Twind) -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -54,10 +56,10 @@
   <link rel="apple-touch-icon" href="assets/pwa-192.png" />
   <link rel="manifest" href="manifest.webmanifest" />
 
-  <!-- CSS do tema -->
+  <!-- CSS do tema (build copia pra dist/assets/css/theme.css) -->
   <link rel="stylesheet" href="assets/css/theme.css" />
 
-  <!-- JSON-LD básico -->
+  <!-- JSON-LD básico (ajuda no SEO de marca) -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -69,52 +71,28 @@
   }
   </script>
 
-  <!-- Ajustes: compactar toolbar no desktop (padronizado) -->
-  <style>
-    @media (min-width:1024px){
-      #toolbar .py-4{ padding-top:.5rem !important; padding-bottom:.5rem !important; }
-      #toolbar #search{ padding-top:.55rem; padding-bottom:.55rem; font-size:.95rem; }
-      #toolbar #toolbarWA{ padding-top:.6rem !important; padding-bottom:.6rem !important; font-size:.95rem !important; }
-      #toolbar #brand,
-      #toolbar #price,
-      #toolbar #sort,
-      #toolbar #btnAll,
-      #toolbar #btnFeatured,
-      #toolbar #btnPromo{
-        padding-top:.35rem !important;
-        padding-bottom:.35rem !important;
-        font-size:.9rem !important;
-      }
-    }
-    /* Linha B sem quebra no landscape estreito */
-    @media (orientation: landscape) and (max-width: 915px){
-      #toolbar .row-b{
-        display:flex; flex-wrap:nowrap; gap:.5rem;
-        overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;
-      }
-      #toolbar .row-b::-webkit-scrollbar{ display:none; }
-      #toolbar .row-b > *{ flex:0 0 auto; }
-      #toolbar #sort{ min-width:170px; }
-    }
-  </style>
+  <!-- Analytics leve (Plausible – opcional; se não usar, remova) -->
+  <!-- <script defer data-domain="lp-template-comercio.pages.dev" src="https://plausible.io/js/script.js"></script> -->
 </head>
+
 
 <body class="bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-800 antialiased">
 
-<!-- ===================== HEADER (padronizado) ===================== -->
-<header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200/60">
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200/60">
   <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
     <a href="index.html" class="flex items-center gap-2">
       <img src="assets/logo-monogram-512.png" alt="Nando" class="w-8 h-8 rounded-lg"/>
       <span class="font-extrabold tracking-tight text-slate-900">Nando Importados</span>
     </a>
 
+    <!-- Busca (apenas linka pro tudo com ?q=) -->
     <form action="tudo.html" method="get" class="hidden md:flex items-center gap-2 w-[48%]">
       <input name="q" type="search" placeholder="Buscar produtos…"
              class="flex-1 rounded-xl border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-400/50">
       <button class="px-3 py-2 rounded-xl bg-sky-500 text-white font-semibold hover:brightness-110">Buscar</button>
     </form>
 
+    <!-- Navegação -->
     <nav class="hidden md:flex items-center gap-4">
       <a href="tudo.html" class="px-3 py-1.5 rounded-lg font-semibold text-slate-700 hover:text-sky-600">Catálogo</a>
       <a href="celulares.html" class="px-3 py-1.5 rounded-lg font-semibold text-slate-700 hover:text-sky-600">Celulares</a>
@@ -122,7 +100,10 @@
       <a href="contato.html" class="px-3 py-1.5 rounded-lg font-semibold text-white bg-emerald-500 hover:brightness-110">Contato</a>
     </nav>
 
-    <button id="btnMenu" class="md:hidden p-2 rounded-lg border border-slate-200" aria-label="Abrir menu">☰</button>
+    <!-- Menu mobile -->
+    <button id="btnMenu" class="md:hidden p-2 rounded-lg border border-slate-200" aria-label="Abrir menu">
+      ☰
+    </button>
   </div>
 
   <div id="mobileMenu" class="md:hidden hidden border-t border-slate-200 bg-white">
@@ -145,82 +126,79 @@
       const menu = document.getElementById('mobileMenu');
       if(!btn || !menu) return;
       btn.addEventListener('click', ()=> menu.classList.toggle('hidden'));
+      // marca ativo
       const path = location.pathname.split('/').pop();
       document.querySelectorAll('nav a, #mobileMenu a').forEach(a=>{
         const href = a.getAttribute('href');
-        if (href && path === href) a.classList.add('text-sky-600');
+        if (href && path === href) {
+          a.classList.add('text-sky-600');
+        }
       });
     })();
   </script>
 </header>
 
-<!-- ===================== HERO (Carrossel – Geral) ===================== -->
-<section id="catHero" class="relative overflow-hidden select-none">
-  <div class="relative w-full aspect-[21/9] md:aspect-[16/7] lg:aspect-[16/6]">
-    <ul id="catHeroSlides" class="absolute inset-0">
-      <li class="absolute inset-0 opacity-100 transition-opacity duration-700">
-        <img src="assets/banners/geral/hero-all-1.jpg" alt="Ofertas especiais — Nando Importados"
-             class="absolute inset-0 w-full h-full object-cover z-0"
-             loading="eager" decoding="async" fetchpriority="high">
-        <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
-      </li>
-      <li class="absolute inset-0 opacity-0 transition-opacity duration-700">
-        <img src="assets/banners/geral/hero-all-2.jpg" alt="Celulares e perfumes com NF e garantia"
-             class="absolute inset-0 w-full h-full object-cover z-0" loading="lazy" decoding="async">
-        <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
-      </li>
-      <li class="absolute inset-0 opacity-0 transition-opacity duration-700">
-        <img src="assets/banners/geral/hero-all-3.jpg" alt="Atendimento no WhatsApp — Nando Importados"
-             class="absolute inset-0 w-full h-full object-cover z-0" loading="lazy" decoding="async">
-        <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
-      </li>
-    </ul>
 
-    <!-- Dots -->
-    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-30">
-      <button class="hero-dot" aria-current="true" aria-label="Slide 1"></button>
-      <button class="hero-dot" aria-label="Slide 2"></button>
-      <button class="hero-dot" aria-label="Slide 3"></button>
+  <!-- ===================== HERO (Carrossel – Geral) ===================== -->
+  <section id="catHero" class="relative overflow-hidden select-none">
+    <div class="relative w-full aspect-[21/9] md:aspect-[16/7] lg:aspect-[16/6]">
+      <ul id="catHeroSlides" class="absolute inset-0">
+        <li class="absolute inset-0 opacity-100 transition-opacity duration-700">
+          <img src="assets/banners/geral/hero-all-1.jpg" alt="Ofertas especiais — Nando Importados"
+               class="absolute inset-0 w-full h-full object-cover z-0"
+               loading="eager" decoding="async" fetchpriority="high">
+          <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
+        </li>
+        <li class="absolute inset-0 opacity-0 transition-opacity duration-700">
+          <img src="assets/banners/geral/hero-all-2.jpg" alt="Celulares e perfumes com NF e garantia"
+               class="absolute inset-0 w-full h-full object-cover z-0" loading="lazy" decoding="async">
+          <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
+        </li>
+        <li class="absolute inset-0 opacity-0 transition-opacity duration-700">
+          <img src="assets/banners/geral/hero-all-3.jpg" alt="Atendimento no WhatsApp — Nando Importados"
+               class="absolute inset-0 w-full h-full object-cover z-0" loading="lazy" decoding="async">
+          <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
+        </li>
+      </ul>
+
+      <!-- Dots -->
+      <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 z-30">
+        <button class="hero-dot" aria-current="true" aria-label="Slide 1"></button>
+        <button class="hero-dot" aria-label="Slide 2"></button>
+        <button class="hero-dot" aria-label="Slide 3"></button>
+      </div>
     </div>
-  </div>
-</section>
-<!-- ===================== /HERO ===================== -->
+  </section>
+  <!-- ===================== /HERO ===================== -->
 
-<!-- ===================== TOOLBAR (BUSCA + CTA + CONTROLES) ===================== -->
-<section id="toolbar" class="bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-slate-200 sticky top-14 z-40">
-  <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3">
+  <!-- ===================== BARRA DE FILTROS (STICKY) ===================== -->
+  <section class="bg-white/75 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-slate-200 sticky top-14 z-40">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center gap-3">
 
-    <!-- Linha 1: BUSCA LARGA -->
-    <div class="relative w-full">
-      <input id="search"
-             class="w-full rounded-2xl border border-slate-300/70 bg-white px-5 py-3 pr-10 text-base focus:outline-none focus:ring-2 focus:ring-blue-500/25"
-             type="search" placeholder="Buscar (ex: iPhone 13, POCO X7, Sauvage, EDP…)">
-      <button id="searchClear" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500/70 hover:text-slate-700" aria-label="Limpar">✕</button>
-    </div>
+      <!-- Busca -->
+      <div class="relative flex-1 min-w-[240px]">
+        <input id="search"
+               class="w-full rounded-xl border border-slate-300/70 bg-white px-4 py-2.5 pr-9 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+               type="search" placeholder="Buscar (ex: iPhone 13, POCO X7, Sauvage, EDP…)">
+        <svg class="absolute right-3 top-2.5 opacity-60" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m21 21-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="#334155" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
 
-    <!-- Linha 2: CTA WhatsApp -->
-    <div>
-      <a id="toolbarWA"
-         class="inline-flex w-full items-center justify-center gap-2 px-5 py-3 rounded-full text-white font-extrabold border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)] bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)] hover:brightness-110 transition">
-        Falar com o Nando no WhatsApp
-      </a>
-    </div>
+      <!-- Categoria -->
+      <div class="flex flex-wrap gap-2">
+        <button class="chip active" data-cat="all">Tudo</button>
+        <button class="chip" data-cat="celulares">Celulares</button>
+        <button class="chip" data-cat="perfumes">Perfumes</button>
+      </div>
 
-    <!-- Linha 3: CONTROLES -->
-    <div class="flex flex-col gap-2">
-      <!-- Sub-linha A: Todos + Marca + Preço -->
-      <div class="flex flex-wrap items-center gap-2">
-        <button id="btnAll" class="chip active">Todos</button>
-
-        <label class="sr-only" for="brand">Marca</label>
-        <select id="brand" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm">
+      <!-- Marca (dinâmico por categoria) -->
+      <div>
+        <select id="brand" class="rounded-xl border border-slate-300/70 bg-white px-3 py-2 text-sm">
           <option value="all">Todas as marcas</option>
           <!-- celulares -->
           <option value="apple" data-for="celulares">Apple</option>
           <option value="samsung" data-for="celulares">Samsung</option>
-          <option value="xiaomi" data-for="celulares">Xiaomi</option>
+          <option value="xiaomi" data-for="celulares">Xiaomi / POCO</option>
           <option value="motorola" data-for="celulares">Motorola</option>
-          <option value="poco" data-for="celulares">POCO</option>
           <!-- perfumes -->
           <option value="dior" data-for="perfumes">Dior</option>
           <option value="versace" data-for="perfumes">Versace</option>
@@ -230,105 +208,193 @@
           <option value="lancome" data-for="perfumes">Lancôme</option>
           <option value="carolina" data-for="perfumes">Carolina Herrera</option>
         </select>
-
-        <label class="sr-only" for="price">Faixa de preço</label>
-        <select id="price" class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm">
-          <option value="all">Todos os preços</option>
-          <option value="<=2000">Até R$ 1.999</option>
-          <option value=">=2000">R$ 2.000+</option>
-        </select>
       </div>
 
-      <!-- Sub-linha B: Destaques + Promoções + Ordenação -->
-      <div class="row-b flex items-center gap-2 flex-nowrap overflow-x-auto whitespace-nowrap">
-        <button id="btnFeatured"
-                class="rounded-full border px-3 py-2 text-sm shadow-sm border-slate-300/70 bg-white hover:bg-slate-50"
-                data-featured="1">
-          Destaques
-        </button>
-
-        <button id="btnPromo"
-                class="rounded-full border px-3 py-2 text-sm shadow-sm border-slate-300/70 bg-white hover:bg-slate-50"
-                aria-pressed="false">
-          Promoções
-        </button>
-
-        <label class="sr-only" for="sort">Ordenar</label>
-        <select id="sort"
-                class="rounded-full border border-slate-300/70 bg-white px-3 py-2 text-sm shadow-sm min-w-[170px]">
-          <option value="featured">Ordem padrão do filtro</option>
+      <!-- Ordenação -->
+      <div class="ml-auto">
+        <select id="sort" class="rounded-xl border border-slate-300/70 bg-white px-3 py-2 text-sm">
+          <option value="featured">Destaques</option>
           <option value="price-asc">Menor preço</option>
           <option value="price-desc">Maior preço</option>
           <option value="newest">Mais novos</option>
         </select>
       </div>
     </div>
+  </section>
+  <!-- ===================== /FILTROS ===================== -->
 
-  </div>
-</section>
-<!-- ===================== /TOOLBAR ===================== -->
-
-<!-- ===================== GRID ===================== -->
-<main class="max-w-6xl mx-auto px-4 py-8">
-  <div class="mb-4 text-sm text-slate-600">
-    <span id="countVisible">0</span> item(ns) exibido(s)
-    · <a href="celulares.html" class="text-blue-700 underline underline-offset-2">Ver celulares</a>
-    · <a href="perfumes.html" class="text-blue-700 underline underline-offset-2">Ver perfumes</a>
-  </div>
-
-  <div id="gridProdutos" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-    <!-- O catálogo dinâmico vai preencher aqui; mantive alguns cards de exemplo apenas como fallback. -->
-
-    <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
-             data-cat="celulares" data-brand="poco" data-price="1899" data-new="2024-04-01" data-featured="1"
-             data-search="poco x7 pro 8gb 256gb snapdragon 7s gen 2 celular android smartphone">
-      <img src="assets/celulares/poco-x7-pro.jpg" alt="POCO X7 PRO"
-           class="w-full h-52 object-cover"
-           onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
-      <div class="p-5">
-        <h2 class="font-bold text-lg">POCO X7 PRO</h2>
-        <p class="text-sm text-slate-600">8GB · 256GB · Snapdragon 7s Gen 2</p>
-        <div class="mt-3">
-          <div class="price-strike text-xs">R$ 2.199</div>
-          <div class="text-xl font-extrabold text-blue-700">R$ 1.899</div>
-        </div>
-        <a class="btn-wa mt-4 w-full" data-wa-product="POCO X7 PRO">Falar no WhatsApp</a>
-      </div>
-    </article>
-
-    <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
-             data-cat="perfumes" data-brand="dior" data-price="649" data-new="2024-04-01"
-             data-search="dior sauvage eau de toilette edt 100ml masculino fresco amadeirado">
-      <img src="assets/perfumes/dior-sauvage.jpg" alt="Dior Sauvage EDT 100ml"
-           class="w-full h-52 object-cover"
-           onerror="this.onerror=null;this.src='assets/perfumes/fallback-perfume.jpg'">
-      <div class="p-5">
-        <h2 class="font-bold text-lg">Dior Sauvage EDT 100ml</h2>
-        <p class="text-sm text-slate-600">Masculino · Fresco amadeirado</p>
-        <div class="mt-3">
-          <div class="price-strike text-xs">R$ 699</div>
-          <div class="text-xl font-extrabold text-blue-700">R$ 649</div>
-        </div>
-        <a class="btn-wa mt-4 w-full" data-wa-product="Dior Sauvage EDT 100ml">Falar no WhatsApp</a>
-      </div>
-    </article>
-    <!-- ... -->
-  </div>
-
-  <!-- Vazio -->
-  <div id="emptyState" class="hidden mt-10 text-center text-slate-600">
-    <div class="inline-block px-4 py-2 rounded-full bg-slate-100 text-slate-700 font-medium">
-      Nenhum produto encontrado para <span class="font-semibold" data-q></span>.
+  <!-- ===================== GRID ===================== -->
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <div class="mb-4 text-sm text-slate-600">
+      <span id="countVisible">0</span> item(ns) exibido(s)
+      · <a href="celulares.html" class="text-blue-700 underline underline-offset-2">Ver celulares</a>
+      · <a href="perfumes.html" class="text-blue-700 underline underline-offset-2">Ver perfumes</a>
     </div>
-    <div class="mt-3">
-      <a href="tudo.html" class="text-blue-700 underline">Limpar filtros</a>
-    </div>
-  </div>
-</main>
-<!-- ===================== /GRID ===================== -->
 
-<!-- ===================== FOOTER (padronizado) ===================== -->
-<footer class="mt-16">
+    <div id="gridProdutos" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- ==================== CELULARES ==================== -->
+
+      <!-- POCO X7 PRO -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+               data-cat="celulares" data-brand="xiaomi" data-price="1899" data-new="2024-04-01"
+               data-search="poco x7 pro 8gb 256gb snapdragon 7s gen 2 celular android smartphone">
+        <img src="assets/celulares/poco-x7-pro.jpg" alt="POCO X7 PRO"
+             class="w-full h-52 object-cover"
+             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+        <div class="p-5">
+          <h2 class="font-bold text-lg">POCO X7 PRO</h2>
+          <p class="text-sm text-slate-600">8GB · 256GB · Snapdragon 7s Gen 2</p>
+          <div class="mt-3">
+            <div class="price-strike text-xs">R$ 2.199</div>
+            <div class="text-xl font-extrabold text-blue-700">R$ 1.899</div>
+          </div>
+          <a class="btn-wa mt-4 w-full" data-wa-product="POCO X7 PRO">Falar no WhatsApp</a>
+        </div>
+      </article>
+
+      <!-- iPhone 13 -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+               data-cat="celulares" data-brand="apple" data-price="3299" data-new="2024-03-10"
+               data-search="iphone 13 128gb ios apple celular smartphone 6.1 polegadas">
+        <img src="assets/celulares/iphone-13.jpg" alt="iPhone 13 128GB"
+             class="w-full h-52 object-cover"
+             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+        <div class="p-5">
+          <h2 class="font-bold text-lg">iPhone 13 (128GB)</h2>
+          <p class="text-sm text-slate-600">Tela 6.1"</p>
+          <div class="mt-3">
+            <div class="price-strike text-xs">R$ 3.499</div>
+            <div class="text-xl font-extrabold text-blue-700">R$ 3.299</div>
+          </div>
+          <a class="btn-wa mt-4 w-full" data-wa-product="iPhone 13 128GB">Falar no WhatsApp</a>
+        </div>
+      </article>
+
+      <!-- Moto G84 -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+               data-cat="celulares" data-brand="motorola" data-price="1699" data-new="2024-02-22"
+               data-search="motorola moto g84 256gb 12gb ram android celular smartphone">
+        <img src="assets/celulares/moto-g84.jpg" alt="Moto G84"
+             class="w-full h-52 object-cover"
+             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+        <div class="p-5">
+          <h2 class="font-bold text-lg">Moto G84</h2>
+          <p class="text-sm text-slate-600">12GB · 256GB · 5G</p>
+          <div class="mt-3">
+            <div class="price-strike text-xs">R$ 1.899</div>
+            <div class="text-xl font-extrabold text-blue-700">R$ 1.699</div>
+          </div>
+          <a class="btn-wa mt-4 w-full" data-wa-product="Moto G84">Falar no WhatsApp</a>
+        </div>
+      </article>
+
+      <!-- Galaxy A34 -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+               data-cat="celulares" data-brand="samsung" data-price="1499" data-new="2024-04-20"
+               data-search="samsung galaxy a34 128gb android celular smartphone">
+        <img src="assets/celulares/galaxy-a34.jpg" alt="Galaxy A34"
+             class="w-full h-52 object-cover"
+             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
+        <div class="p-5">
+          <h2 class="font-bold text-lg">Galaxy A34</h2>
+          <p class="text-sm text-slate-600">128GB · Novo lacrado</p>
+          <div class="mt-3">
+            <div class="price-strike text-xs">R$ 1.699</div>
+            <div class="text-xl font-extrabold text-blue-700">R$ 1.499</div>
+          </div>
+          <a class="btn-wa mt-4 w-full" data-wa-product="Galaxy A34">Falar no WhatsApp</a>
+        </div>
+      </article>
+
+      <!-- ==================== PERFUMES ==================== -->
+
+      <!-- Dior Sauvage -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+               data-cat="perfumes" data-brand="dior" data-price="649" data-new="2024-04-01"
+               data-search="dior sauvage eau de toilette edt 100ml masculino fresco amadeirado">
+        <img src="assets/perfumes/dior-sauvage.jpg" alt="Dior Sauvage EDT 100ml"
+             class="w-full h-52 object-cover"
+             onerror="this.onerror=null;this.src='assets/perfumes/fallback-perfume.jpg'">
+        <div class="p-5">
+          <h2 class="font-bold text-lg">Dior Sauvage EDT 100ml</h2>
+          <p class="text-sm text-slate-600">Masculino · Fresco amadeirado</p>
+          <div class="mt-3">
+            <div class="price-strike text-xs">R$ 699</div>
+            <div class="text-xl font-extrabold text-blue-700">R$ 649</div>
+          </div>
+          <a class="btn-wa mt-4 w-full" data-wa-product="Dior Sauvage EDT 100ml">Falar no WhatsApp</a>
+        </div>
+      </article>
+
+      <!-- Dylan Blue -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+               data-cat="perfumes" data-brand="versace" data-price="549" data-new="2024-03-12"
+               data-search="versace dylan blue 100ml masculino fougere moderno">
+        <img src="assets/perfumes/versace-dylan-blue.jpg" alt="Versace Dylan Blue 100ml"
+             class="w-full h-52 object-cover"
+             onerror="this.onerror=null;this.src='assets/perfumes/fallback-perfume.jpg'">
+        <div class="p-5">
+          <h2 class="font-bold text-lg">Versace Dylan Blue 100ml</h2>
+          <p class="text-sm text-slate-600">Masculino · Aromático</p>
+          <div class="mt-3">
+            <div class="price-strike text-xs">R$ 599</div>
+            <div class="text-xl font-extrabold text-blue-700">R$ 549</div>
+          </div>
+          <a class="btn-wa mt-4 w-full" data-wa-product="Versace Dylan Blue 100ml">Falar no WhatsApp</a>
+        </div>
+      </article>
+
+      <!-- Bleu de Chanel -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+               data-cat="perfumes" data-brand="chanel" data-price="1099" data-new="2024-01-30"
+               data-search="bleu de chanel eau de parfum edp 100ml masculino amadeirado citrico">
+        <img src="assets/perfumes/bleu-de-chanel.jpg" alt="Bleu de Chanel EDP 100ml"
+             class="w-full h-52 object-cover"
+             onerror="this.onerror=null;this.src='assets/perfumes/fallback-perfume.jpg'">
+        <div class="p-5">
+          <h2 class="font-bold text-lg">Bleu de Chanel EDP 100ml</h2>
+          <p class="text-sm text-slate-600">Masculino · Amadeirado</p>
+          <div class="mt-3">
+            <div class="price-strike text-xs">R$ 1.199</div>
+            <div class="text-xl font-extrabold text-blue-700">R$ 1.099</div>
+          </div>
+          <a class="btn-wa mt-4 w-full" data-wa-product="Bleu de Chanel EDP 100ml">Falar no WhatsApp</a>
+        </div>
+      </article>
+
+      <!-- YSL Libre -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+               data-cat="perfumes" data-brand="ysl" data-price="799" data-new="2024-03-22"
+               data-search="ysl libre eau de parfum edp 90ml feminino floral baunilha lavanda">
+        <img src="assets/perfumes/ysl-libre.jpg" alt="YSL Libre EDP 90ml"
+             class="w-full h-52 object-cover"
+             onerror="this.onerror=null;this.src='assets/perfumes/fallback-perfume.jpg'">
+        <div class="p-5">
+          <h2 class="font-bold text-lg">YSL Libre EDP 90ml</h2>
+          <p class="text-sm text-slate-600">Feminino · Floral</p>
+          <div class="mt-3">
+            <div class="price-strike text-xs">R$ 869</div>
+            <div class="text-xl font-extrabold text-blue-700">R$ 799</div>
+          </div>
+          <a class="btn-wa mt-4 w-full" data-wa-product="YSL Libre EDP 90ml">Falar no WhatsApp</a>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Vazio -->
+    <div id="emptyState" class="hidden mt-10 text-center text-slate-600">
+      <div class="inline-block px-4 py-2 rounded-full bg-slate-100 text-slate-700 font-medium">
+        Nenhum produto encontrado para <span class="font-semibold" data-q></span>.
+      </div>
+      <div class="mt-3">
+        <a href="tudo.html" class="text-blue-700 underline">Limpar filtros</a>
+      </div>
+    </div>
+  </main>
+  <!-- ===================== /GRID ===================== -->
+
+  <footer class="mt-16">
   <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 text-slate-100">
     <div class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-8">
       <div>
@@ -375,212 +441,150 @@
   </div>
 </footer>
 
-<!-- ===================== SCRIPTS ===================== -->
-<script>
-  // CTA WhatsApp (toolbar)
-  (function waHero(){
-    const a = document.getElementById('toolbarWA');
-    if(!a) return;
-    const msg = `Olá, Nando! Vim pelo site (página: Catálogo completo). Pode me ajudar a escolher?`;
-    a.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
-    a.target = "_blank"; a.rel = "noopener";
-  })();
 
-  // ========= FILTROS/ORDENAÇÃO padronizados =========
-  (function filtros(){
-    const moneyToNumber = (txt) => Number(String(txt||'').replace(/[^\d]/g,'')) || 0;
-
-    // Estado inicial (URL)
-    const params = new URLSearchParams(location.search);
-    let activeQuery = (params.get('q') || '').trim().toLowerCase();
-    let activeBrand = (params.get('brand') || 'all').toLowerCase();
-    let activeSort  = (params.get('sort')  || 'featured');
-    let activePrice = 'all';          // 'all' | '<=2000' | '>=2000'
-    let featuredOnly = false;         // Destaques
-    let promoOnly = false;            // Promoções (data-promo="1")
-
-    // Elementos
-    const grid = document.getElementById('gridProdutos');
-    const countEl = document.getElementById('countVisible');
-    const empty = document.getElementById('emptyState');
-    const qHolders = document.querySelectorAll('[data-q]');
-    const search = document.getElementById('search');
-    const searchClear = document.getElementById('searchClear');
-    const sort = document.getElementById('sort');
-    const btnAll = document.getElementById('btnAll'); // (existe só pra manter API igual — aqui usamos brand 'all')
-    const selectBrand = document.getElementById('brand');
-    const selectPrice = document.getElementById('price');
-    const btnFeatured = document.getElementById('btnFeatured');
-    const btnPromo = document.getElementById('btnPromo');
-
-    // Hidratar UI
-    if (search) search.value = activeQuery;
-    if (sort) sort.value = activeSort;
-    if (selectBrand) selectBrand.value = activeBrand;
-    if (selectPrice) selectPrice.value = activePrice;
-    qHolders?.forEach(el => el.textContent = activeQuery);
-
-    const getCards = () => Array.from(grid.querySelectorAll('article.offer-card'));
-
-    let isApplying = false;
-    let obsTimer = null;
-
-    function syncURL(){
-      const p = new URLSearchParams(location.search);
-      activeBrand ? p.set('brand', activeBrand) : p.delete('brand');
-      activeQuery ? p.set('q', activeQuery) : p.delete('q');
-      activeSort  ? p.set('sort', activeSort) : p.delete('sort');
-      history.replaceState(null, '', `${location.pathname}?${p.toString()}`);
-    }
-
-    function passPrice(price){
-      if (activePrice === '<=2000') return price <= 1999.99;
-      if (activePrice === '>=2000') return price >= 2000;
-      return true;
-    }
-
-    function aplicar(){
-      if (!grid || isApplying) return;
-      isApplying = true;
-
-      syncURL();
-
-      const cards = getCards();
-
-      // Ordenação
-      const sorted = cards.slice().sort((a,b)=>{
-        const pa = Number(a.getAttribute('data-price')) || moneyToNumber(a.querySelector('.text-xl')?.textContent);
-        const pb = Number(b.getAttribute('data-price')) || moneyToNumber(b.querySelector('.text-xl')?.textContent);
-        const da = new Date(a.getAttribute('data-new') || '2000-01-01').getTime();
-        const db = new Date(b.getAttribute('data-new') || '2000-01-01').getTime();
-        switch (activeSort){
-          case 'price-asc': return pa - pb;
-          case 'price-desc': return pb - pa;
-          case 'newest': return db - da;
-          default: return 0; // featured
-        }
-      });
-      sorted.forEach(card => grid.appendChild(card));
-
-      // Filtros
-      let visible = 0;
-      cards.forEach(card=>{
-        // marca e preço já vêm em data-*
-        const br   = (card.getAttribute('data-brand') || '').toLowerCase();
-        const hay  = (card.getAttribute('data-search') || '').toLowerCase();
-        const pnum = Number(card.getAttribute('data-price')) || 0;
-        const feat = (card.getAttribute('data-featured') || '0') === '1';
-        const promo= (card.getAttribute('data-promo') || '0') === '1';
-
-        const passBrand   = activeBrand === 'all' ? true : (br === activeBrand);
-        const passQuery   = activeQuery ? hay.includes(activeQuery) : true;
-        const passFaixa   = passPrice(pnum);
-        const passDestaq  = featuredOnly ? feat : true;
-        const passPromo   = promoOnly ? promo : true;
-
-        const show = passBrand && passQuery && passFaixa && passDestaq && passPromo;
-        card.style.display = show ? '' : 'none';
-        if (show) visible++;
-      });
-
-      if (countEl) countEl.textContent = visible;
-      if (empty) empty.classList.toggle('hidden', visible !== 0);
-      qHolders?.forEach(el => el.textContent = activeQuery || '');
-
-      isApplying = false;
-    }
-
-    // Eventos
-    btnAll?.addEventListener('click', () => {
-      activeBrand = 'all';
-      if (selectBrand) selectBrand.value = 'all';
-      aplicar();
-    });
-
-    selectBrand?.addEventListener('change', () => {
-      activeBrand = (selectBrand.value || 'all').toLowerCase();
-      aplicar();
-    });
-
-    selectPrice?.addEventListener('change', () => {
-      activePrice = selectPrice.value || 'all';
-      aplicar();
-    });
-
-    btnFeatured?.addEventListener('click', () => {
-      featuredOnly = !featuredOnly;
-      btnFeatured.classList.toggle('bg-sky-100', featuredOnly);
-      btnFeatured.classList.toggle('text-sky-800', featuredOnly);
-      btnFeatured.classList.toggle('border-sky-200', featuredOnly);
-      aplicar();
-    });
-
-    btnPromo?.addEventListener('click', () => {
-      promoOnly = !promoOnly;
-      btnPromo.setAttribute('aria-pressed', String(promoOnly));
-      btnPromo.classList.toggle('bg-amber-100', promoOnly);
-      btnPromo.classList.toggle('text-amber-900', promoOnly);
-      btnPromo.classList.toggle('border-amber-200', promoOnly);
-      aplicar();
-    });
-
-    let t=null;
-    search?.addEventListener('input', () => {
-      clearTimeout(t);
-      t = setTimeout(()=>{
-        activeQuery = (search.value || '').trim().toLowerCase();
-        aplicar();
-      }, 180);
-    });
-
-    document.getElementById('searchClear')?.addEventListener('click', () => {
-      search.value = '';
-      activeQuery = '';
-      aplicar();
-      search.focus();
-    });
-
-    sort?.addEventListener('change', () => { activeSort = sort.value; aplicar(); });
-
-    // Reaplicar quando o catálogo dinâmico alterar o grid (com debounce e guarda)
-    if (grid) {
-      const mo = new MutationObserver(() => {
-        if (isApplying) return;
-        clearTimeout(obsTimer);
-        obsTimer = setTimeout(aplicar, 60);
-      });
-      mo.observe(grid, { childList: true });
-    }
-
-    window.addEventListener('load', aplicar);
-    aplicar();
-  })();
-
-  // WhatsApp por produto (mensagem contextual)
-  (function waProdutos(){
-    const links = document.querySelectorAll('a.btn-wa[data-wa-product]');
-    links.forEach(a => {
-      const name = a.getAttribute('data-wa-product') || 'Produto';
-      const msg = `Olá, Nando! Vim pelo site (página: Catálogo completo) e me interessei por: ${name}. Pode me atender?`;
+  <!-- ===================== SCRIPTS ===================== -->
+  <script>
+    // CTA WhatsApp (hero)
+    (function waHero(){
+      const a = document.querySelector('a[data-wa]');
+      if(!a) return;
+      const msg = `Olá, Nando! Vim pelo site (página: Catálogo completo). Pode me ajudar a escolher?`;
       a.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
-      a.target = "_blank";
-      a.rel = "noopener";
-      a.className = "inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)] bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)] hover:brightness-110 transition";
-    });
-  })();
-</script>
+      a.target = "_blank"; a.rel = "noopener";
+    })();
 
-<!-- Catálogo dinâmico unificado -->
-<script type="module" src="assets/js/catalog-hibrido.js"></script>
+    // Util
+    function moneyToNumber(txt){ return Number(String(txt||'').replace(/[^\d]/g,'')) || 0; }
+
+    // Filtros / busca / ordenação
+    (function filtros(){
+      const params   = new URLSearchParams(location.search);
+      const qParam   = (params.get('q') || '').trim().toLowerCase();
+      const catParam = (params.get('cat') || 'all').toLowerCase();
+      const brandParam = (params.get('brand') || 'all').toLowerCase();
+      const sortParam  = (params.get('sort') || 'featured');
+
+      const grid   = document.getElementById('gridProdutos');
+      const cards  = Array.from(grid.querySelectorAll('article.offer-card'));
+      const countEl= document.getElementById('countVisible');
+      const empty  = document.getElementById('emptyState');
+      const qHolders = document.querySelectorAll('[data-q]');
+
+      // Controles
+      const search = document.getElementById('search');
+      const sort   = document.getElementById('sort');
+      const brand  = document.getElementById('brand');
+      const chipsCat = Array.from(document.querySelectorAll('.chip[data-cat]'));
+
+      // Estado
+      let activeQuery = qParam;
+      let activeCat   = catParam;
+      let activeBrand = brandParam;
+
+      // Inicial
+      if (qParam) {
+        search.value = qParam;
+        qHolders.forEach(el => el.textContent = qParam);
+      }
+      chipsCat.forEach(c => c.classList.toggle('active', c.getAttribute('data-cat') === activeCat));
+      brand.value = brandParam;
+      sort.value  = sortParam;
+
+      // Exibir/ocultar marcas por categoria
+      function refreshBrandVisibility(){
+        const opts = Array.from(brand.querySelectorAll('option[value!="all"]'));
+        opts.forEach(o => {
+          const forCat = o.getAttribute('data-for');
+          o.hidden = !!(forCat && activeCat !== 'all' && forCat !== activeCat);
+        });
+        // se opção selecionada ficou oculta, volta para "all"
+        if (brand.options[brand.selectedIndex]?.hidden) brand.value = 'all';
+      }
+      refreshBrandVisibility();
+
+      // Eventos
+      chipsCat.forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          activeCat = btn.getAttribute('data-cat') || 'all';
+          chipsCat.forEach(b=>b.classList.remove('active'));
+          btn.classList.add('active');
+          refreshBrandVisibility();
+          aplicar();
+        });
+      });
+
+      brand.addEventListener('change', ()=>{ activeBrand = brand.value || 'all'; aplicar(); });
+
+      let t; search.addEventListener('input', ()=>{
+        clearTimeout(t);
+        t = setTimeout(()=>{ activeQuery = (search.value||'').trim().toLowerCase(); aplicar(); }, 180);
+      });
+
+      sort.addEventListener('change', aplicar);
+
+      function aplicar(){
+        // ordenação
+        const sorted = cards.slice().sort((a,b)=>{
+          const pa = Number(a.getAttribute('data-price')) || moneyToNumber(a.querySelector('.text-xl')?.textContent);
+          const pb = Number(b.getAttribute('data-price')) || moneyToNumber(b.querySelector('.text-xl')?.textContent);
+          const da = new Date(a.getAttribute('data-new') || '2000-01-01').getTime();
+          const db = new Date(b.getAttribute('data-new') || '2000-01-01').getTime();
+          switch (sort.value){
+            case 'price-asc': return pa - pb;
+            case 'price-desc': return pb - pa;
+            case 'newest': return db - da;
+            default: return 0;
+          }
+        });
+        sorted.forEach(card => grid.appendChild(card));
+
+        // filtros
+        let visible = 0;
+        cards.forEach(card=>{
+          const cat   = (card.getAttribute('data-cat') || '').toLowerCase();
+          const br    = (card.getAttribute('data-brand') || '').toLowerCase();
+          const hay   = (card.getAttribute('data-search') || '').toLowerCase();
+
+          const passCat   = activeCat==='all' ? true : (cat===activeCat);
+          const passBrand = activeBrand==='all' ? true : (br===activeBrand);
+          const passQuery = activeQuery ? hay.includes(activeQuery) : true;
+
+          const show = passCat && passBrand && passQuery;
+          card.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+
+        countEl.textContent = visible;
+        empty.classList.toggle('hidden', visible !== 0);
+        qHolders.forEach(el => el.textContent = activeQuery || '');
+      }
+
+      aplicar();
+    })();
+
+    // Links de WhatsApp por produto com mensagem contextual
+    (function waProdutos(){
+      const links = document.querySelectorAll('a.btn-wa[data-wa-product]');
+      links.forEach(a => {
+        const name = a.getAttribute('data-wa-product') || 'Produto';
+        const msg = `Olá, Nando! Vim pelo site (página: Catálogo completo) e me interessei por: ${name}. Pode me atender?`;
+        a.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
+        a.target = "_blank"; a.rel = "noopener";
+        a.className = "inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)] bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)] hover:brightness-110 transition";
+      });
+    })();
+  </script>
+  <script src="assets/js/produtos.js"></script>
 <script>
-  NandoCatalog.renderCatalogSimple({
+  // tudo.html — catálogo completo com filtros
+  NandoCatalog.renderCatalogFull({
     pageLabel: 'Catálogo completo',
-    categoria: 'tudo'
+    initialCat: 'all'
   });
 </script>
 
+<!-- Carrossel da categoria (auto + touch + dots) -->
 <script>
-  // Carrossel da categoria (auto + touch + dots)
   (function catHeroCarousel(){
     const root = document.getElementById('catHero');
     if (!root) return;
@@ -612,6 +616,5 @@
     show(0); play();
   })();
 </script>
-
 </body>
 </html>
