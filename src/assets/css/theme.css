@@ -1,9 +1,7 @@
 /* ===================================================================
    THEME.CSS – Estilo global adicional (convive bem com Tailwind)
    Projeto: Nando Importados
-   Observação: mantemos a filosofia “utilitário primeiro”.
-   Este arquivo só cobre o que Tailwind não resolve bem sozinho
-   (microdetalhes visuais, animações, helpers e pequenos toques).
+   Filosofia: utilitário primeiro; aqui só microdetalhes/ajustes.
    =================================================================== */
 
 /* -------------------------
@@ -11,9 +9,7 @@
    ------------------------- */
 *,
 *::before,
-*::after {
-  box-sizing: border-box;
-}
+*::after { box-sizing: border-box; }
 
 html {
   -webkit-text-size-adjust: 100%;
@@ -23,19 +19,13 @@ html {
 
 body {
   margin: 0;
-  color: #1e293b;             /* slate-800 */
+  color: #1e293b; /* slate-800 */
   background: linear-gradient(#f8fafc, #ffffff);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-img,
-svg,
-video {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}
+img, svg, video { display: block; max-width: 100%; height: auto; }
 
 a {
   color: inherit;
@@ -47,7 +37,7 @@ a {
 ::selection { background: rgba(99,102,241,.2); }
 
 /* -------------------------
-   Variáveis de cor (opcional)
+   Variáveis de cor
    ------------------------- */
 :root{
   --brand-1: #0ea5e9;   /* sky-500  */
@@ -63,8 +53,8 @@ a {
    Helpers utilitários
    ------------------------- */
 
-/* Efeito “glass” leve para containers brancos translúcidos */
-.glass {
+/* Efeito “glass” leve */
+.glass{
   background: rgba(255,255,255,.72);
   backdrop-filter: saturate(160%) blur(12px);
   -webkit-backdrop-filter: saturate(160%) blur(12px);
@@ -72,13 +62,13 @@ a {
   border: 1px solid rgba(2,6,23,.06);
 }
 
-/* Gradiente padrão do projeto (mesma linha visual do hero) */
-.bg-brand-gradient {
+/* Gradiente padrão do projeto */
+.bg-brand-gradient{
   background-image: linear-gradient(90deg, var(--indigo-900), var(--blue-800), var(--cyan-700));
 }
 
-/* Botão com gradiente conic (usado em CTAs) */
-.btn-conic {
+/* Botão com gradiente cônico (CTAs) */
+.btn-conic{
   background: conic-gradient(at 50% 50%, #16a34a, #10b981, #06b6d4, #16a34a);
   color: #fff;
   border: 1px solid rgba(255,255,255,.3);
@@ -88,27 +78,22 @@ a {
 /* Sombra suave padrão para cards */
 .shadow-soft { box-shadow: var(--shadow-soft); }
 
-/* Esconder scrollbars de containers horizontais (cardsScroller) */
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* IE/Edge */
-  scrollbar-width: none;     /* Firefox */
-}
-.scrollbar-hide::-webkit-scrollbar { display: none; }
+/* Esconder scrollbars de containers horizontais */
+.scrollbar-hide{ -ms-overflow-style:none; scrollbar-width:none; }
+.scrollbar-hide::-webkit-scrollbar{ display:none; }
 
 /* -------------------------
    Header / Navegação
    ------------------------- */
-header.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
+header.site-header{
+  position: sticky; top: 0; z-index: 50;
   background: rgba(255,255,255,.72);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(2,6,23,.06);
 }
 
-/* Busca (aprimora o campo dentro do header) */
+/* Busca no header */
 .header-search input[type="search"]{
   outline: none;
   background: rgba(255,255,255,.9);
@@ -116,21 +101,19 @@ header.site-header {
   box-shadow: inset 0 0 0 1px rgba(2,6,23,.02), var(--shadow-soft);
   transition: box-shadow .2s ease, transform .15s ease;
 }
-.header-search input[type="search"]::placeholder{
-  color: rgb(100 116 139 / .85); /* slate-500 */
-}
+.header-search input[type="search"]::placeholder{ color: rgb(100 116 139 / .85); }
 .header-search input[type="search"]:focus{
   box-shadow: 0 0 0 4px rgba(14,165,233,.15), var(--shadow-soft);
 }
 
 /* Botão “Buscar” arredondado */
-.header-search .btn-buscar {
+.header-search .btn-buscar{
   border: 1px solid rgba(255,255,255,.35);
   box-shadow: 0 12px 24px rgba(2,6,23,.15);
 }
 
 /* -------------------------
-   Top bar (pílulas “nota fiscal / garantia”)
+   Top bar (pílulas)
    ------------------------- */
 .top-pills .pill{
   display:inline-flex;align-items:center;gap:.5rem;
@@ -141,18 +124,37 @@ header.site-header {
 }
 
 /* -------------------------
-   Hero / Carrossel
+   Hero / Carrossel (CATEGORIAS)
    ------------------------- */
-#hero { position: relative; user-select:none; }
-#heroSlides { position: relative; }
-#heroSlides > li { transition: opacity .7s ease-in-out; }
-#heroSlides img { object-fit: cover; }
 
-/* Dots mais responsivos (quando não usamos Tailwind para isso) */
-#hero .hero-dot { 
-  width:10px;height:10px;border-radius:9999px;background:rgba(255,255,255,.7);
+/* Altura padronizada do herói (todas as categorias) */
+#catHeroSlides { height: clamp(220px, 45vw, 380px); }
+#catHero .hero-dot{
+  width:10px;height:10px;border-radius:9999px;
+  background:rgba(255,255,255,.65);
+  transition:all .2s ease;
 }
-#hero .hero-dot[aria-current="true"]{ width:14px;height:14px;background:#fff; }
+#catHero .hero-dot[aria-current="true"]{
+  width:12px;height:12px;background:#fff;
+}
+
+/* Neutraliza utilitários de aspect-ratio do wrapper do hero
+   e define alturas coerentes para igualar CELULARES x TUDO */
+#catHero .aspect-\[21\/9\],
+#catHero .md\:aspect-\[16\/7\],
+#catHero .lg\:aspect-\[16\/6\]{
+  aspect-ratio: auto !important;
+  height: clamp(220px, 34vw, 340px);
+}
+@media (min-width: 768px){
+  #catHero .md\:aspect-\[16\/7\]{ height: clamp(220px, 28vw, 320px); }
+}
+@media (min-width: 1024px){
+  #catHero .lg\:aspect-\[16\/6\]{ height: clamp(220px, 24vw, 300px); }
+}
+@media (min-width: 1280px){
+  #catHero .lg\:aspect-\[16\/6\]{ height: 280px; }
+}
 
 /* -------------------------
    Categorias (cards quadrados)
@@ -170,114 +172,32 @@ header.site-header {
 }
 
 /* -------------------------
-   Ofertas (carrossel horizontal)
+   Ofertas (cards do grid)
    ------------------------- */
-#cardsScroller{
-  overscroll-behavior-x: contain;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x proximity;
-}
+
+/* Visual premium dos cards sem pesar */
 .offer-card{
-  scroll-snap-align: start;
-  border: 1px solid rgba(2,6,23,.06);
-  border-radius: 1rem;
-  overflow: hidden;
-  background: #fff;
-  transition: transform .15s ease, box-shadow .2s ease;
+  border-radius:1rem;
+  border:1px solid rgba(226,232,240,.7);
+  box-shadow:0 10px 18px rgba(15,23,42,.06);
+  transition:box-shadow .2s ease, transform .2s ease, border-color .2s ease;
+  background:#fff;
 }
 .offer-card:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 18px 36px rgba(2,6,23,.12);
+  box-shadow:0 20px 40px rgba(2,132,199,.18);
+  border-color:rgba(56,189,248,.28);
+  transform:translateY(-2px);
 }
 
-/* Preço: linha com valor riscado mais sutil */
-.price-strike{
-  color: rgb(100 116 139 / .75);
-  text-decoration: line-through;
-}
+/* Força altura consistente das imagens (opcional, bom para grid híbrido) */
+.offer-card img{ height: 208px; object-fit: cover; }
 
-/* -------------------------
-   FAQ (details/summary)
-   ------------------------- */
-.faq details{
-  border: 1px solid rgba(2,6,23,.08);
-  border-radius: .75rem;
-  background: #fff;
-  transition: box-shadow .2s ease, border-color .2s ease, transform .15s ease;
-}
-.faq details[open]{
-  box-shadow: 0 10px 24px rgba(2,6,23,.08);
-  border-color: rgba(2,6,23,.12);
-}
-.faq summary{
-  list-style: none;
-}
-.faq summary::-webkit-details-marker { display: none; }
+/* Preço riscado sutil */
+.price-strike{ color: rgb(100 116 139 / .75); text-decoration: line-through; }
 
 /* -------------------------
-   Footer (ajustes sutis)
+   Toolbar – chips premium
    ------------------------- */
-footer .payment-logos img{
-  height: 26px; width:auto; opacity:.9; filter: saturate(80%);
-}
-footer .payment-logos img:hover{ opacity:1; filter:none; }
-
-/* -------------------------
-   Animações utilitárias
-   ------------------------- */
-
-/* brilha sutil (para botões/links, se desejar aplicar) */
-@keyframes glow {
-  0% { box-shadow: 0 0 0 0 rgba(16,185,129,.35); }
-  70% { box-shadow: 0 0 30px 12px rgba(16,185,129,0); }
-  100%{ box-shadow: 0 0 0 0 rgba(16,185,129,0); }
-}
-
-/* aparição suave */
-@keyframes floatIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* -------------------------
-   Responsivo
-   ------------------------- */
-@media (min-width: 768px){
-  .header-search input[type="search"]{ min-width: 420px; }
-  .category-tile:hover{ transform: translateY(-3px); }
-}
-
-/* -------------------------
-   Modo redução de movimento
-   ------------------------- */
-@media (prefers-reduced-motion: reduce){
-  html { scroll-behavior: auto; }
-  #heroSlides > li { transition: none; }
-  .offer-card, .category-tile { transition: none; }
-}
-
-/* -------------------------
-   Impressão (bem simples)
-   ------------------------- */
-@media print{
-  header, .top-pills, #hero, .faq svg, .btn-conic { display: none !important; }
-  a::after { content:" (" attr(href) ")"; font-size: 12px; color:#64748b; }
-}
-
-/* -------------------------
-   Hero categorias (altura fluida + dots)
-   ------------------------- */
-#catHeroSlides { height: clamp(220px, 45vw, 380px); }
-#catHero .hero-dot{
-  width: 10px; height: 10px; border-radius: 9999px;
-  background: rgba(255,255,255,.65);
-  transition: all .2s ease;
-}
-#catHero .hero-dot[aria-current="true"]{
-  width: 12px; height: 12px; background: #fff;
-}
-
-/* Chips premium da toolbar */
 .chip{
   border:1px solid #e6e8ec;
   background:#f7f8fa;
@@ -297,64 +217,24 @@ footer .payment-logos img:hover{ opacity:1; filter:none; }
   box-shadow:0 6px 16px rgba(10,99,255,.25);
 }
 
-/* ===================================================================
-   AJUSTES ESPECÍFICOS – Celulares (hero + toolbar mobile horizontal)
-   =================================================================== */
+/* Altura dos selects na toolbar, compacta e coerente com os chips */
+section.sticky.top-14 select{ height: 36px; }
 
-/* 1) Reduz altura do hero em todas as larguras, SEM remover o carrossel.
-      Força o container do aspect-ratio a usar altura limitada. */
-#catHero .aspect-\[21\/9\],
-#catHero .md\:aspect-\[16\/7\],
-#catHero .lg\:aspect-\[16\/6\]{
-  aspect-ratio: auto !important;           /* ignora o aspect para poder limitar a altura */
-  height: clamp(220px, 34vw, 340px);       /* valor base para telas menores */
-}
-
-/* refina por breakpoint (mais compacto no desktop) */
-@media (min-width: 768px){
-  #catHero .md\:aspect-\[16\/7\]{ height: clamp(220px, 28vw, 320px); }
-}
-@media (min-width: 1024px){
-  #catHero .lg\:aspect-\[16\/6\]{ height: clamp(220px, 24vw, 300px); }
-}
-@media (min-width: 1280px){
-  #catHero .lg\:aspect-\[16\/6\]{ height: 280px; }
-}
-
-/* 2) Segunda fileira de filtros SEM QUEBRA no celular deitado,
-      com espaço compacto e sem “buraco” visual. */
+/* Toolbar: evitar quebra no celular deitado */
 @media (orientation: landscape) and (max-width: 915px){
   .flex-nowrap.overflow-x-auto{
-    gap: .375rem;                        /* ~6px entre itens */
+    gap: .375rem;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
   .flex-nowrap.overflow-x-auto::-webkit-scrollbar{ display: none; }
-  .flex-nowrap.overflow-x-auto > *{ flex: 0 0 auto; }   /* evita quebra */
-  #sort{ min-width: 150px; }                               /* select mais enxuto cabe ao lado */
+  .flex-nowrap.overflow-x-auto > *{ flex: 0 0 auto; }
+  #sort{ min-width: 150px; }
 }
 
-/* 3) Altura dos selects dentro da toolbar levemente compacta
-      (coerente com os chips) */
-section.sticky.top-14 select{
-  height: 36px;
-}
-
-/* 4) (Opcional, mas útil) Se algum container horizontal usar .scrollbar-hide,
-      aplica o mesmo “sumir scrollbar” usado nos cards */
-.flex-nowrap.overflow-x-auto.scrollbar-hide{
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.flex-nowrap.overflow-x-auto.scrollbar-hide::-webkit-scrollbar{
-  display: none;
-}
-/* Altura padronizada do herói (todas as categorias) */
-#catHeroSlides { height: clamp(220px, 45vw, 380px); }
-#catHero .hero-dot{ width:10px;height:10px;border-radius:9999px;background:rgba(255,255,255,.65);transition:all .2s ease; }
-#catHero .hero-dot[aria-current="true"]{ width:12px;height:12px;background:#fff; }
-
-/* Botão de WhatsApp (aparece com visual mesmo sem JS) */
+/* -------------------------
+   Botão WhatsApp – classe padrão dos cards (.btn-wa)
+   ------------------------- */
 .btn-wa{
   display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
   padding:.625rem 1rem;border-radius:9999px;font-weight:800;color:#fff;text-decoration:none;
@@ -364,15 +244,55 @@ section.sticky.top-14 select{
 }
 .btn-wa:hover{ filter:brightness(1.08); }
 
-/* Visual premium dos cards sem pesar (todas as páginas) */
-.offer-card{
-  border-radius:1rem;
-  border:1px solid rgba(226,232,240,.7);
-  box-shadow:0 10px 18px rgba(15,23,42,.06);
-  transition:box-shadow .2s ease, transform .2s ease, border-color .2s;
+/* -------------------------
+   FAQ (details/summary)
+   ------------------------- */
+.faq details{
+  border: 1px solid rgba(2,6,23,.08);
+  border-radius: .75rem;
+  background: #fff;
+  transition: box-shadow .2s ease, border-color .2s ease, transform .15s ease;
 }
-.offer-card:hover{
-  box-shadow:0 16px 32px rgba(2,132,199,.15);
-  border-color:rgba(56,189,248,.25);
-  transform:translateY(-1px);
+.faq details[open]{ box-shadow: 0 10px 24px rgba(2,6,23,.08); border-color: rgba(2,6,23,.12); }
+.faq summary{ list-style: none; }
+.faq summary::-webkit-details-marker { display: none; }
+
+/* -------------------------
+   Footer (ajustes sutis)
+   ------------------------- */
+footer .payment-logos img{ height: 26px; width:auto; opacity:.9; filter: saturate(80%); }
+footer .payment-logos img:hover{ opacity:1; filter:none; }
+
+/* -------------------------
+   Animações utilitárias
+   ------------------------- */
+@keyframes glow{
+  0%{ box-shadow: 0 0 0 0 rgba(16,185,129,.35); }
+  70%{ box-shadow: 0 0 30px 12px rgba(16,185,129,0); }
+  100%{ box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+}
+@keyframes floatIn{ from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:translateY(0);} }
+
+/* -------------------------
+   Responsivo
+   ------------------------- */
+@media (min-width: 768px){
+  .header-search input[type="search"]{ min-width: 420px; }
+  .category-tile:hover{ transform: translateY(-3px); }
+}
+
+/* -------------------------
+   Redução de movimento
+   ------------------------- */
+@media (prefers-reduced-motion: reduce){
+  html { scroll-behavior: auto; }
+  .offer-card, .category-tile { transition: none; }
+}
+
+/* -------------------------
+   Impressão
+   ------------------------- */
+@media print{
+  header, .top-pills, #catHero, .faq svg, .btn-conic { display: none !important; }
+  a::after { content:" (" attr(href) ")"; font-size: 12px; color:#64748b; }
 }

@@ -3,7 +3,9 @@
 @@include("_partials/head.html")
 <body class="bg-gradient-to-b from-slate-50 via-white to-slate-50 text-slate-800 antialiased">
 
-  <!-- ===================== HEADER ===================== -->
+  <!-- =========================================================
+       HEADER (padrão)
+  ========================================================== -->
   <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200/60">
     <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
       <a href="index.html" class="flex items-center gap-2">
@@ -50,7 +52,6 @@
         const menu = document.getElementById('mobileMenu');
         if(!btn || !menu) return;
         btn.addEventListener('click', ()=> menu.classList.toggle('hidden'));
-        // Marca ativo no menu
         const path = location.pathname.split('/').pop();
         document.querySelectorAll('nav a, #mobileMenu a').forEach(a=>{
           const href = a.getAttribute('href');
@@ -60,8 +61,12 @@
     </script>
   </header>
 
-  <!-- ===================== HERO (padronizado) ===================== -->
-  <!-- IMPORTANTE: sem classes de aspect-ratio; altura vem do CSS #catHeroSlides -->
+  <!-- =========================================================
+       HERO (padronizado — mesma altura do CELULARES)
+       * Depende do CSS em theme.css:
+         #catHeroSlides { height: clamp(220px, 45vw, 380px); }
+         .hero-dot {...}
+  ========================================================== -->
   <section id="catHero" class="relative overflow-hidden select-none">
     <div class="relative w-full">
       <ul id="catHeroSlides" class="absolute inset-0">
@@ -70,18 +75,19 @@
           <picture>
             <!-- Desktop (>=1024px) -->
             <source type="image/webp" media="(min-width:1024px)"
-                    srcset="assets/banners/geral/hero-all-1-desktop-1280.webp 1280w,
-                            assets/banners/geral/hero-all-1-desktop-1920.webp 1920w" sizes="100vw">
+              srcset="assets/banners/geral/hero-all-1-desktop-1280.webp 1280w,
+                      assets/banners/geral/hero-all-1-desktop-1920.webp 1920w" sizes="100vw">
             <source type="image/jpeg" media="(min-width:1024px)"
-                    srcset="assets/banners/geral/hero-all-1-desktop-1280.jpg 1280w,
-                            assets/banners/geral/hero-all-1-desktop-1920.jpg 1920w" sizes="100vw">
+              srcset="assets/banners/geral/hero-all-1-desktop-1280.jpg 1280w,
+                      assets/banners/geral/hero-all-1-desktop-1920.jpg 1920w" sizes="100vw">
             <!-- Mobile -->
             <source type="image/webp"
-                    srcset="assets/banners/geral/hero-all-1-mobile-640.webp 640w,
-                            assets/banners/geral/hero-all-1-mobile-960.webp 960w" sizes="100vw">
+              srcset="assets/banners/geral/hero-all-1-mobile-640.webp 640w,
+                      assets/banners/geral/hero-all-1-mobile-960.webp 960w" sizes="100vw">
             <source type="image/jpeg"
-                    srcset="assets/banners/geral/hero-all-1-mobile-640.jpg 640w,
-                            assets/banners/geral/hero-all-1-mobile-960.jpg 960w" sizes="100vw">
+              srcset="assets/banners/geral/hero-all-1-mobile-640.jpg 640w,
+                      assets/banners/geral/hero-all-1-mobile-960.jpg 960w" sizes="100vw">
+            <!-- Fallback (usa seus arquivos atuais se não houver as variantes) -->
             <img src="assets/banners/geral/hero-all-1.jpg"
                  alt="Ofertas especiais — Nando Importados"
                  class="absolute inset-0 w-full h-full object-cover z-0"
@@ -95,21 +101,21 @@
         <li class="absolute inset-0 opacity-0 transition-opacity duration-700">
           <picture>
             <source type="image/webp" media="(min-width:1024px)"
-                    srcset="assets/banners/geral/hero-all-2-desktop-1280.webp 1280w,
-                            assets/banners/geral/hero-all-2-desktop-1920.webp 1920w" sizes="100vw">
+              srcset="assets/banners/geral/hero-all-2-desktop-1280.webp 1280w,
+                      assets/banners/geral/hero-all-2-desktop-1920.webp 1920w" sizes="100vw">
             <source type="image/jpeg" media="(min-width:1024px)"
-                    srcset="assets/banners/geral/hero-all-2-desktop-1280.jpg 1280w,
-                            assets/banners/geral/hero-all-2-desktop-1920.jpg 1920w" sizes="100vw">
+              srcset="assets/banners/geral/hero-all-2-desktop-1280.jpg 1280w,
+                      assets/banners/geral/hero-all-2-desktop-1920.jpg 1920w" sizes="100vw">
             <source type="image/webp"
-                    srcset="assets/banners/geral/hero-all-2-mobile-640.webp 640w,
-                            assets/banners/geral/hero-all-2-mobile-960.webp 960w" sizes="100vw">
+              srcset="assets/banners/geral/hero-all-2-mobile-640.webp 640w,
+                      assets/banners/geral/hero-all-2-mobile-960.webp 960w" sizes="100vw">
             <source type="image/jpeg"
-                    srcset="assets/banners/geral/hero-all-2-mobile-640.jpg 640w,
-                            assets/banners/geral/hero-all-2-mobile-960.jpg 960w" sizes="100vw">
+              srcset="assets/banners/geral/hero-all-2-mobile-640.jpg 640w,
+                      assets/banners/geral/hero-all-2-mobile-960.jpg 960w" sizes="100vw">
             <img src="assets/banners/geral/hero-all-2.jpg"
                  alt="Celulares e perfumes com NF e garantia"
                  class="absolute inset-0 w-full h-full object-cover z-0"
-                 loading="lazy" decoding="async">
+                 loading="lazy" decoding="async" style="object-position:center 35%">
           </picture>
           <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
         </li>
@@ -118,21 +124,21 @@
         <li class="absolute inset-0 opacity-0 transition-opacity duration-700">
           <picture>
             <source type="image/webp" media="(min-width:1024px)"
-                    srcset="assets/banners/geral/hero-all-3-desktop-1280.webp 1280w,
-                            assets/banners/geral/hero-all-3-desktop-1920.webp 1920w" sizes="100vw">
+              srcset="assets/banners/geral/hero-all-3-desktop-1280.webp 1280w,
+                      assets/banners/geral/hero-all-3-desktop-1920.webp 1920w" sizes="100vw">
             <source type="image/jpeg" media="(min-width:1024px)"
-                    srcset="assets/banners/geral/hero-all-3-desktop-1280.jpg 1280w,
-                            assets/banners/geral/hero-all-3-desktop-1920.jpg 1920w" sizes="100vw">
+              srcset="assets/banners/geral/hero-all-3-desktop-1280.jpg 1280w,
+                      assets/banners/geral/hero-all-3-desktop-1920.jpg 1920w" sizes="100vw">
             <source type="image/webp"
-                    srcset="assets/banners/geral/hero-all-3-mobile-640.webp 640w,
-                            assets/banners/geral/hero-all-3-mobile-960.webp 960w" sizes="100vw">
+              srcset="assets/banners/geral/hero-all-3-mobile-640.webp 640w,
+                      assets/banners/geral/hero-all-3-mobile-960.webp 960w" sizes="100vw">
             <source type="image/jpeg"
-                    srcset="assets/banners/geral/hero-all-3-mobile-640.jpg 640w,
-                            assets/banners/geral/hero-all-3-mobile-960.jpg 960w" sizes="100vw">
+              srcset="assets/banners/geral/hero-all-3-mobile-640.jpg 640w,
+                      assets/banners/geral/hero-all-3-mobile-960.jpg 960w" sizes="100vw">
             <img src="assets/banners/geral/hero-all-3.jpg"
                  alt="Atendimento no WhatsApp — Nando Importados"
                  class="absolute inset-0 w-full h-full object-cover z-0"
-                 loading="lazy" decoding="async">
+                 loading="lazy" decoding="async" style="object-position:center 35%">
           </picture>
           <div class="absolute inset-0 z-10 bg-gradient-to-b from-black/10 via-black/35 to-black/60"></div>
         </li>
@@ -146,9 +152,10 @@
       </div>
     </div>
   </section>
-  <!-- ===================== /HERO ===================== -->
 
-  <!-- ===================== TOOLBAR (sticky) ===================== -->
+  <!-- =========================================================
+       TOOLBAR (sticky) + CTA WhatsApp
+  ========================================================== -->
   <section class="bg-white/75 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-slate-200 sticky top-14 z-40">
     <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center gap-3">
 
@@ -160,8 +167,9 @@
         <svg class="absolute right-3 top-2.5 opacity-60" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="m21 21-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="#334155" stroke-width="1.8" stroke-linecap="round"/></svg>
       </div>
 
-      <!-- CTA WhatsApp (linha 2 da toolbar) -->
-      <a id="ctaWA" class="w-full md:w-auto flex-1 text-center btn-wa shadow-[0_18px_42px_rgba(16,185,129,.35)]">
+      <!-- CTA WhatsApp (mensagem contextual) -->
+      <a id="ctaWA" data-wa
+         class="px-5 py-3 rounded-full text-white font-extrabold shadow-[0_18px_36px_rgba(16,185,129,.35)] bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)] hover:brightness-110 transition">
         Ver melhores ofertas no WhatsApp
       </a>
 
@@ -203,9 +211,10 @@
       </div>
     </div>
   </section>
-  <!-- ===================== /TOOLBAR ===================== -->
 
-  <!-- ===================== GRID ===================== -->
+  <!-- =========================================================
+       GRID
+  ========================================================== -->
   <main class="max-w-6xl mx-auto px-4 py-8">
     <div class="mb-4 text-sm text-slate-600">
       <span id="countVisible">0</span> item(ns) exibido(s)
@@ -214,10 +223,9 @@
     </div>
 
     <div id="gridProdutos" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-      <!-- ==================== CELULARES ==================== -->
-
-      <article class="offer-card bg-white border border-slate-200 shadow-sm overflow-hidden"
+      <!-- (cards estáticos de exemplo — podem ser removidos quando usar a planilha) -->
+      <!-- POCO X7 PRO -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
                data-cat="celulares" data-brand="xiaomi" data-price="1899" data-new="2024-04-01"
                data-search="poco x7 pro 8gb 256gb snapdragon 7s gen 2 celular android smartphone">
         <img src="assets/celulares/poco-x7-pro.jpg" alt="POCO X7 PRO"
@@ -234,7 +242,8 @@
         </div>
       </article>
 
-      <article class="offer-card bg-white border border-slate-200 shadow-sm overflow-hidden"
+      <!-- iPhone 13 -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
                data-cat="celulares" data-brand="apple" data-price="3299" data-new="2024-03-10"
                data-search="iphone 13 128gb ios apple celular smartphone 6.1 polegadas">
         <img src="assets/celulares/iphone-13.jpg" alt="iPhone 13 128GB"
@@ -251,7 +260,8 @@
         </div>
       </article>
 
-      <article class="offer-card bg-white border border-slate-200 shadow-sm overflow-hidden"
+      <!-- Moto G84 -->
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
                data-cat="celulares" data-brand="motorola" data-price="1699" data-new="2024-02-22"
                data-search="motorola moto g84 256gb 12gb ram android celular smartphone">
         <img src="assets/celulares/moto-g84.jpg" alt="Moto G84"
@@ -268,26 +278,9 @@
         </div>
       </article>
 
-      <article class="offer-card bg-white border border-slate-200 shadow-sm overflow-hidden"
-               data-cat="celulares" data-brand="samsung" data-price="1499" data-new="2024-04-20"
-               data-search="samsung galaxy a34 128gb android celular smartphone">
-        <img src="assets/celulares/galaxy-a34.jpg" alt="Galaxy A34"
-             class="w-full h-52 object-cover"
-             onerror="this.onerror=null;this.src='assets/celulares/fallback-celular.jpg'">
-        <div class="p-5">
-          <h2 class="font-bold text-lg">Galaxy A34</h2>
-          <p class="text-sm text-slate-600">128GB · Novo lacrado</p>
-          <div class="mt-3">
-            <div class="price-strike text-xs">R$ 1.699</div>
-            <div class="text-xl font-extrabold text-blue-700">R$ 1.499</div>
-          </div>
-          <a class="btn-wa mt-4 w-full" data-wa-product="Galaxy A34">Falar no WhatsApp</a>
-        </div>
-      </article>
+      <!-- ===== PERFUMES ===== -->
 
-      <!-- ==================== PERFUMES ==================== -->
-
-      <article class="offer-card bg-white border border-slate-200 shadow-sm overflow-hidden"
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
                data-cat="perfumes" data-brand="dior" data-price="649" data-new="2024-04-01"
                data-search="dior sauvage eau de toilette edt 100ml masculino fresco amadeirado">
         <img src="assets/perfumes/dior-sauvage.jpg" alt="Dior Sauvage EDT 100ml"
@@ -304,7 +297,7 @@
         </div>
       </article>
 
-      <article class="offer-card bg-white border border-slate-200 shadow-sm overflow-hidden"
+      <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
                data-cat="perfumes" data-brand="versace" data-price="549" data-new="2024-03-12"
                data-search="versace dylan blue 100ml masculino fougere moderno">
         <img src="assets/perfumes/versace-dylan-blue.jpg" alt="Versace Dylan Blue 100ml"
@@ -321,43 +314,9 @@
         </div>
       </article>
 
-      <article class="offer-card bg-white border border-slate-200 shadow-sm overflow-hidden"
-               data-cat="perfumes" data-brand="chanel" data-price="1099" data-new="2024-01-30"
-               data-search="bleu de chanel eau de parfum edp 100ml masculino amadeirado citrico">
-        <img src="assets/perfumes/bleu-de-chanel.jpg" alt="Bleu de Chanel EDP 100ml"
-             class="w-full h-52 object-cover"
-             onerror="this.onerror=null;this.src='assets/perfumes/fallback-perfume.jpg'">
-        <div class="p-5">
-          <h2 class="font-bold text-lg">Bleu de Chanel EDP 100ml</h2>
-          <p class="text-sm text-slate-600">Masculino · Amadeirado</p>
-          <div class="mt-3">
-            <div class="price-strike text-xs">R$ 1.199</div>
-            <div class="text-xl font-extrabold text-blue-700">R$ 1.099</div>
-          </div>
-          <a class="btn-wa mt-4 w-full" data-wa-product="Bleu de Chanel EDP 100ml">Falar no WhatsApp</a>
-        </div>
-      </article>
-
-      <article class="offer-card bg-white border border-slate-200 shadow-sm overflow-hidden"
-               data-cat="perfumes" data-brand="ysl" data-price="799" data-new="2024-03-22"
-               data-search="ysl libre eau de parfum edp 90ml feminino floral baunilha lavanda">
-        <img src="assets/perfumes/ysl-libre.jpg" alt="YSL Libre EDP 90ml"
-             class="w-full h-52 object-cover"
-             onerror="this.onerror=null;this.src='assets/perfumes/fallback-perfume.jpg'">
-        <div class="p-5">
-          <h2 class="font-bold text-lg">YSL Libre EDP 90ml</h2>
-          <p class="text-sm text-slate-600">Feminino · Floral</p>
-          <div class="mt-3">
-            <div class="price-strike text-xs">R$ 869</div>
-            <div class="text-xl font-extrabold text-blue-700">R$ 799</div>
-          </div>
-          <a class="btn-wa mt-4 w-full" data-wa-product="YSL Libre EDP 90ml">Falar no WhatsApp</a>
-        </div>
-      </article>
-
     </div>
 
-    <!-- Vazio -->
+    <!-- Empty state -->
     <div id="emptyState" class="hidden mt-10 text-center text-slate-600">
       <div class="inline-block px-4 py-2 rounded-full bg-slate-100 text-slate-700 font-medium">
         Nenhum produto encontrado para <span class="font-semibold" data-q></span>.
@@ -367,9 +326,10 @@
       </div>
     </div>
   </main>
-  <!-- ===================== /GRID ===================== -->
 
-  <!-- ===================== FOOTER ===================== -->
+  <!-- =========================================================
+       FOOTER (padrão)
+  ========================================================== -->
   <footer class="mt-16">
     <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 text-slate-100">
       <div class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-8">
@@ -417,39 +377,42 @@
     </div>
   </footer>
 
-  <!-- ===================== SCRIPTS ===================== -->
+  <!-- =========================================================
+       SCRIPTS
+  ========================================================== -->
   <script>
-    // CTA WhatsApp da toolbar (mensagem contextual)
-    (function waToolbar(){
-      const a = document.getElementById('ctaWA');
+    // CTA WhatsApp do HERO/Toolbar – mensagem PRO + número fixo
+    (function waHero(){
+      const a = document.querySelector('a[data-wa]');
       if(!a) return;
-      const msg = `Olá, Nando! Vim pelo site (página: Catálogo completo). Pode me ajudar a escolher?`;
+      const msg = `Olá, Nando! Vim pelo site (página: Catálogo completo). ` +
+                  `Gostaria de receber as melhores ofertas de hoje e tirar dúvidas rápidas. ` +
+                  `Pode me atender?`;
       a.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
       a.target = "_blank"; a.rel = "noopener";
     })();
 
     // Util
-    function moneyToNumber(txt){ return Number(String(txt||'').replace(/[^\d]/g,'')) || 0; }
+    const moneyToNumber = (txt)=> Number(String(txt||'').replace(/[^\d]/g,'')) || 0;
 
-    // Filtros / busca / ordenação
+    // Filtros / busca / ordenação  — robusto também para catálogo DINÂMICO
     (function filtros(){
-      const params   = new URLSearchParams(location.search);
-      const qParam   = (params.get('q') || '').trim().toLowerCase();
-      const catParam = (params.get('cat') || 'all').toLowerCase();
+      const params     = new URLSearchParams(location.search);
+      const qParam     = (params.get('q') || '').trim().toLowerCase();
+      const catParam   = (params.get('cat') || 'all').toLowerCase();
       const brandParam = (params.get('brand') || 'all').toLowerCase();
       const sortParam  = (params.get('sort') || 'featured');
 
-      const grid   = document.getElementById('gridProdutos');
-      const cards  = Array.from(grid.querySelectorAll('article.offer-card'));
-      const countEl= document.getElementById('countVisible');
-      const empty  = document.getElementById('emptyState');
+      const grid     = document.getElementById('gridProdutos');
+      const countEl  = document.getElementById('countVisible');
+      const empty    = document.getElementById('emptyState');
       const qHolders = document.querySelectorAll('[data-q]');
 
       // Controles
-      const search = document.getElementById('search');
-      const sort   = document.getElementById('sort');
-      const brand  = document.getElementById('brand');
-      const chipsCat = Array.from(document.querySelectorAll('.chip[data-cat]'));
+      const search  = document.getElementById('search');
+      const sort    = document.getElementById('sort');
+      const brand   = document.getElementById('brand');
+      const chips   = Array.from(document.querySelectorAll('.chip[data-cat]'));
 
       // Estado
       let activeQuery = qParam;
@@ -457,18 +420,13 @@
       let activeBrand = brandParam;
 
       // Inicial
-      if (qParam) {
-        search.value = qParam;
-        qHolders.forEach(el => el.textContent = qParam);
-      }
-      chipsCat.forEach(c => c.classList.toggle('active', c.getAttribute('data-cat') === activeCat));
-      brand.value = brandParam;
-      sort.value  = sortParam;
+      if (qParam) { search.value = qParam; qHolders.forEach(el => el.textContent = qParam); }
+      chips.forEach(c => c.classList.toggle('active', c.getAttribute('data-cat') === activeCat));
+      brand.value = brandParam; sort.value = sortParam;
 
       // Exibir/ocultar marcas por categoria
       function refreshBrandVisibility(){
-        const opts = Array.from(brand.querySelectorAll('option[value!="all"]'));
-        opts.forEach(o => {
+        Array.from(brand.querySelectorAll('option[value!="all"]')).forEach(o => {
           const forCat = o.getAttribute('data-for');
           o.hidden = !!(forCat && activeCat !== 'all' && forCat !== activeCat);
         });
@@ -477,26 +435,21 @@
       refreshBrandVisibility();
 
       // Eventos
-      chipsCat.forEach(btn=>{
+      chips.forEach(btn=>{
         btn.addEventListener('click', ()=>{
           activeCat = btn.getAttribute('data-cat') || 'all';
-          chipsCat.forEach(b=>b.classList.remove('active'));
-          btn.classList.add('active');
-          refreshBrandVisibility();
-          aplicar();
+          chips.forEach(b=>b.classList.remove('active')); btn.addEventListener; btn.classList.add('active');
+          refreshBrandVisibility(); aplicar();
         });
       });
-
       brand.addEventListener('change', ()=>{ activeBrand = brand.value || 'all'; aplicar(); });
-
-      let t; search.addEventListener('input', ()=>{
-        clearTimeout(t);
-        t = setTimeout(()=>{ activeQuery = (search.value||'').trim().toLowerCase(); aplicar(); }, 180);
-      });
-
+      let t; search.addEventListener('input', ()=>{ clearTimeout(t); t = setTimeout(()=>{ activeQuery = (search.value||'').trim().toLowerCase(); aplicar(); }, 160); });
       sort.addEventListener('change', aplicar);
 
       function aplicar(){
+        // **SEMPRE** pega cards atuais (inclui itens renderizados via produtos.js)
+        const cards = Array.from(grid.querySelectorAll('article.offer-card'));
+
         // ordenação
         const sorted = cards.slice().sort((a,b)=>{
           const pa = Number(a.getAttribute('data-price')) || moneyToNumber(a.querySelector('.text-xl')?.textContent);
@@ -504,10 +457,10 @@
           const da = new Date(a.getAttribute('data-new') || '2000-01-01').getTime();
           const db = new Date(b.getAttribute('data-new') || '2000-01-01').getTime();
           switch (sort.value){
-            case 'price-asc': return pa - pb;
+            case 'price-asc':  return pa - pb;
             case 'price-desc': return pb - pa;
-            case 'newest': return db - da;
-            default: return 0;
+            case 'newest':     return db - da;
+            default:           return 0;
           }
         });
         sorted.forEach(card => grid.appendChild(card));
@@ -515,9 +468,9 @@
         // filtros
         let visible = 0;
         cards.forEach(card=>{
-          const cat   = (card.getAttribute('data-cat') || '').toLowerCase();
-          const br    = (card.getAttribute('data-brand') || '').toLowerCase();
-          const hay   = (card.getAttribute('data-search') || '').toLowerCase();
+          const cat = (card.getAttribute('data-cat') || '').toLowerCase();
+          const br  = (card.getAttribute('data-brand') || '').toLowerCase();
+          const hay = (card.getAttribute('data-search') || '').toLowerCase();
 
           const passCat   = activeCat==='all' ? true : (cat===activeCat);
           const passBrand = activeBrand==='all' ? true : (br===activeBrand);
@@ -531,37 +484,36 @@
         countEl.textContent = visible;
         empty.classList.toggle('hidden', visible !== 0);
         qHolders.forEach(el => el.textContent = activeQuery || '');
+
+        // Reaplica botão WA em cards novos
+        applyWAButtons();
       }
 
+      // Observa mudanças no grid (quando catálogo vem da planilha)
+      new MutationObserver(()=> aplicar()).observe(grid, {childList:true, subtree:false});
       aplicar();
     })();
 
-    // WhatsApp nos cards — robusto a re-render (MutationObserver)
-    (function waProdutos(){
-      const grid = document.getElementById('gridProdutos');
-      if(!grid) return;
-
-      function wire(){
-        document.querySelectorAll('a.btn-wa[data-wa-product]').forEach(a=>{
-          const name = a.getAttribute('data-wa-product') || 'Produto';
-          const msg = `Olá, Nando! Vim pelo site (página: Catálogo completo) e me interessei por: ${name}. Pode me atender?`;
-          a.href = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
-          a.target = "_blank"; a.rel = "noopener";
-          // Visual agora vem do CSS .btn-wa (não sobrescrevemos className)
-        });
-      }
-      // Primeira passagem
-      wire();
-      // Observa adições/remover (caso algum script regenere o grid)
-      const mo = new MutationObserver(()=>{ wire(); });
-      mo.observe(grid, {childList:true, subtree:true});
-    })();
+    // Botões WhatsApp por produto — mensagem PRO com nome do produto
+    function applyWAButtons(){
+      const links = document.querySelectorAll('a.btn-wa[data-wa-product]');
+      links.forEach(a => {
+        if (a.dataset.__waBound) return; // evita reprocessar
+        a.dataset.__waBound = "1";
+        const name = a.getAttribute('data-wa-product') || 'Produto';
+        const msg  = `Olá, Nando! Vim pelo site (página: Catálogo completo) e me interessei por: ${name}. ` +
+                     `Gostaria de saber preço à vista, opções de pagamento e disponibilidade.`;
+        a.href   = `https://wa.me/5521976950809?text=${encodeURIComponent(msg)}`;
+        a.target = "_blank"; a.rel = "noopener";
+        a.className = "inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)] bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)] hover:brightness-110 transition";
+      });
+    }
   </script>
 
-  <!-- Fonte de dados/dom e helpers -->
+  <!-- Catálogo dinâmico -->
   <script src="assets/js/produtos.js"></script>
 
-  <!-- Alias do catálogo: compat + padronização -->
+  <!-- Alias de compatibilidade (se seu produtos.js só tiver renderCatalogSimple) -->
   <script>
     (function(){
       if (!window.NandoCatalog) window.NandoCatalog = {};
@@ -574,13 +526,13 @@
   </script>
 
   <script>
-    // tudo.html — catálogo completo com filtros
-    if (window.NandoCatalog && typeof NandoCatalog.renderCatalogFull === 'function') {
+    // Render do catálogo (tudo)
+    if (window.NandoCatalog && typeof NandoCatalog.renderCatalogFull === 'function'){
       NandoCatalog.renderCatalogFull({ pageLabel: 'Catálogo completo', initialCat: 'all' });
     }
   </script>
 
-  <!-- Carrossel (auto + touch + dots) -->
+  <!-- Carrossel auto + touch + dots -->
   <script>
     (function catHeroCarousel(){
       const root = document.getElementById('catHero');
@@ -594,16 +546,13 @@
         slides.forEach((el, idx) => el.style.opacity = idx === i ? '1' : '0');
         dots.forEach((d, idx) => d.setAttribute('aria-current', idx === i ? 'true' : 'false'));
       }
-      function play(){
-        clearInterval(timer);
-        timer = setInterval(()=>{ if(!hover) show(i+1); }, 5000);
-      }
+      function play(){ clearInterval(timer); timer = setInterval(()=>{ if(!hover) show(i+1); }, 5000); }
 
       dots.forEach((d, idx)=> d.addEventListener('click', ()=>{ show(idx); play(); }));
       root.addEventListener('mouseenter', ()=>{ hover = true; });
       root.addEventListener('mouseleave', ()=>{ hover = false; });
 
-      // swipe em touch
+      // swipe
       root.addEventListener('touchstart', e => { touch.x = e.touches[0].clientX; }, {passive:true});
       root.addEventListener('touchend',   e => {
         const dx = e.changedTouches[0].clientX - touch.x;
