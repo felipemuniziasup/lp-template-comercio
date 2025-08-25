@@ -66,8 +66,8 @@
 
   <!-- ===================== HERO (Carrossel – Geral) ===================== -->
   <section id="catHero" class="relative overflow-hidden select-none">
-    <!-- ALTURA PADRÃO: vem do CSS (#catHeroSlides { height: clamp(...) }) -->
-    <div class="relative w-full">
+    <!-- Damos altura ao wrapper (igual ao theme.css) -->
+    <div class="relative w-full h-[clamp(220px,45vw,380px)]">
       <ul id="catHeroSlides" class="absolute inset-0">
         <!-- Slide 1 (eager/high) -->
         <li class="absolute inset-0 opacity-100 transition-opacity duration-700">
@@ -86,7 +86,7 @@
             <source type="image/jpeg"
                     srcset="assets/banners/geral/hero-all-1-mobile-640.jpg 640w,
                             assets/banners/geral/hero-all-1-mobile-960.jpg 960w" sizes="100vw">
-            <!-- Fallback (mantém seu arquivo atual) -->
+            <!-- Fallback -->
             <img src="assets/banners/geral/hero-all-1.jpg"
                  alt="Ofertas especiais — Nando Importados"
                  class="absolute inset-0 w-full h-full object-cover z-0"
@@ -221,8 +221,7 @@
     </div>
 
     <div id="gridProdutos" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- ==================== CELULARES ==================== -->
-
+      <!-- (cards iguais aos seus)… -->
       <!-- POCO X7 PRO -->
       <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
                data-cat="celulares" data-brand="xiaomi" data-price="1899" data-new="2024-04-01"
@@ -295,9 +294,7 @@
         </div>
       </article>
 
-      <!-- ==================== PERFUMES ==================== -->
-
-      <!-- Dior Sauvage -->
+      <!-- ==================== PERFUMES (idem aos seus) ==================== -->
       <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
                data-cat="perfumes" data-brand="dior" data-price="649" data-new="2024-04-01"
                data-search="dior sauvage eau de toilette edt 100ml masculino fresco amadeirado">
@@ -315,7 +312,6 @@
         </div>
       </article>
 
-      <!-- Dylan Blue -->
       <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
                data-cat="perfumes" data-brand="versace" data-price="549" data-new="2024-03-12"
                data-search="versace dylan blue 100ml masculino fougere moderno">
@@ -333,7 +329,6 @@
         </div>
       </article>
 
-      <!-- Bleu de Chanel -->
       <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
                data-cat="perfumes" data-brand="chanel" data-price="1099" data-new="2024-01-30"
                data-search="bleu de chanel eau de parfum edp 100ml masculino amadeirado citrico">
@@ -351,7 +346,6 @@
         </div>
       </article>
 
-      <!-- YSL Libre -->
       <article class="offer-card rounded-2xl bg-white border border-slate-200 shadow-sm overflow-hidden"
                data-cat="perfumes" data-brand="ysl" data-price="799" data-new="2024-03-22"
                data-search="ysl libre eau de parfum edp 90ml feminino floral baunilha lavanda">
@@ -486,7 +480,6 @@
           const forCat = o.getAttribute('data-for');
           o.hidden = !!(forCat && activeCat !== 'all' && forCat !== activeCat);
         });
-        // se opção selecionada ficou oculta, volta para "all"
         if (brand.options[brand.selectedIndex]?.hidden) brand.value = 'all';
       }
       refreshBrandVisibility();
@@ -551,8 +544,8 @@
       aplicar();
     })();
 
-    // Links de WhatsApp por produto com mensagem contextual
-    (function waProdutos(){
+    // ============ WhatsApp por produto (reaplica após render) ============
+    function enhanceWA(){
       const links = document.querySelectorAll('a.btn-wa[data-wa-product]');
       links.forEach(a => {
         const name = a.getAttribute('data-wa-product') || 'Produto';
@@ -561,7 +554,9 @@
         a.target = "_blank"; a.rel = "noopener";
         a.className = "inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full text-white font-extrabold border border-white/30 shadow-[0_12px_28px_rgba(16,185,129,.35)] bg-[conic-gradient(at_50%_50%,#16a34a,#10b981,#06b6d4,#16a34a)] hover:brightness-110 transition";
       });
-    })();
+    }
+    enhanceWA(); // primeira aplicação
+
   </script>
   <script src="assets/js/produtos.js"></script>
 
@@ -583,6 +578,16 @@
     pageLabel: 'Catálogo completo',
     initialCat: 'all'
   });
+
+  // Reaplica estilos/links de WhatsApp após o render do catálogo
+  setTimeout(enhanceWA, 0);
+
+  // Observa mudanças no grid (caso haja re-render dinâmico)
+  const grid = document.getElementById('gridProdutos');
+  if (grid && 'MutationObserver' in window){
+    const mo = new MutationObserver(()=>enhanceWA());
+    mo.observe(grid, {childList:true, subtree:true});
+  }
 </script>
 
 <!-- Carrossel da categoria (auto + touch + dots) -->
