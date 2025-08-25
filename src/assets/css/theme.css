@@ -349,3 +349,30 @@ section.sticky.top-14 select{
 .flex-nowrap.overflow-x-auto.scrollbar-hide::-webkit-scrollbar{
   display: none;
 }
+/* Altura padronizada do herói (todas as categorias) */
+#catHeroSlides { height: clamp(220px, 45vw, 380px); }
+#catHero .hero-dot{ width:10px;height:10px;border-radius:9999px;background:rgba(255,255,255,.65);transition:all .2s ease; }
+#catHero .hero-dot[aria-current="true"]{ width:12px;height:12px;background:#fff; }
+
+/* Botão de WhatsApp (aparece com visual mesmo sem JS) */
+.btn-wa{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  padding:.625rem 1rem;border-radius:9999px;font-weight:800;color:#fff;text-decoration:none;
+  border:1px solid rgba(255,255,255,.28);
+  box-shadow:0 12px 28px rgba(16,185,129,.35);
+  background:conic-gradient(at 50% 50%, #16a34a, #10b981, #06b6d4, #16a34a);
+}
+.btn-wa:hover{ filter:brightness(1.08); }
+
+/* Visual premium dos cards sem pesar (todas as páginas) */
+.offer-card{
+  border-radius:1rem;
+  border:1px solid rgba(226,232,240,.7);
+  box-shadow:0 10px 18px rgba(15,23,42,.06);
+  transition:box-shadow .2s ease, transform .2s ease, border-color .2s;
+}
+.offer-card:hover{
+  box-shadow:0 16px 32px rgba(2,132,199,.15);
+  border-color:rgba(56,189,248,.25);
+  transform:translateY(-1px);
+}
